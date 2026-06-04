@@ -1,0 +1,172 @@
+/*
+ * Tier control styling — namespaced poe2tf-, additive-only (PLAN §8/§9).
+ *
+ * Meshing rules:
+ *   • font is INHERITED so we ride the site's Fontin small-caps automatically
+ *   • boxes mirror the native MIN/MAX inputs (dark fill, thin warm border)
+ *   • gold #c8aa6e accent matches the group-header / highlight color
+ * Colors sampled from the trade2 Stats panel screenshot (2026-06-03).
+ */
+
+/* Root is a real table-cell — the stat row's .filter-body is `display:table`,
+   so an inline-flex child would get swept into a shared anonymous cell with the
+   MIN input and overlap it. A cell gets its own column, left of MIN. */
+.poe2tf-control {
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+  padding: 0 6px;
+  font: inherit;
+}
+.poe2tf-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── family toggle (1H | 2H) ─────────────────────────────────────────────── */
+.poe2tf-fam {
+  display: inline-flex;
+  border: 1px solid #46413a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.poe2tf-fam-btn {
+  font: inherit;
+  background: #221f1b;
+  color: #97917f;
+  border: 0;
+  padding: 2px 7px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.poe2tf-fam-btn + .poe2tf-fam-btn { border-left: 1px solid #46413a; }
+.poe2tf-fam-btn:hover { color: #e9dcb8; }
+.poe2tf-fam-btn.is-active { background: #3a3024; color: #e9dcb8; }
+
+/* ── dropdown button (mirrors the MIN/MAX boxes) ─────────────────────────── */
+.poe2tf-dd-btn {
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(#2b2823, #211e1a);
+  border: 1px solid #46413a;
+  border-radius: 2px;
+  color: #cbbf9c;
+  padding: 2px 8px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.poe2tf-dd-btn:hover { border-color: #c8aa6e; color: #efe3c2; }
+.poe2tf-control.is-open .poe2tf-dd-btn { border-color: #c8aa6e; }
+.poe2tf-control.is-set .poe2tf-label { color: #e9c97a; }
+
+.poe2tf-approx { color: #c8aa6e; }
+
+/* Strict mode (§11.8) — amber accent on the collapsed control so the active
+   mode is legible without opening the panel. Same warm family as the gold,
+   just hotter/tighter. */
+.poe2tf-control.is-strict .poe2tf-approx { color: #e6a23c; }
+.poe2tf-control.is-strict.is-set .poe2tf-label { color: #e6a23c; }
+.poe2tf-caret { font-size: 0.78em; opacity: 0.7; }
+
+/* ── dropdown panel (fixed-position; never clipped by the row) ───────────── */
+.poe2tf-panel {
+  position: fixed;
+  z-index: 2147483646;
+  background: #15120d;
+  border: 1px solid #46413a;
+  border-radius: 2px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
+  padding: 3px;
+  max-height: 52vh;
+  overflow-y: auto;
+}
+.poe2tf-panel[hidden] { display: none; }
+
+/* ── threshold-mode bar (§11.8) — header row inside the panel ─────────────── */
+.poe2tf-mode {
+  display: flex;
+  gap: 2px;
+  margin: 1px 1px 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #322d26;
+}
+.poe2tf-mode-btn {
+  font: inherit;
+  flex: 1;
+  background: #221f1b;
+  color: #97917f;
+  border: 1px solid #46413a;
+  border-radius: 2px;
+  padding: 2px 8px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.poe2tf-mode-btn:hover { color: #e9dcb8; border-color: #c8aa6e; }
+.poe2tf-mode-btn.is-active { background: #3a3024; color: #e9c97a; border-color: #c8aa6e; }
+.poe2tf-mode-btn--strict.is-active { background: #3a2f20; color: #e6a23c; border-color: #c8863e; }
+
+.poe2tf-opt {
+  font: inherit;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  background: none;
+  border: 0;
+  color: #cabf9d;
+  padding: 4px 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.poe2tf-opt:hover { background: rgba(200, 170, 110, 0.16); color: #f3e9c9; }
+.poe2tf-opt-tier { color: #c8aa6e; }
+.poe2tf-opt-min { opacity: 0.78; font-size: 0.92em; }
+
+/* ── info tooltip ────────────────────────────────────────────────────────── */
+.poe2tf-info {
+  position: relative;
+  margin-left: 1px;
+  color: #897f69;
+  cursor: help;
+  font-size: 0.95em;
+}
+.poe2tf-info:hover, .poe2tf-info:focus { color: #c8aa6e; outline: none; }
+
+.poe2tf-tip {
+  display: none;
+  position: absolute;
+  top: 130%;
+  right: 0;
+  z-index: 2147483647;
+  width: 250px;
+  background: #15120d;
+  border: 1px solid #46413a;
+  border-radius: 3px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
+  padding: 8px 10px;
+  white-space: normal;
+  color: #cabf9d;
+  font-size: 0.9em;
+  line-height: 1.45;
+  text-align: left;
+}
+.poe2tf-info:hover .poe2tf-tip,
+.poe2tf-info:focus .poe2tf-tip,
+.poe2tf-info:focus-within .poe2tf-tip { display: block; }
+
+.poe2tf-tip-title { color: #efe3c2; margin-bottom: 2px; }
+.poe2tf-tip-fam { color: #c8aa6e; font-size: 0.88em; margin-bottom: 4px; }
+.poe2tf-tip-row { margin: 2px 0; }
+.poe2tf-tip-row b { color: #e9c97a; }
+.poe2tf-tip-note {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #322d26;
+  color: #9a8f78;
+  font-size: 0.88em;
+}

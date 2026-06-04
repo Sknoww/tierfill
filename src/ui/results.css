@@ -1,0 +1,118 @@
+/*
+ * Result annotation styling (§9) — namespaced poe2tf-, additive-only (PLAN §9).
+ *   • tier badge prepended into each searched .item-mod--explicit line
+ *   • off-target (lucky lower-tier) badges take the amber accent (matches the
+ *     Strict-mode accent in tier-control.css)
+ *   • the floating on/off toggle mirrors the MIN/MAX box styling and carries a
+ *     status dot (green ● on / hollow ○ off)
+ */
+
+/* The badged mod line becomes the positioning host; the badge is pinned
+   absolutely (out of flow) so the centered stat text never shifts. */
+.poe2tf-host { position: relative; }
+
+.poe2tf-badge {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font: inherit;
+  font-size: 0.82em;
+  line-height: 1.2;
+  padding: 0 5px;
+  border: 1px solid #557a3e;     /* on-target: green frame */
+  border-radius: 3px;
+  background: #2b2823;
+  white-space: nowrap;
+  box-sizing: border-box;
+  min-width: 8.5em;             /* wider than the longest badge (e.g. "▼ ≈T11 ·high") so all match */
+  text-align: center;          /* center content so they line up cleanly */
+}
+.poe2tf-badge--off { border-color: #c8863e; }   /* below target: amber frame */
+
+/* verdict (glyph + tier): green = meets searched tier, amber = below it */
+.poe2tf-badge-v { color: #8fcf6b; }
+.poe2tf-badge--off .poe2tf-badge-v { color: #e6a23c; }
+
+/* roll quality: neutral gray — a footnote, not a verdict */
+.poe2tf-badge-q { color: #9a9382; }
+
+/* ── on/off toggle + ⓘ legend (default ON) ───────────────────────────────────
+   Wrapper holds the button + legend and is the positioned element.
+   Primary: docked inline in the search-controls row, beside "Clear" (.is-docked).
+   Fallback: fixed bottom-left if the Clear button can't be found. */
+.poe2tf-toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.poe2tf-toggle-wrap[hidden] { display: none; }
+.poe2tf-toggle-wrap.is-docked { align-self: center; margin: 0 8px 0 0; }
+.poe2tf-toggle-wrap:not(.is-docked) {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2147483640;
+}
+
+.poe2tf-results-toggle {
+  font: inherit;
+  font-size: 0.9em;
+  padding: 4px 10px;
+  border: 1px solid #46413a;
+  border-radius: 3px;
+  background: linear-gradient(#2b2823, #211e1a);
+  color: #97917f;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.poe2tf-results-toggle:hover { border-color: #c8aa6e; color: #e9dcb8; }
+.poe2tf-results-toggle.is-on { color: #e9c97a; border-color: #c8aa6e; background: #3a3024; }
+
+/* status dot — same glyph width on/off so toggling never resizes the button */
+.poe2tf-dot { color: #6f6857; margin-right: 2px; font-size: 0.85em; }
+.poe2tf-results-toggle.is-on .poe2tf-dot { color: #7ec45a; }   /* on: filled green */
+
+/* ── ⓘ legend (key for the badges) ──────────────────────────────────────────── */
+.poe2tf-legend {
+  position: relative;
+  cursor: help;
+  color: #897f69;
+  font-size: 1.05em;
+  line-height: 1;
+}
+.poe2tf-legend:hover, .poe2tf-legend:focus { color: #c8aa6e; outline: none; }
+.poe2tf-legend-tip {
+  display: none;
+  position: absolute;
+  top: 150%;
+  right: 0;
+  z-index: 2147483647;
+  width: 260px;
+  background: #15120d;
+  border: 1px solid #46413a;
+  border-radius: 3px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
+  padding: 9px 11px;
+  white-space: normal;
+  color: #cabf9d;
+  font-size: 0.86em;
+  line-height: 1.5;
+  text-align: left;
+  cursor: default;
+}
+.poe2tf-legend:hover .poe2tf-legend-tip,
+.poe2tf-legend:focus .poe2tf-legend-tip,
+.poe2tf-legend:focus-within .poe2tf-legend-tip { display: block; }
+.poe2tf-legend-title { color: #efe3c2; margin-bottom: 5px; }
+.poe2tf-legend-row { margin: 4px 0; }
+.poe2tf-lg-on { color: #8fcf6b; }
+.poe2tf-lg-off { color: #e6a23c; }
+.poe2tf-lg-q { color: #9a9382; }
+.poe2tf-legend-note {
+  margin-top: 7px;
+  padding-top: 6px;
+  border-top: 1px solid #322d26;
+  color: #9a8f78;
+}

@@ -1,0 +1,38 @@
+# --- Local-only development material (kept on disk, not published) ---
+docs/
+spike/
+
+# Icon working files — only the three sized PNGs are published
+icons/*
+!icons/icon-16.png
+!icons/icon-48.png
+!icons/icon-128.png
+
+# Source art dropped in the repo root (Midjourney renders, references)
+/Snow_*.png
+/exalted.jpg
+
+# --- Build inputs for the data pipeline ---
+# Only our hand-authored override layer is committed; the rest are large and/or
+# third-party and are re-obtainable (see README → "Rebuilding the data snapshot").
+tools/data-sources/*
+!tools/data-sources/ggg-overrides.json
+
+# --- Packaging / build artifacts ---
+dist/
+*.zip
+*.xpi
+*.crx
+*.pem
+
+# --- Dependencies (none today, but guard against future tooling) ---
+node_modules/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*~
+*.log
+*.tmp
+.vscode/
+.idea/

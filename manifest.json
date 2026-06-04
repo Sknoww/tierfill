@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "TierFill — PoE2 Trade Tier Filter",
+  "version": "1.0.0",
+  "description": "Filter PoE2 trade stat mods by tier instead of raw numbers. Adds a per-row tier picker that fills the computed MIN.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": { "id": "poe2-tier-filter@local" }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.pathofexile.com/trade2/*"],
+      "js": ["src/content/loader.js"],
+      "css": ["src/ui/tier-control.css", "src/ui/results.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/content/index.mjs",
+        "src/content/detect.mjs",
+        "src/content/store.mjs",
+        "src/content/results.mjs",
+        "src/content/detect-tier.mjs",
+        "src/ui/tier-control.mjs",
+        "src/tiers/compute.mjs",
+        "assets/data-snapshot.json"
+      ],
+      "matches": ["*://www.pathofexile.com/*"]
+    }
+  ]
+}
