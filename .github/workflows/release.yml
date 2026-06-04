@@ -1,0 +1,41 @@
+name: Release
+
+# Tag a version (e.g. `git tag v1.0.0 && git push origin v1.0.0`) to build the
+# store packages and attach them to a GitHub Release automatically.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify tag matches manifest version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          MAN="$(node -p "require('./manifest.json').version")"
+          echo "tag=$TAG  manifest=$MAN"
+          if [ "$TAG" != "$MAN" ]; then
+            echo "::error::Tag ($TAG) does not match manifest version ($MAN)"
+            exit 1
+          fi
+
+      - name: Build extension packages
+        run: node tools/package.mjs
+
+      - name: Attach packages to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/tierfill-firefox.zip
+            dist/tierfill-chrome.zip

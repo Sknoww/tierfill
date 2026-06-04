@@ -12,6 +12,9 @@ icons/*
 /Snow_*.png
 /exalted.jpg
 
+# Raw OS screen captures (kept local; only processed screenshots/ are committed)
+/Screenshot*.png
+
 # --- Build inputs for the data pipeline ---
 # Only our hand-authored override layer is committed; the rest are large and/or
 # third-party and are re-obtainable (see README → "Rebuilding the data snapshot").
