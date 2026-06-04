@@ -44,6 +44,19 @@ meets your target tier, amber when it's below:
 - **Stays out of the way** — only fills the native inputs and lets the site run the search; works
   alongside other trade extensions. It never automates searches or touches GGG's servers.
 
+## Scope & limitations
+
+TierFill works on **explicit** stat mods — the regular prefixes and suffixes that roll on
+weapons, armour, and jewellery. Rows it has tier data for get a picker; everything else is
+left untouched, including:
+
+- **Pseudo** mods (e.g. `+#% total Elemental Resistance`),
+- **implicit, rune, crafted, and enchant** mods,
+- mods on items outside that scope, such as **tablets** and other miscellaneous item types.
+
+When a row has no tier data, TierFill stays silent (no control) rather than guessing — so
+those rows just behave as the trade site's normal number boxes.
+
 ## Install
 
 - **Firefox:** _[Add-ons listing — coming soon]_
