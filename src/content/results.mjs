@@ -27,6 +27,16 @@ const NS = 'poe2tf';
 const DEBUG = false; // flip ON to log the per-match table while diagnosing.
 const squish = (s) => (s || '').replace(/\s+/g, ' ').trim();
 
+// Build an element with class + text via safe DOM APIs (no innerHTML). All of
+// our injected content is controlled (fixed glyphs, numbers, our own snapshot
+// text), but we still avoid innerHTML so nothing can ever be parsed as markup.
+function mk(tag, className, text) {
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
 let enabled = true; // default ON — badges carry the verdict, so show them by default
 let toggleEl = null;  // the on/off button
 let wrapEl = null;    // container holding the button + the ⓘ legend (docked together)
@@ -46,8 +56,8 @@ function badgeLine(line, tier, quality, isOff) {
   const b = document.createElement('span');
   b.className = `${NS}-badge${isOff ? ` ${NS}-badge--off` : ''}`;
   const glyph = isOff ? '▼' : '✓';
-  const q = quality ? `<span class="${NS}-badge-q"> ·${quality}</span>` : '';
-  b.innerHTML = `<span class="${NS}-badge-v">${glyph} ≈T${tier}</span>${q}`;
+  b.appendChild(mk('span', `${NS}-badge-v`, `${glyph} ≈T${tier}`));
+  if (quality) b.appendChild(mk('span', `${NS}-badge-q`, ` ·${quality}`));
   b.title = isOff
     ? `Below your target tier — GGG tier ${tier}${quality ? ` (a ${quality} roll for its tier` : ''}` +
       (quality === 'high' ? ', which is how it slipped past your filter).' : quality ? ').' : '.')
@@ -125,8 +135,9 @@ function updateToggleLabel() {
   // Constant-width label with an explicit status dot: filled green ● when on,
   // hollow gray ○ when off. The dot is the same width either way, so toggling
   // never resizes the button or wraps the search-controls row.
-  const dot = `<span class="${NS}-dot">${enabled ? '●' : '○'}</span>`;
-  toggleEl.innerHTML = `${dot} ≈ Tier badges`;
+  toggleEl.textContent = '';
+  toggleEl.appendChild(mk('span', `${NS}-dot`, enabled ? '●' : '○'));
+  toggleEl.appendChild(document.createTextNode(' ≈ Tier badges'));
   toggleEl.classList.toggle('is-on', enabled);
 }
 
@@ -149,11 +160,17 @@ function buildLegend() {
   info.textContent = 'ⓘ';
   const tip = document.createElement('span');
   tip.className = `${NS}-legend-tip`;
-  tip.innerHTML =
-    `<div class="${NS}-legend-title">Result tier badges</div>` +
-    `<div class="${NS}-legend-row"><b class="${NS}-lg-on">✓ ≈T1</b> &mdash; meets the tier you searched (or better)</div>` +
-    `<div class="${NS}-legend-row"><b class="${NS}-lg-off">▼ ≈T2</b> &mdash; below it: a lucky lower-tier roll</div>` +
-    `<div class="${NS}-legend-row"><span class="${NS}-lg-q">·low ·mid ·high</span> &mdash; where the roll sits within its own tier (a high lower-tier roll is how it slipped past the filter)</div>`;
+  tip.appendChild(mk('div', `${NS}-legend-title`, 'Result tier badges'));
+  const row = (boldEl, rest) => {
+    const r = mk('div', `${NS}-legend-row`);
+    r.appendChild(boldEl);
+    r.appendChild(document.createTextNode(rest));
+    tip.appendChild(r);
+  };
+  row(mk('b', `${NS}-lg-on`, '✓ ≈T1'), ' — meets the tier you searched (or better)');
+  row(mk('b', `${NS}-lg-off`, '▼ ≈T2'), ' — below it: a lucky lower-tier roll');
+  row(mk('span', `${NS}-lg-q`, '·low ·mid ·high'),
+    ' — where the roll sits within its own tier (a high lower-tier roll is how it slipped past the filter)');
   info.appendChild(tip);
   return info;
 }

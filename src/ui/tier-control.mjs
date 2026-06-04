@@ -42,6 +42,16 @@ function setNativeValue(input, value) {
 const fmtMin = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
 const fmtRanges = (ranges) => ranges.map((p) => `${p[0]}–${p[1]}`).join('  /  ');
 
+// Build an element with class + text via safe DOM APIs (no innerHTML). Our
+// content is all controlled (numbers, fixed glyphs, our own snapshot text), but
+// we avoid innerHTML so nothing can ever be parsed as markup.
+function mk(tag, className, text) {
+  const e = document.createElement(tag);
+  if (className) e.className = className;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
 // Short toggle label for a family. Weapon ladders collapse to 1H/2H; everything else
 // (caster gear, armour bases, …) takes the first item-type of its coverage, with an
 // ellipsis when the family spans more than one type. The full coverage shows on hover
@@ -100,12 +110,9 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'poe2tf-dd-btn';
-  btn.innerHTML =
-    '<span class="poe2tf-approx">≈</span>' +
-    '<span class="poe2tf-label">TIER</span>' +
-    '<span class="poe2tf-caret">▾</span>';
+  const label = mk('span', 'poe2tf-label', 'TIER');
+  btn.append(mk('span', 'poe2tf-approx', '≈'), label, mk('span', 'poe2tf-caret', '▾'));
   inner.appendChild(btn);
-  const label = btn.querySelector('.poe2tf-label');
 
   // ── dropdown panel ──────────────────────────────────────────────────────────
   const panel = document.createElement('div');
@@ -129,7 +136,7 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
     // Strict tightens MIN above every lower tier — shift the collapsed control
     // to the amber accent so the active mode is visible without opening the panel.
     root.classList.toggle('is-strict', mode === 'strict');
-    panel.innerHTML = '';
+    panel.replaceChildren();
 
     // ── threshold-mode bar (header of the panel) ────────────────────────────
     const modeBar = document.createElement('div');
@@ -154,9 +161,10 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
       const o = document.createElement('button');
       o.type = 'button';
       o.className = 'poe2tf-opt';
-      o.innerHTML =
-        `<span class="poe2tf-opt-tier">≈ T${t.tier}</span>` +
-        `<span class="poe2tf-opt-min">min ${fmtMin(t.min)}</span>`;
+      o.append(
+        mk('span', 'poe2tf-opt-tier', `≈ T${t.tier}`),
+        mk('span', 'poe2tf-opt-min', `min ${fmtMin(t.min)}`),
+      );
       o.addEventListener('click', () => select(t));
       panel.appendChild(o);
     });
@@ -189,24 +197,30 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
   }
 
   function updateTip(t) {
-    const famLine = current.family
-      ? `<div class="poe2tf-tip-fam">${current.family}</div>`
-      : '';
     const modeLabel = (MODES.find((m) => m.key === mode) || MODES[0]).label;
-    const modeLine = `<div class="poe2tf-tip-row">mode: <b>${modeLabel}</b></div>`;
-    const detail = t
-      ? `<div class="poe2tf-tip-row"><b>≈ T${t.tier}</b> &middot; fills MIN = ${fmtMin(t.min)}</div>` +
-        `<div class="poe2tf-tip-row">rolls ${fmtRanges(t.ranges)}</div>`
-      : '<div class="poe2tf-tip-row">Pick a tier to fill MIN.</div>';
     const note =
       mode === 'strict'
         ? 'Strict — MIN is raised above every lower tier’s top average, so ' +
           'lucky lower-tier rolls are excluded (may also drop a low-rolled T).'
         : '≈ approximate — adjacent tiers overlap, so a lucky lower-tier roll ' +
           'can slip past the filter. Switch to Strict to exclude them.';
-    tip.innerHTML =
-      `<div class="poe2tf-tip-title">${current.display}</div>${famLine}${modeLine}${detail}` +
-      `<div class="poe2tf-tip-note">${note}</div>`;
+    tip.textContent = '';
+    tip.appendChild(mk('div', 'poe2tf-tip-title', current.display));
+    if (current.family) tip.appendChild(mk('div', 'poe2tf-tip-fam', current.family));
+    const modeRow = mk('div', 'poe2tf-tip-row');
+    modeRow.appendChild(document.createTextNode('mode: '));
+    modeRow.appendChild(mk('b', null, modeLabel));
+    tip.appendChild(modeRow);
+    if (t) {
+      const d = mk('div', 'poe2tf-tip-row');
+      d.appendChild(mk('b', null, `≈ T${t.tier}`));
+      d.appendChild(document.createTextNode(` · fills MIN = ${fmtMin(t.min)}`));
+      tip.appendChild(d);
+      tip.appendChild(mk('div', 'poe2tf-tip-row', `rolls ${fmtRanges(t.ranges)}`));
+    } else {
+      tip.appendChild(mk('div', 'poe2tf-tip-row', 'Pick a tier to fill MIN.'));
+    }
+    tip.appendChild(mk('div', 'poe2tf-tip-note', note));
   }
 
   // ── open / close (fixed-position panel so the row never clips it) ──────────
