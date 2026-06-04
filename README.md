@@ -18,6 +18,18 @@ and for flat damage mods (`Adds X to Y`) you have to do the averaging math yours
 **TierFill adds a small tier picker to each stat-filter row.** Pick a mod the normal way,
 choose a tier (e.g. `T1`), and it fills the correct `min` value for you.
 
+## Screenshots
+
+Pick a tier and TierFill fills the trade MIN for you (the pseudo row has no control —
+data is explicit-only):
+
+![TierFill tier pickers filling the MIN on stat-filter rows](screenshots/tier-control.png)
+
+Every searched mod on each result is badged with its tier and roll quality — green when it
+meets your target tier, amber when it's below:
+
+![TierFill tier badges on result mods](screenshots/result-badges.png)
+
 ## Features
 
 - **Per-row tier picker** — a compact `≈ TIER ▾` control appears left of the MIN box on stat
