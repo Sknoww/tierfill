@@ -27,13 +27,22 @@ const TYPE_TOKENS = new Set([
   'fractured', 'scourge', 'veiled', 'desecrated', 'sanctum', 'corrupted',
 ]);
 
+// Tokens whose rows we attach a tier control to. Desecrated and fractured mods
+// reuse the EXPLICIT tier ladder for the same stat: they share the explicit
+// stat id and their GGG tier bands match ours 1:1 (verified — e.g. desecrated
+// "P4 [6—10 to 12—17]" and fractured "P1 [12—19 to 22—32]" equal our explicit
+// T4 / T1 bands for "Adds # to # Physical Damage to Attacks"; every desecrated &
+// fractured stat text also exists as an explicit). Other tokens (implicit/pseudo/
+// rune/crafted/…) carry different — or no — tiers and stay gated out.
+const TIERED_TOKENS = new Set(['explicit', 'desecrated', 'fractured']);
+
 let INDEX = null; // normalized display text → [stat entries] (one per family)
 let idCounter = 0; // stable per-row id for the §9 selection store
 
 const squish = (s) => (s || '').replace(/\s+/g, ' ').trim();
 
 // Split a row title into its leading type token (explicit/implicit/pseudo/…) and the
-// stat template text. The token gates which rows we touch (our data is explicit-only).
+// stat template text. The token gates which rows we touch (see TIERED_TOKENS).
 function stripTypeToken(title) {
   const t = squish(title);
   const sp = t.indexOf(' ');
@@ -79,11 +88,15 @@ function processRow(row) {
   if (row.dataset.poe2tfId) clearSelection(row.dataset.poe2tfId);
   row.dataset.poe2tfTpl = cacheKey;
 
-  // explicit-only data: never attach to implicit/pseudo/rune/crafted/… rows (they'd
-  // match by text but carry different — or no — tiers). token===null = no recognized
-  // prefix, treated as best-effort explicit.
-  if (token && token !== 'explicit') return;
+  // Attach only to tiered tokens (explicit + desecrated + fractured, all of which
+  // share the explicit ladder — see TIERED_TOKENS). Never attach to implicit/pseudo/
+  // rune/crafted/… rows: they'd match by text but carry different — or no — tiers.
+  // token===null = no recognized prefix, treated as best-effort explicit.
+  if (token && !TIERED_TOKENS.has(token)) return;
 
+  // Look up by stat text alone. A desecrated/fractured row's text resolves to the
+  // shared explicit family entry (the ladder is identical); a desecrated/fractured-
+  // only "special" mod with no explicit twin simply misses and gets no control.
   const families = INDEX.get(template);
   if (!families || !families.length) return; // no tier data → no control (silent)
 

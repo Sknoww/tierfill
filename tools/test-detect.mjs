@@ -78,5 +78,24 @@ check('single-value parseGggTier → S3', parseGggTier('S3 [41—53] +47 to maxi
 check('single-value parseGggRanges → [[41,53]]', parseGggRanges('S3 [41—53] +47 to maximum Life'), [[41, 53]]);
 check('single-value 47 in [41,53] → mid', rollQuality([47], [[41, 53]]), 'mid');
 
+// Desecrated mod line — carries GGG's tier bracket exactly like an explicit one,
+// so the class-agnostic parsers handle it unchanged (the §9 fix only widens the
+// DOM selector). Exact textContent captured from a desecrated result line.
+const DESECRATED = 'P4 [6—10 to 12—17]Adds 6 to 16 Physical Damage to AttacksAnnealed (≥54)';
+check('desecrated parseGggTier → P4', parseGggTier(DESECRATED), { affix: 'P', tier: 4 });
+check('desecrated parseGggRanges → [[6,10],[12,17]]', parseGggRanges(DESECRATED), [[6, 10], [12, 17]]);
+const desRolls = parseRolls(templateToRegex('Adds # to # Physical Damage to Attacks').exec(DESECRATED));
+check('desecrated rolls extracted (trailing suffix ignored) → [6,16]', desRolls, [6, 16]);
+check('desecrated 6/16 in [[6,10],[12,17]] → mid', rollQuality(desRolls, [[6, 10], [12, 17]]), 'mid');
+
+// Fractured mod line — same story as desecrated: shares the explicit stat id +
+// ladder, carries GGG's tier bracket, parsed unchanged. Captured textContent.
+const FRACTURED = 'P1 [12—19 to 22—32]Adds 16 to 25 Physical Damage to AttacksFlaring (≥75)';
+check('fractured parseGggTier → P1', parseGggTier(FRACTURED), { affix: 'P', tier: 1 });
+check('fractured parseGggRanges → [[12,19],[22,32]]', parseGggRanges(FRACTURED), [[12, 19], [22, 32]]);
+const fracRolls = parseRolls(templateToRegex('Adds # to # Physical Damage to Attacks').exec(FRACTURED));
+check('fractured rolls extracted (trailing suffix ignored) → [16,25]', fracRolls, [16, 25]);
+check('fractured 16/25 in [[12,19],[22,32]] → mid', rollQuality(fracRolls, [[12, 19], [22, 32]]), 'mid');
+
 console.log(`\n${fail === 0 ? '✅ all §9 detection tests passed' : `❌ ${fail} failed`} (${pass} passed)`);
 process.exit(fail === 0 ? 0 : 1);

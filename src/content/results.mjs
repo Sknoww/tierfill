@@ -13,9 +13,12 @@
  *     appears once results + at least one picked tier are present. The badges
  *     carry the verdict per line, so no row-level dimming is needed.
  *
- * Live DOM (FINDINGS §12): explicit mod line = `div.item-mod--explicit`
- * (built-in explicit-only gate, matches our explicit-only data); one listing =
- * `div.row` under `.results`/`.resultset`. Additive-only, namespaced `poe2tf-`,
+ * Live DOM (FINDINGS §12): explicit mod line = `div.item-mod--explicit`;
+ * desecrated = `div.item-mod--desecrated`, fractured = `div.item-mod--fractured`.
+ * All three carry the same GGG tier-bracket shape and share the explicit stat
+ * id + tier ladder, so the GGG-label parsers handle them unchanged — we just
+ * widen the selector. One listing = `div.row` under `.results`/`.resultset`.
+ * Additive-only, namespaced `poe2tf-`,
  * idempotent (re-applies on every results re-render). Coexists with TFT /
  * better-trading result decoration (PLAN §9).
  */
@@ -85,11 +88,11 @@ function annotate() {
     console.log(`[poe2tf §9] enabled. selections:`, compiled.map((s) =>
       `T${s.tier} "${s.display}" /${s.re.source}/`));
     console.log(`[poe2tf §9] rows matched by .results .row/.resultset .row = ${rows.length};` +
-      ` .item-mod--explicit page-wide = ${document.querySelectorAll('.item-mod--explicit').length}`);
+      ` .item-mod--explicit/--desecrated/--fractured page-wide = ${document.querySelectorAll('.item-mod--explicit, .item-mod--desecrated, .item-mod--fractured').length}`);
   }
 
   rows.forEach((row, ri) => {
-    const lines = row.querySelectorAll('.item-mod--explicit');
+    const lines = row.querySelectorAll('.item-mod--explicit, .item-mod--desecrated, .item-mod--fractured');
     lines.forEach((line) => {
       const text = squish(line.textContent);
       for (const s of compiled) {

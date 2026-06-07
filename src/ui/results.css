@@ -1,6 +1,6 @@
 /*
  * Result annotation styling (§9) — namespaced poe2tf-, additive-only (PLAN §9).
- *   • tier badge prepended into each searched .item-mod--explicit line
+ *   • tier badge prepended into each searched .item-mod--explicit/--desecrated/--fractured line
  *   • off-target (lucky lower-tier) badges take the amber accent (matches the
  *     Strict-mode accent in tier-control.css)
  *   • the floating on/off toggle mirrors the MIN/MAX box styling and carries a
