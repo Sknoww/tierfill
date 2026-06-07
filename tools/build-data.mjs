@@ -8,6 +8,12 @@
  * Inputs (tools/data-sources/):
  *   • enhancer-mods2-data.json   REQUIRED. PoE2DB-derived, pre-tiered, by stat text.
  *       Shape: { prefix|suffix|implicit: { "<stat text with #>": [ {level, values, types}... ] } }
+ *   • poe2db-extra-mods.json     OPTIONAL. Same prefix/suffix shape, holding ladders the
+ *       enhancer source omits (it predates some mechanics). Scraped from PoE2DB by
+ *       tools/fetch-poe2db-mods.mjs and MERGED into the enhancer buckets here, so the GGG
+ *       join / family-split / override machinery treats them identically. Kept separate
+ *       from the enhancer file so a per-patch `refresh.mjs` (which only rewrites the
+ *       enhancer file) never clobbers these hand-targeted additions.
  *   • ggg-trade2-stats.json      OPTIONAL (one-time browser capture of
  *       https://www.pathofexile.com/api/trade2/data/stats). Authoritative source of the
  *       EXACT display text the trade site renders + each mod's stat_id. Needed so injected
@@ -165,9 +171,33 @@ async function loadOverrides() {
   return map;
 }
 
+// ── extra mods (optional) ─────────────────────────────────────────────────────
+// Merge tools/data-sources/poe2db-extra-mods.json (PoE2DB-scraped ladders the enhancer
+// source lacks) into the enhancer prefix/suffix buckets. A new stat text is added; a
+// colliding one has its tier elements appended (so the family-split still sees them).
+async function mergeExtraMods(enhancer) {
+  let raw;
+  try {
+    raw = await readFile(join(SRC, 'poe2db-extra-mods.json'), 'utf8');
+  } catch {
+    return 0; // none present
+  }
+  const extra = JSON.parse(raw);
+  let added = 0;
+  for (const bucket of ['prefix', 'suffix']) {
+    for (const [text, els] of Object.entries(extra[bucket] || {})) {
+      if (!enhancer[bucket]) enhancer[bucket] = {};
+      enhancer[bucket][text] = (enhancer[bucket][text] || []).concat(els);
+      added += 1;
+    }
+  }
+  return added;
+}
+
 // ── build ─────────────────────────────────────────────────────────────────────
 async function main() {
   const enhancer = JSON.parse(await readFile(join(SRC, 'enhancer-mods2-data.json'), 'utf8'));
+  const extraMods = await mergeExtraMods(enhancer);
   const ggg = await loadGggLookup();
   const overrides = await loadOverrides();
   const overridden = [];
@@ -310,6 +340,7 @@ async function main() {
   const c = report.counts;
   console.log('build-data report');
   console.log('─'.repeat(60));
+  console.log(`extra mods:       ${extraMods ? `${extraMods} stat text(s) merged from poe2db-extra-mods.json` : 'none (tools/data-sources/poe2db-extra-mods.json absent)'}`);
   console.log(`GGG capture:      ${ggg ? `present (${ggg.size} explicit texts)` : 'MISSING — run the one-time browser capture'}`);
   console.log(`GGG overrides:    ${overrides ? `${overrides.size} stat(s); applied to ${overridden.length} ladder(s)` : 'none (tools/data-sources/ggg-overrides.json absent)'}`);
   if (overridden.length) for (const o of overridden) console.log(`  ↪ ${o}`);

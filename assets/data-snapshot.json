@@ -3106,6 +3106,83 @@
         }
       ]
     },
+    "gain_deflection_rating_equal_to_x_of_evasion_rating": {
+      "display": "Gain Deflection Rating equal to #% of Evasion Rating",
+      "tradeStatId": "explicit.stat_3033371881",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Shield / Gloves / Boots +2",
+      "types": [
+        "shield",
+        "gloves",
+        "boots",
+        "helmet",
+        "body-armour"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              24,
+              26
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 66,
+          "ranges": [
+            [
+              21,
+              23
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 48,
+          "ranges": [
+            [
+              18,
+              20
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 36,
+          "ranges": [
+            [
+              15,
+              17
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 16,
+          "ranges": [
+            [
+              12,
+              14
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 1,
+          "ranges": [
+            [
+              8,
+              11
+            ]
+          ]
+        }
+      ]
+    },
     "gain_x_guard_during_effect": {
       "display": "gain # guard during effect",
       "tradeStatId": null,
