@@ -52,15 +52,31 @@ function mk(tag, className, text) {
   return e;
 }
 
-// Short toggle label for a family. Weapon ladders collapse to 1H/2H; everything else
-// (caster gear, armour bases, …) takes the first item-type of its coverage, with an
-// ellipsis when the family spans more than one type. The full coverage shows on hover
-// (button title = f.family). Handles both the generator's labels ("1-handed", "Staff",
-// "Wand / Shield / Focus +2") and the older hand-snapshot ones ("1-handed + bow/crossbow").
-function familyLabel(f) {
+// True when every family in the set carries a distinct affix (e.g. one prefix +
+// one suffix). Only then is the affix a meaningful disambiguator — otherwise two
+// "prefix" ladders labelled "Prefix"/"Prefix" would be useless.
+function affixesDistinct(families) {
+  const affixes = families.map((f) => f.affix).filter(Boolean);
+  return affixes.length === families.length && new Set(affixes).size === affixes.length;
+}
+
+// Short toggle label for a family. Priority:
+//   1. weapon ladders collapse to 1H/2H;
+//   2. when the toggled families differ only by affix (e.g. the prefix vs suffix
+//      "increased Rarity" ladders, which share every item type), label by affix —
+//      "Prefix"/"Suffix" — since the item type can't tell them apart;
+//   3. otherwise take the first item-type of the coverage, with an ellipsis when the
+//      family spans more than one type.
+// The full coverage always shows on hover (button title = f.family). Handles both the
+// generator's labels ("1-handed", "Staff", "Wand / Shield / Focus +2") and the older
+// hand-snapshot ones ("1-handed + bow/crossbow").
+function familyLabel(f, families) {
   const fam = (f.family || '').toLowerCase();
   if (/(^|\W)(2-hand|two-hand|2h)\b/.test(fam)) return '2H';
   if (/(^|\W)(1-hand|one-hand|1h)\b/.test(fam)) return '1H';
+  if (f.affix && families && families.length > 1 && affixesDistinct(families)) {
+    return f.affix.charAt(0).toUpperCase() + f.affix.slice(1);
+  }
   const t = (f.types && f.types[0]) || fam || '?';
   const word = String(t).split(/[-\s]/)[0];
   const cap = word.charAt(0).toUpperCase() + word.slice(1);
@@ -85,25 +101,31 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
   inner.className = 'poe2tf-inner';
   root.appendChild(inner);
 
-  // ── family toggle (only when ambiguous) ──────────────────────────────────
-  if (ambiguous && families.length > 1) {
-    const fam = document.createElement('span');
-    fam.className = 'poe2tf-fam';
+  // ── family toggle ─────────────────────────────────────────────────────────
+  // Built whenever there's more than one ladder, but only shown while `ambiguous`
+  // (the page couldn't disambiguate). Keeping it built — just hidden — lets the
+  // live re-resolve (index.mjs) flip it on/off without rebuilding the control.
+  let famEl = null;
+  if (families.length > 1) {
+    famEl = document.createElement('span');
+    famEl.className = 'poe2tf-fam';
     families.forEach((f) => {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'poe2tf-fam-btn';
-      b.textContent = familyLabel(f);
+      b._famRef = f; // map button → family for active-state updates
+      b.textContent = familyLabel(f, families);
       b.title = f.family || '';
       if (f === current) b.classList.add('is-active');
       b.addEventListener('click', () => {
         current = f;
-        fam.querySelectorAll('.poe2tf-fam-btn').forEach((x) => x.classList.toggle('is-active', x === b));
+        famEl.querySelectorAll('.poe2tf-fam-btn').forEach((x) => x.classList.toggle('is-active', x === b));
         rebuild();
       });
-      fam.appendChild(b);
+      famEl.appendChild(b);
     });
-    inner.appendChild(fam);
+    famEl.hidden = !ambiguous;
+    inner.appendChild(famEl);
   }
 
   // ── dropdown button ───────────────────────────────────────────────────────
@@ -250,6 +272,21 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
   }
   btn.addEventListener('click', () => (panel.hidden ? open() : close()));
 
+  // ── live re-resolve (index.mjs) ───────────────────────────────────────────
+  // Called when the page's item-type context changes without the stat itself
+  // changing (e.g. the user picks a category after adding the stat filter). Swaps
+  // the active ladder + toggle visibility in place, preserving the chosen tier:
+  // rebuild() re-fills MIN with the new family's value for the same tier.
+  function update(newFamily, newAmbiguous) {
+    current = newFamily || current;
+    ambiguous = newAmbiguous;
+    if (famEl) {
+      famEl.hidden = !(ambiguous && families.length > 1);
+      famEl.querySelectorAll('.poe2tf-fam-btn').forEach((b) => b.classList.toggle('is-active', b._famRef === current));
+    }
+    rebuild();
+  }
+
   rebuild();
-  return root;
+  return { root, update };
 }

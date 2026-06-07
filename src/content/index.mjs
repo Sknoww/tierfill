@@ -38,6 +38,10 @@ const TIERED_TOKENS = new Set(['explicit', 'desecrated', 'fractured']);
 
 let INDEX = null; // normalized display text → [stat entries] (one per family)
 let idCounter = 0; // stable per-row id for the §9 selection store
+// row → { update, families, family, ambiguous } for live family re-resolve. Lets a
+// later item-type change swap the control's ladder in place without destroying it
+// (and without clobbering the user's chosen tier). WeakMap so removed rows GC away.
+const rowState = new WeakMap();
 
 const squish = (s) => (s || '').replace(/\s+/g, ' ').trim();
 
@@ -80,12 +84,27 @@ function processRow(row) {
   const { token, text } = stripTypeToken(titleEl.textContent);
   const template = text.toLowerCase();
   const cacheKey = `${token || ''}::${template}`;
-  if (row.dataset.poe2tfTpl === cacheKey) return; // unchanged → leave it (and the user's selection) alone
+
+  // Stat unchanged → don't rebuild the control (keeps the user's chosen tier), but
+  // DO re-resolve the family: the item-type context (Type Filters / search bar) can
+  // change after the control was created, and the picked ladder must follow it.
+  if (row.dataset.poe2tfTpl === cacheKey) {
+    const st = rowState.get(row);
+    if (!st) return; // row has no control (non-tiered / no data) — nothing to track
+    const { family, ambiguous } = resolveFamily(st.families);
+    if (family && (family !== st.family || ambiguous !== st.ambiguous)) {
+      st.family = family;
+      st.ambiguous = ambiguous;
+      st.update(family, ambiguous);
+    }
+    return;
+  }
 
   // template/type changed (or first sighting) → reset any prior control + its
   // published selection (the old tier no longer describes this row's mod).
   row.querySelector(':scope .poe2tf-control')?.remove();
   if (row.dataset.poe2tfId) clearSelection(row.dataset.poe2tfId);
+  rowState.delete(row);
   row.dataset.poe2tfTpl = cacheKey;
 
   // Attach only to tiered tokens (explicit + desecrated + fractured, all of which
@@ -112,7 +131,8 @@ function processRow(row) {
     // publish the pick to the §9 store so the results annotator can detect tiers.
     onChange: (entry, tier) => setSelection(id, { display: entry.display, entry, tier }),
   });
-  minInput.parentNode.insertBefore(control, minInput); // left of MIN
+  minInput.parentNode.insertBefore(control.root, minInput); // left of MIN
+  rowState.set(row, { update: control.update, families, family, ambiguous });
 }
 
 function scan() {
@@ -142,9 +162,15 @@ async function init() {
   INDEX = buildIndex(await res.json());
   scan();
   initResults(); // §9 result annotator (own observer; default OFF until toggled)
+  // Watch childList for added/removed rows AND a narrow set of attributes: the item
+  // type is committed via a `modified` class + placeholder/value change (FINDINGS §4),
+  // which a childList-only observer misses — so inference would never re-run after the
+  // user picks a category/base. The 150ms debounce keeps the extra churn cheap.
   new MutationObserver(scheduleScan).observe(document.documentElement, {
     childList: true,
     subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'placeholder', 'value'],
   });
 }
 
