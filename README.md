@@ -47,8 +47,9 @@ meets your target tier, amber when it's below:
 ## Scope & limitations
 
 TierFill works on **explicit** stat mods — the regular prefixes and suffixes that roll on
-weapons, armour, and jewellery. Rows it has tier data for get a picker; everything else is
-left untouched, including:
+weapons, armour, jewellery, and **life & mana flasks** (recovery, charges, and the rest of
+the flask mod pool). Rows it has tier data for get a picker; everything else is left
+untouched, including:
 
 - **Pseudo** mods (e.g. `+#% total Elemental Resistance`),
 - **implicit, rune, crafted, and enchant** mods,

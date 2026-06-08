@@ -80,7 +80,16 @@ function annotate() {
 
   const sels = getSelections().filter((s) => s.tier != null && s.entry);
   if (!sels.length) { if (DEBUG) console.log('[poe2tf §9] no selections with a tier'); return; }
-  const compiled = sels.map((s) => ({ ...s, re: templateToRegex(s.display) }));
+  // Sign-flipped (inverted) mods print the OPPOSITE-polarity wording on results — e.g.
+  // "28% reduced Charges per use" for the stat whose canonical text is "increased
+  // Charges per use" — so we match against that wording. The GGG tier bracket (e.g.
+  // "S2 [-29—-27]") stays authoritative for the verdict; only the regex and the roll's
+  // sign need adjusting. Non-inverted selections are byte-for-byte unchanged.
+  const matchDisplay = (s) =>
+    s.entry && s.entry.inverted
+      ? s.display.replace(/\bincreased\b/gi, 'reduced').replace(/\bmore\b/gi, 'less')
+      : s.display;
+  const compiled = sels.map((s) => ({ ...s, re: templateToRegex(matchDisplay(s)) }));
 
   const rows = document.querySelectorAll('.results .row, .resultset .row');
   const diag = [];
@@ -101,7 +110,9 @@ function annotate() {
         // GGG's own tier label + range, read straight off the result line.
         const ggg = parseGggTier(text);
         const ranges = parseGggRanges(text);
-        const rolls = parseRolls(m);
+        // Inverted mods print a positive roll ("28% reduced") against a negative band
+        // ([-29,-27]); flip the roll's sign so quality is graded on the same axis.
+        const rolls = s.entry && s.entry.inverted ? parseRolls(m).map((v) => -v) : parseRolls(m);
         const quality = ggg && ranges ? rollQuality(rolls, ranges) : null;
         if (DEBUG) diag.push({ row: ri, target: `T${s.tier}`, gggTier: ggg ? `${ggg.affix}${ggg.tier}` : 'NONE', quality: quality || '', rolls: rolls.join('/'), text: text.slice(0, 44) });
         if (!ggg) continue; // no GGG tier label on this line → can't annotate accurately

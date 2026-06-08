@@ -43,6 +43,17 @@ const single = { isAveraged: false, tiers: [{ tier: 1, ranges: [[5, 8]] }] };
 check('single T1 inclusive', computeFilter(single, 1), { min: 5 });
 check('single T1 exact-band', computeFilter(single, 1, 'exact-band'), { min: 5, max: 8 });
 
+// Sign-flipped (inverted) mod: fills MAX on the negative axis. "reduced Charges per use"
+// stored as the trade stat "increased Charges per use" with negated ranges.
+const inverted = {
+  inverted: true, isAveraged: false,
+  tiers: [{ tier: 1, ranges: [[-32, -30]] }, { tier: 2, ranges: [[-29, -27]] }],
+};
+check('inverted T1 inclusive → max=ceil', computeFilter(inverted, 1), { max: -30 });
+check('inverted T2 inclusive → max=ceil (incl. better T1)', computeFilter(inverted, 2), { max: -27 });
+check('inverted T1 exact-band', computeFilter(inverted, 1, 'exact-band'), { min: -32, max: -30 });
+check('inverted has no min key (fills MAX only)', computeFilter(inverted, 1).min, undefined);
+
 // Average-model sanity: live item "Adds 14 to 26" → average 20. A tier whose inclusive
 // floor ≤ 20 must include it; > 20 must exclude it. (PLAN §4: min 19 shows, 21 hides.)
 const avg = (lo, hi) => (lo + hi) / 2;
@@ -57,27 +68,34 @@ console.log(`  version: ${snap.version}`);
 // and ordering is monotonic (better tier ⇒ higher-or-equal min).
 for (const [key, stat] of Object.entries(snap.stats)) {
   const all = computeAllTiers(stat, 'inclusive');
+  // Inverted (sign-flipped) stats fill MAX, not MIN, and run on a mirrored axis; the
+  // MIN-based invariants below don't apply, so check their own monotonicity on `max`.
+  const fillKey = stat.inverted ? 'max' : 'min';
   let monotonic = true;
-  for (const t of stat.tiers) {
-    const strict = computeFilter(stat, t.tier, 'strict').min;
-    const floor = computeFilter(stat, t.tier, 'inclusive').min;
-    if (strict < floor) { check(`${key} T${t.tier} strict >= floor`, strict, `>= ${floor}`); }
+  if (!stat.inverted) {
+    for (const t of stat.tiers) {
+      const strict = computeFilter(stat, t.tier, 'strict').min;
+      const floor = computeFilter(stat, t.tier, 'inclusive').min;
+      if (strict < floor) { check(`${key} T${t.tier} strict >= floor`, strict, `>= ${floor}`); }
+    }
   }
-  for (let i = 1; i < all.length; i++) if (all[i - 1].min < all[i].min) monotonic = false;
+  for (let i = 1; i < all.length; i++) if (all[i - 1][fillKey] < all[i][fillKey]) monotonic = false;
   // NOTE: non-monotonic mins are a WARNING, not a failure — some real PoE2 affixes roll
   // a higher value at a LOWER ilvl tier (e.g. sceptre "#% increased Spirit": lvl-1 = 30–36
   // > lvl-11 = 27–32). Forcing monotonicity would corrupt faithful source data.
-  if (!monotonic) console.log(`  ⚠ ${key}: inclusive mins non-monotonic by tier (legit if low-ilvl rolls higher) → ${all.map((t) => t.min).join(',')}`);
+  if (!monotonic) console.log(`  ⚠ ${key}: inclusive ${fillKey}s non-monotonic by tier (legit if low-ilvl rolls higher) → ${all.map((t) => t[fillKey]).join(',')}`);
 }
 
 for (const [key, stat] of Object.entries(snap.stats)) {
   const flag = stat._unverified ? ' ⚠ UNVERIFIED' : '';
-  console.log(`\n  [${key}] ${stat.display}  (${stat.tradeStatId}, ${stat.affix}, averaged=${stat.isAveraged})${flag}`);
+  const inv = stat.inverted ? ' ⮃ INVERTED (fills MAX)' : '';
+  console.log(`\n  [${key}] ${stat.display}  (${stat.tradeStatId}, ${stat.affix}, averaged=${stat.isAveraged})${flag}${inv}`);
+  const box = stat.inverted ? 'max' : 'min';
   for (const t of computeAllTiers(stat, 'inclusive')) {
     const eb = computeFilter(stat, t.tier, 'exact-band');
     const st = computeFilter(stat, t.tier, 'strict');
     console.log(`    T${t.tier} ${t.name ?? ''} ilvl${t.ilvl ?? '?'} ranges=${JSON.stringify(t.ranges)}`);
-    console.log(`        inclusive min=${t.min} · exact-band [${eb.min}, ${eb.max}] · strict min=${st.min}`);
+    console.log(`        inclusive ${box}=${t[box]} · exact-band [${eb.min}, ${eb.max}] · strict ${box}=${st[box]}`);
   }
 }
 

@@ -128,7 +128,19 @@ const ALIAS = {
   'allies in your presence deal # to # additional attack lightning damage':
     'Allies in your Presence deal # to # added Attack Lightning Damage',
   '#% increased duration': '#% increased Skill Effect Duration',
+  // Sign-flipped flask/charm mod: PoE2DB lists it as "reduced Charges per use", but the
+  // trade site's searchable stat is the positive-axis "#% increased Charges per use"
+  // (a reduction is a NEGATIVE roll there). Aliased here so it joins the GGG id, and
+  // inverted below (see INVERTED) so the control fills MAX with the negative value.
+  '#% reduced charges per use': '#% increased Charges per use',
 };
+
+// Sign-flipped stats (keyed by normalized SOURCE stat text). For these, a "good" roll is
+// the most NEGATIVE value on the trade stat's axis, so we negate the source ranges and
+// tag the entry `inverted:true`; the UI then fills the row's MAX box instead of MIN.
+// Kept deliberately tiny — the default (MIN-filling) path is untouched for every other mod.
+const INVERTED = new Set(['#% reduced charges per use']);
+const negateRanges = (ranges) => ranges.map(([lo, hi]) => [-hi, -lo]);
 
 // ── GGG stats lookup (optional) ───────────────────────────────────────────────
 async function loadGggLookup() {
@@ -298,6 +310,12 @@ async function main() {
         }
         report.counts.entries += tiers.length;
 
+        // Sign-flip: negate the ranges onto the trade stat's positive axis (a reduction
+        // is a negative roll). tier 1 stays "best" = most negative, since the source's
+        // best (highest) value becomes the lowest (most negative) here.
+        const isInverted = INVERTED.has(statText.toLowerCase());
+        if (isInverted) tiers = tiers.map((t) => ({ ...t, ranges: negateRanges(t.ranges) }));
+
         const isAveraged = (tiers[0].ranges || []).length === 2;
 
         // unique snapshot key
@@ -317,6 +335,7 @@ async function main() {
           family: familyLabelFromTypes(types),
           types,
           tiers,
+          ...(isInverted ? { inverted: true } : {}),
           ...(tradeStatIdAlts ? { _tradeStatIdAlts: tradeStatIdAlts } : {}),
           ...(tradeStatId ? {} : { _needsCanonicalText: true }),
           ...(isOverridden ? { _src: 'ggg-override' } : {}),

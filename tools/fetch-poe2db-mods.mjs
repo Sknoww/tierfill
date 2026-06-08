@@ -55,6 +55,40 @@ const TARGETS = [
   },
 ];
 
+// ── flasks (Life & Mana) ───────────────────────────────────────────────────────
+// The enhancer source carries ZERO flask-ITEM mods (its "flask"-worded texts roll on
+// belts/charms/armour). We scrape both flask class pages and merge by stat text: a mod
+// present on BOTH pages is tagged life-flask + mana-flask (one shared ladder); a
+// page-exclusive mod (e.g. "increased Life Recovered") keeps its single token. Unlike
+// the family-targeted TARGETS above, we pull EVERY numeric prefix/suffix mod on the
+// page (gen type 1/2) and keep whatever joins to a GGG stat id in build-data.
+const FLASK_PAGES = [
+  { page: 'Life_Flasks', token: 'life-flask' },
+  { page: 'Mana_Flasks', token: 'mana-flask' },
+];
+// Charge mods that already ship via the CHARM ladder (identical tiers + the same GGG
+// stat id), so re-emitting them here would only create a redundant second family.
+// "#% reduced charges per use" is likewise covered by the charm entry, which build-data
+// aliases to GGG "#% increased Charges per use" and inverts — so flask rows get that
+// (MAX-filling) control through the charm entry too. Compared case-insensitively.
+const FLASK_SKIP = new Set([
+  '#% increased charges',
+  '#% increased charges gained',
+  '#% reduced charges per use',
+  'gains # charges per second', // identical ladder + stat id to the charm version
+]);
+// PoE2DB glues a second sentence onto two "hybrid" flask mods (e.g. "…Recovered" +
+// "Removes 15% …"). The trade site only filters the first clause, so cut back to it.
+const FLASK_TEXT_FIXUPS = [
+  [/^(#% increased (?:Life|Mana) Recovered)Removes\b.*$/, '$1'],
+];
+// Mods PoE2DB writes WITHOUT a parenthesised roll (the value is baked into the text).
+// Map each tier's text to a placeholder stat text + the captured value so they form a
+// normal ladder. Currently only the per-second charge-gain mod (0.15 / 0.2 / 0.25).
+const FLASK_FIXED_VALUE = [
+  { re: /^Gains ([\d.]+) Charges per Second$/i, text: 'Gains # Charges per Second' },
+];
+
 // ── tiny HTML/JSON helpers ──────────────────────────────────────────────────────
 // Return the smallest {...} object enclosing `pos`, by brace-matching outward then
 // inward. PoE2DB embeds each mod as a flat JSON object; this lifts one out of the page.
@@ -141,6 +175,71 @@ function extractFamilyMods(html, family, genType) {
   return out;
 }
 
+// Pull EVERY prefix (gen 1) / suffix (gen 2) mod object from a class page, deduped.
+function extractAllGenMods(html) {
+  const out = [];
+  const re = /"ModGenerationTypeID"/g;
+  let m;
+  const seen = new Set();
+  while ((m = re.exec(html))) {
+    const obj = enclosingObject(html, m.index);
+    if (!obj) continue;
+    let o;
+    try { o = JSON.parse(obj); } catch { continue; }
+    const gt = String(o.ModGenerationTypeID);
+    if (gt !== '1' && gt !== '2') continue;
+    const dedupe = `${o.Name}|${o.Level}|${o.str}`;
+    if (seen.has(dedupe)) continue;
+    seen.add(dedupe);
+    out.push(o);
+  }
+  return out;
+}
+
+// Parse a flask mod object into { text, values }, applying the hybrid-text cut and
+// the fixed-value (no-parens) fallback. Returns values=[] for non-numeric mods.
+function parseFlaskMod(o) {
+  let { text, values } = parseStr(o.str);
+  for (const [re, rep] of FLASK_TEXT_FIXUPS) if (re.test(text)) text = text.replace(re, rep);
+  if (!values.length) {
+    for (const fv of FLASK_FIXED_VALUE) {
+      const fm = text.match(fv.re);
+      if (fm) { values = [[Number(fm[1]), Number(fm[1])]]; text = fv.text; break; }
+    }
+  }
+  return { text, values };
+}
+
+// Scrape both flask pages and merge by stat text → result[bucket][text] elements,
+// tagging each with the flask token(s) the mod appears on (life-flask / mana-flask).
+async function scrapeFlasks(result, report) {
+  const byText = new Map(); // text -> { bucket, perToken: Map<token, els[]> }
+  for (const { page, token } of FLASK_PAGES) {
+    const html = await fetchPage(page);
+    for (const o of extractAllGenMods(html)) {
+      const { text, values } = parseFlaskMod(o);
+      if (!values.length) continue; // non-numeric → no ladder
+      if (FLASK_SKIP.has(text.toLowerCase())) continue;
+      const bucket = String(o.ModGenerationTypeID) === '1' ? 'prefix' : 'suffix';
+      const rec = byText.get(text) || { bucket, perToken: new Map() };
+      const els = rec.perToken.get(token) || [];
+      els.push({ level: String(o.Level), values: values.map((p) => p.map(String)) });
+      rec.perToken.set(token, els);
+      byText.set(text, rec);
+    }
+  }
+  for (const [text, rec] of byText) {
+    const tokens = [...rec.perToken.keys()]; // ['life-flask'] or ['life-flask','mana-flask']
+    // Shared mods are byte-identical across pages — take one page's ladder, tag with all tokens.
+    const els = rec.perToken.get(tokens[0]);
+    const out = els
+      .map((e) => ({ affinities: ['normal'], level: e.level, values: e.values, types: tokens.slice() }))
+      .sort((a, b) => Number(b.level) - Number(a.level));
+    result[rec.bucket][text] = out;
+    report.push({ page: tokens.join('+'), bucket: rec.bucket, text, tiers: out.length });
+  }
+}
+
 async function main() {
   const result = { prefix: {}, suffix: {} };
   const report = [];
@@ -178,6 +277,8 @@ async function main() {
       report.push({ page: t.page, bucket: t.bucket, text, tiers: els.length });
     }
   }
+
+  await scrapeFlasks(result, report);
 
   // ── report ──
   console.log('fetch-poe2db-mods');

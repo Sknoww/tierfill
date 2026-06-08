@@ -119,7 +119,11 @@ function processRow(row) {
   const families = INDEX.get(template);
   if (!families || !families.length) return; // no tier data → no control (silent)
 
-  const minInput = row.querySelector('input.minmax, input.form-control.minmax');
+  // The row's two number boxes in order: [MIN, MAX]. Normal mods fill MIN; sign-flipped
+  // (inverted) mods fill MAX with a negative value (see tier-control / compute).
+  const boxes = row.querySelectorAll('input.minmax, input.form-control.minmax');
+  const minInput = boxes[0];
+  const maxInput = boxes[1] || null;
   if (!minInput) return;
 
   const { family, ambiguous } = resolveFamily(families);
@@ -127,7 +131,7 @@ function processRow(row) {
 
   const id = row.dataset.poe2tfId || (row.dataset.poe2tfId = String(++idCounter));
   const control = createTierControl({
-    families, family, ambiguous, minInput, computeAllTiers,
+    families, family, ambiguous, minInput, maxInput, computeAllTiers,
     // publish the pick to the §9 store so the results annotator can detect tiers.
     onChange: (entry, tier) => setSelection(id, { display: entry.display, entry, tier }),
   });

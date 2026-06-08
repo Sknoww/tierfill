@@ -44,6 +44,14 @@ export function tierCeil(stat, tier) {
 export function computeFilter(stat, tierNum, mode = 'inclusive') {
   const tier = getTier(stat, tierNum);
   if (!tier) return null;
+
+  // Sign-flipped stats (e.g. "reduced Charges per use" → the trade stat "increased
+  // Charges per use", where better = more negative). The whole axis mirrors: we fill
+  // MAX instead of MIN, with the tier's least-negative bound (ceil), so "T or better"
+  // captures this tier and every more-negative one. A self-contained branch — the
+  // default path below is byte-for-byte unchanged for every normal mod.
+  if (stat.inverted) return computeInvertedFilter(stat, tierNum, mode);
+
   const floor = tierFloor(stat, tier);
 
   if (mode === 'exact-band') return { min: floor, max: tierCeil(stat, tier) };
@@ -60,6 +68,30 @@ export function computeFilter(stat, tierNum, mode = 'inclusive') {
   }
 
   return { min: floor }; // inclusive
+}
+
+// Sign-flipped variant of computeFilter (see the `stat.inverted` note above). The axis is
+// mirrored: better = more negative, so we return a `max` (the value the trade MAX box gets)
+// rather than a `min`. Inverted mods are single-roll, so strict steps by 1.
+function computeInvertedFilter(stat, tierNum, mode) {
+  const tier = getTier(stat, tierNum);
+  if (!tier) return null;
+  const floor = tierFloor(stat, tier); // most-negative bound (best within tier)
+  const ceil = tierCeil(stat, tier); // least-negative bound (worst within tier)
+
+  if (mode === 'exact-band') return { min: floor, max: ceil };
+
+  if (mode === 'strict') {
+    const lower = (stat.tiers || []).filter((t) => t.tier > tierNum);
+    let minLowerFloor = Infinity;
+    for (const lt of lower) minLowerFloor = Math.min(minLowerFloor, tierFloor(stat, lt));
+    if (minLowerFloor === Infinity) return { max: ceil }; // no lower tier
+    // Largest value strictly below the most-negative roll any lower tier can reach.
+    // Never loosen past this tier's own ceil (when tiers don't overlap, ceil already excludes them).
+    return { max: Math.min(ceil, minLowerFloor - 1) };
+  }
+
+  return { max: ceil }; // inclusive: this tier + every more-negative (better) one
 }
 
 // Convenience: every tier's computed min for a mode (UI dropdown / validation table).

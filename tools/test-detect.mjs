@@ -97,5 +97,18 @@ const fracRolls = parseRolls(templateToRegex('Adds # to # Physical Damage to Att
 check('fractured rolls extracted (trailing suffix ignored) → [16,25]', fracRolls, [16, 25]);
 check('fractured 16/25 in [[12,19],[22,32]] → mid', rollQuality(fracRolls, [[12, 19], [22, 32]]), 'mid');
 
+// Inverted (sign-flipped) mod line — the result prints the opposite-polarity wording
+// ("reduced") and a positive roll against GGG's NEGATIVE band. The annotator matches
+// the inverted wording and flips the roll's sign before grading. Captured textContent.
+console.log('\nInverted (sign-flipped) mod line:');
+const INVERTED = 'S2 [-29—-27]28% reduced Charges per useof the Brewer (≥64)';
+check('inverted parseGggTier → S2', parseGggTier(INVERTED), { affix: 'S', tier: 2 });
+check('inverted parseGggRanges → [[-29,-27]]', parseGggRanges(INVERTED), [[-29, -27]]);
+// The annotator builds the match regex from the inverted wording (increased→reduced).
+const invRe = templateToRegex('#% increased Charges per use'.replace(/\bincreased\b/gi, 'reduced'));
+const invRolls = parseRolls(invRe.exec(INVERTED)).map((v) => -v); // sign-flipped to the band's axis
+check('inverted rolls extracted + negated → [-28]', invRolls, [-28]);
+check('inverted -28 in [[-29,-27]] → mid', rollQuality(invRolls, [[-29, -27]]), 'mid');
+
 console.log(`\n${fail === 0 ? '✅ all §9 detection tests passed' : `❌ ${fail} failed`} (${pass} passed)`);
 process.exit(fail === 0 ? 0 : 1);

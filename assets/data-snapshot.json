@@ -3860,6 +3860,70 @@
         }
       ]
     },
+    "grants_x_of_life_recovery_to_minions": {
+      "display": "Grants #% of Life Recovery to Minions",
+      "tradeStatId": "explicit.stat_2416869319",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask / Mana Flask",
+      "types": [
+        "life-flask",
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 82,
+          "ranges": [
+            [
+              75,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 64,
+          "ranges": [
+            [
+              69,
+              74
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 46,
+          "ranges": [
+            [
+              63,
+              68
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 28,
+          "ranges": [
+            [
+              57,
+              62
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 10,
+          "ranges": [
+            [
+              51,
+              56
+            ]
+          ]
+        }
+      ]
+    },
     "hits_against_you_have_x_reduced_critical_damage_bonus": {
       "display": "Hits against you have #% reduced Critical Damage Bonus",
       "tradeStatId": "explicit.stat_3855016469",
@@ -4600,6 +4664,50 @@
         }
       ]
     },
+    "x_chance_to_gain_a_charge_when_you_kill_an_enemy_2": {
+      "display": "#% Chance to gain a Charge when you kill an enemy",
+      "tradeStatId": "explicit.stat_828533480",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask / Mana Flask",
+      "types": [
+        "life-flask",
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 45,
+          "ranges": [
+            [
+              31,
+              35
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 26,
+          "ranges": [
+            [
+              26,
+              30
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 8,
+          "ranges": [
+            [
+              21,
+              25
+            ]
+          ]
+        }
+      ]
+    },
     "x_chance_to_pierce_an_enemy": {
       "display": "#% chance to Pierce an Enemy",
       "tradeStatId": "explicit.stat_2321178454",
@@ -4691,6 +4799,100 @@
             [
               1,
               1
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_amount_recovered": {
+      "display": "#% increased Amount Recovered",
+      "tradeStatId": "explicit.stat_700317374",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask / Mana Flask",
+      "types": [
+        "life-flask",
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 83,
+          "ranges": [
+            [
+              76,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 67,
+          "ranges": [
+            [
+              71,
+              75
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 56,
+          "ranges": [
+            [
+              66,
+              70
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 46,
+          "ranges": [
+            [
+              61,
+              65
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 34,
+          "ranges": [
+            [
+              56,
+              60
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 23,
+          "ranges": [
+            [
+              51,
+              55
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 11,
+          "ranges": [
+            [
+              46,
+              50
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 1,
+          "ranges": [
+            [
+              41,
+              45
             ]
           ]
         }
@@ -8084,6 +8286,69 @@
         }
       ]
     },
+    "x_increased_life_recovered": {
+      "display": "#% increased Life Recovered",
+      "tradeStatId": "explicit.stat_1261982764",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask",
+      "types": [
+        "life-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              93,
+              100
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 64,
+          "ranges": [
+            [
+              85,
+              92
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 47,
+          "ranges": [
+            [
+              77,
+              84
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 30,
+          "ranges": [
+            [
+              69,
+              76
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 13,
+          "ranges": [
+            [
+              61,
+              68
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_lightning_damage__1": {
       "display": "#% increased Lightning Damage",
       "tradeStatId": "explicit.stat_2231156303",
@@ -8340,6 +8605,69 @@
             [
               3,
               7
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_mana_recovered": {
+      "display": "#% increased Mana Recovered",
+      "tradeStatId": "explicit.stat_1811130680",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Mana Flask",
+      "types": [
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              93,
+              100
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 64,
+          "ranges": [
+            [
+              85,
+              92
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 47,
+          "ranges": [
+            [
+              77,
+              84
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 30,
+          "ranges": [
+            [
+              69,
+              76
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 13,
+          "ranges": [
+            [
+              61,
+              68
             ]
           ]
         }
@@ -9023,6 +9351,80 @@
       ],
       "_tradeStatIdAlts": [
         "explicit.stat_2306002879"
+      ]
+    },
+    "x_increased_recovery_rate": {
+      "display": "#% increased Recovery rate",
+      "tradeStatId": "explicit.stat_173226756",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask / Mana Flask",
+      "types": [
+        "life-flask",
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              66,
+              70
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 61,
+          "ranges": [
+            [
+              61,
+              65
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 46,
+          "ranges": [
+            [
+              56,
+              60
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 31,
+          "ranges": [
+            [
+              51,
+              55
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 15,
+          "ranges": [
+            [
+              46,
+              50
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 1,
+          "ranges": [
+            [
+              41,
+              45
+            ]
+          ]
+        }
       ]
     },
     "x_increased_spell_damage__1": {
@@ -9781,6 +10183,132 @@
         }
       ]
     },
+    "x_more_recovery_if_used_while_on_low_life": {
+      "display": "#% more Recovery if used while on Low Life",
+      "tradeStatId": "explicit.stat_886931978",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask",
+      "types": [
+        "life-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 82,
+          "ranges": [
+            [
+              91,
+              100
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 63,
+          "ranges": [
+            [
+              81,
+              90
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 44,
+          "ranges": [
+            [
+              71,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 25,
+          "ranges": [
+            [
+              61,
+              70
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 2,
+          "ranges": [
+            [
+              51,
+              60
+            ]
+          ]
+        }
+      ]
+    },
+    "x_more_recovery_if_used_while_on_low_mana": {
+      "display": "#% more Recovery if used while on Low Mana",
+      "tradeStatId": "explicit.stat_3276224428",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Mana Flask",
+      "types": [
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 82,
+          "ranges": [
+            [
+              91,
+              100
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 63,
+          "ranges": [
+            [
+              81,
+              90
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 44,
+          "ranges": [
+            [
+              71,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 25,
+          "ranges": [
+            [
+              61,
+              70
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 2,
+          "ranges": [
+            [
+              51,
+              60
+            ]
+          ]
+        }
+      ]
+    },
     "x_of_damage_taken_recouped_as_life": {
       "display": "#% of Damage taken Recouped as Life",
       "tradeStatId": "explicit.stat_1444556985",
@@ -9902,6 +10430,50 @@
             [
               10,
               12
+            ]
+          ]
+        }
+      ]
+    },
+    "x_of_recovery_applied_instantly": {
+      "display": "#% of Recovery applied Instantly",
+      "tradeStatId": "explicit.stat_2503377690",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Life Flask / Mana Flask",
+      "types": [
+        "life-flask",
+        "mana-flask"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 46,
+          "ranges": [
+            [
+              28,
+              30
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 27,
+          "ranges": [
+            [
+              24,
+              27
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 3,
+          "ranges": [
+            [
+              20,
+              23
             ]
           ]
         }
@@ -10057,8 +10629,8 @@
       "_needsCanonicalText": true
     },
     "x_reduced_charges_per_use": {
-      "display": "#% reduced charges per use",
-      "tradeStatId": null,
+      "display": "#% increased Charges per use",
+      "tradeStatId": "explicit.stat_388617051",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
@@ -10072,8 +10644,8 @@
           "ilvl": 83,
           "ranges": [
             [
-              30,
-              32
+              -32,
+              -30
             ]
           ]
         },
@@ -10082,8 +10654,8 @@
           "ilvl": 64,
           "ranges": [
             [
-              27,
-              29
+              -29,
+              -27
             ]
           ]
         },
@@ -10092,8 +10664,8 @@
           "ilvl": 49,
           "ranges": [
             [
-              24,
-              26
+              -26,
+              -24
             ]
           ]
         },
@@ -10102,8 +10674,8 @@
           "ilvl": 34,
           "ranges": [
             [
-              21,
-              23
+              -23,
+              -21
             ]
           ]
         },
@@ -10112,8 +10684,8 @@
           "ilvl": 14,
           "ranges": [
             [
-              18,
-              20
+              -20,
+              -18
             ]
           ]
         },
@@ -10122,13 +10694,13 @@
           "ilvl": 1,
           "ranges": [
             [
-              15,
-              17
+              -17,
+              -15
             ]
           ]
         }
       ],
-      "_needsCanonicalText": true
+      "inverted": true
     },
     "x_reduced_charm_charges_used": {
       "display": "#% reduced Charm Charges used",

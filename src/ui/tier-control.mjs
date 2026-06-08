@@ -14,6 +14,10 @@
  * the spike-confirmed native-setter + input/change/blur (PLAN §10). It never
  * triggers the search — the user still clicks the native Search button.
  *
+ * Sign-flipped (`inverted`) stats — e.g. "increased Charges per use", where a good
+ * roll is NEGATIVE — fill the row's MAX box instead, with the tier's least-negative
+ * bound. That fork is localized to a few helpers; the MIN path is otherwise unchanged.
+ *
  * §11.8 threshold modes (UI only; the math lives in compute.mjs):
  *   • Inclusive (default) — min = tier average floor; never misses a T, but a
  *     lucky lower-tier roll can slip past.
@@ -83,10 +87,18 @@ function familyLabel(f, families) {
   return f.types && f.types.length > 1 ? `${cap}…` : cap;
 }
 
-export function createTierControl({ families, family, ambiguous, minInput, computeAllTiers, onChange }) {
+export function createTierControl({ families, family, ambiguous, minInput, maxInput, computeAllTiers, onChange }) {
   let current = family;
   let selectedTier = null; // remembered across family swaps so MIN re-fills automatically
   let mode = 'inclusive'; // §11.8 threshold mode (per-control); default = inclusive
+
+  // Sign-flipped mods (e.g. "increased Charges per use", where better = more negative)
+  // fill the row's MAX box with a negative value; every normal mod fills MIN. These
+  // helpers localize that fork so the rest of the control reads the same for both.
+  const isInverted = () => !!current.inverted;
+  const fillOf = (t) => (isInverted() ? t.max : t.min);
+  const targetInput = () => (isInverted() ? maxInput : minInput) || minInput;
+  const boxLabel = () => (isInverted() ? 'MAX' : 'MIN');
 
   // root is a table-cell (the stat row's .filter-body is display:table, so we
   // must be a real cell to get our own column left of MIN). `inner` holds the
@@ -185,7 +197,7 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
       o.className = 'poe2tf-opt';
       o.append(
         mk('span', 'poe2tf-opt-tier', `≈ T${t.tier}`),
-        mk('span', 'poe2tf-opt-min', `min ${fmtMin(t.min)}`),
+        mk('span', 'poe2tf-opt-min', `${boxLabel().toLowerCase()} ${fmtMin(fillOf(t))}`),
       );
       o.addEventListener('click', () => select(t));
       panel.appendChild(o);
@@ -203,7 +215,7 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
   }
 
   function applyTier(t) {
-    setNativeValue(minInput, t.min);
+    setNativeValue(targetInput(), fillOf(t));
     label.textContent = `T${t.tier}`;
     root.classList.add('is-set');
     selectedTier = t.tier;
@@ -236,11 +248,11 @@ export function createTierControl({ families, family, ambiguous, minInput, compu
     if (t) {
       const d = mk('div', 'poe2tf-tip-row');
       d.appendChild(mk('b', null, `≈ T${t.tier}`));
-      d.appendChild(document.createTextNode(` · fills MIN = ${fmtMin(t.min)}`));
+      d.appendChild(document.createTextNode(` · fills ${boxLabel()} = ${fmtMin(fillOf(t))}`));
       tip.appendChild(d);
       tip.appendChild(mk('div', 'poe2tf-tip-row', `rolls ${fmtRanges(t.ranges)}`));
     } else {
-      tip.appendChild(mk('div', 'poe2tf-tip-row', 'Pick a tier to fill MIN.'));
+      tip.appendChild(mk('div', 'poe2tf-tip-row', `Pick a tier to fill ${boxLabel()}.`));
     }
     tip.appendChild(mk('div', 'poe2tf-tip-note', note));
   }
