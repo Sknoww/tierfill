@@ -70,12 +70,16 @@ const slug = (s) =>
 // (caster gear, armour bases, …) falls back to a faithful humanized list of its types.
 // The UI only surfaces this when a stat is multi-family, so single-family stats don't
 // depend on it being pretty — but it must be UNIQUE per family within a stat.
+// Hand-class per PoE2DB's item tree (poe2db.tw/us/Items): Bows and Crossbows are
+// TWO-handed (a prior version listed them as one-handed, which mislabeled some
+// mixed weapon bundles).
 const ONE_H = new Set([
   'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace',
-  'spear', 'flail', 'sceptre', 'wand', 'bow', 'crossbow',
+  'spear', 'flail', 'sceptre', 'wand',
 ]);
 const TWO_H = new Set([
   'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'staff',
+  'bow', 'crossbow',
 ]);
 const ALL_WEAPON = new Set([...ONE_H, ...TWO_H]);
 const pretty = (t) => t.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
@@ -176,9 +180,14 @@ async function loadOverrides() {
     return null; // none yet
   }
   const data = JSON.parse(raw);
+  // tradeStatId → list of overrides. A stat that rolls the SAME trade stat as both a
+  // prefix and a suffix (e.g. Rarity) shares one id across two families, so we key by
+  // id but keep every entry and disambiguate by `family` at apply time.
   const map = new Map();
   for (const o of data.overrides || []) {
-    if (o.tradeStatId) map.set(o.tradeStatId, o);
+    if (!o.tradeStatId) continue;
+    if (!map.has(o.tradeStatId)) map.set(o.tradeStatId, []);
+    map.get(o.tradeStatId).push(o);
   }
   return map;
 }
@@ -287,10 +296,12 @@ async function main() {
         // §10: GGG-authoritative override REPLACES this ladder when the stat id (and
         // family, if specified) matches. Re-rank best→worst by the tier floor so the
         // tier numbers stay 1=best regardless of the override file's ordering.
-        const ov = overrides && tradeStatId ? overrides.get(tradeStatId) : null;
+        const ovList = (overrides && tradeStatId && overrides.get(tradeStatId)) || [];
         const famLabel = familyLabelFromTypes(types);
+        // Prefer a family-specific override; fall back to a family-agnostic one.
+        const ov = ovList.find((o) => o.family === famLabel) || ovList.find((o) => o.family == null) || null;
         let isOverridden = false;
-        if (ov && (ov.family == null || ov.family === famLabel) && Array.isArray(ov.tiers) && ov.tiers.length) {
+        if (ov && Array.isArray(ov.tiers) && ov.tiers.length) {
           // SAFETY: full-ladder replacement drops any source tier the override
           // doesn't carry. If the override has FEWER tiers than the source ladder
           // it's likely an incomplete capture → skip (keep source) unless the entry

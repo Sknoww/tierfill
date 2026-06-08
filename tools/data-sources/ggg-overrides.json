@@ -482,6 +482,30 @@
           ]
         }
       ]
+    },
+    {
+      "tradeStatId": "explicit.stat_3917489142",
+      "display": "#% increased Rarity of Items found",
+      "family": "Helmet / Amulet / Ring",
+      "force": true,
+      "_note": "PoE2DB ItemFoundRarityIncreasePrefix — prefix on helmet/amulet/ring; 3 tiers (source ladder was a stale 5-tier up to 32).",
+      "tiers": [
+        { "ilvl": 47, "ranges": [[16, 19]] },
+        { "ilvl": 29, "ranges": [[12, 15]] },
+        { "ilvl": 10, "ranges": [[8, 11]] }
+      ]
+    },
+    {
+      "tradeStatId": "explicit.stat_3917489142",
+      "display": "#% increased Rarity of Items found",
+      "family": "Gloves / Boots / Helmet +2",
+      "force": true,
+      "_note": "PoE2DB ItemFoundRarityIncrease — suffix on gloves/boots/helmet/amulet/ring; 3 tiers (source ladder was a stale 5-tier up to 30).",
+      "tiers": [
+        { "ilvl": 40, "ranges": [[15, 18]] },
+        { "ilvl": 24, "ranges": [[11, 14]] },
+        { "ilvl": 3, "ranges": [[6, 10]] }
+      ]
     }
   ]
 }

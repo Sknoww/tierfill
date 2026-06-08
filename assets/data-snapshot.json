@@ -9230,46 +9230,26 @@
       "tiers": [
         {
           "tier": 1,
-          "ilvl": 81,
+          "ilvl": 47,
           "ranges": [
             [
-              28,
-              32
+              16,
+              19
             ]
           ]
         },
         {
           "tier": 2,
-          "ilvl": 65,
+          "ilvl": 29,
           "ranges": [
             [
-              23,
-              27
+              12,
+              15
             ]
           ]
         },
         {
           "tier": 3,
-          "ilvl": 47,
-          "ranges": [
-            [
-              18,
-              22
-            ]
-          ]
-        },
-        {
-          "tier": 4,
-          "ilvl": 29,
-          "ranges": [
-            [
-              13,
-              17
-            ]
-          ]
-        },
-        {
-          "tier": 5,
           "ilvl": 10,
           "ranges": [
             [
@@ -9281,7 +9261,8 @@
       ],
       "_tradeStatIdAlts": [
         "explicit.stat_2306002879"
-      ]
+      ],
+      "_src": "ggg-override"
     },
     "x_increased_rarity_of_items_found_2": {
       "display": "#% increased Rarity of Items found",
@@ -9300,46 +9281,26 @@
       "tiers": [
         {
           "tier": 1,
-          "ilvl": 75,
+          "ilvl": 40,
           "ranges": [
             [
-              26,
-              30
+              15,
+              18
             ]
           ]
         },
         {
           "tier": 2,
-          "ilvl": 63,
+          "ilvl": 24,
           "ranges": [
             [
-              21,
-              25
+              11,
+              14
             ]
           ]
         },
         {
           "tier": 3,
-          "ilvl": 40,
-          "ranges": [
-            [
-              16,
-              20
-            ]
-          ]
-        },
-        {
-          "tier": 4,
-          "ilvl": 24,
-          "ranges": [
-            [
-              11,
-              15
-            ]
-          ]
-        },
-        {
-          "tier": 5,
           "ilvl": 3,
           "ranges": [
             [
@@ -9351,7 +9312,8 @@
       ],
       "_tradeStatIdAlts": [
         "explicit.stat_2306002879"
-      ]
+      ],
+      "_src": "ggg-override"
     },
     "x_increased_recovery_rate": {
       "display": "#% increased Recovery rate",
