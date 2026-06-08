@@ -28,8 +28,15 @@ function collectDetectedTokens() {
   // PLACEHOLDER plus a "modified" class on the container (FINDINGS §4 Mode 2).
   document.querySelectorAll('.multiselect.filter-select').forEach((sel) => {
     if (!sel.classList.contains('modified')) return;
-    const ph = norm(sel.querySelector('input')?.getAttribute('placeholder'));
-    if (ph && ph !== 'any') cats.add(ph.replace(/\s+/g, '-'));
+    let ph = norm(sel.querySelector('input')?.getAttribute('placeholder'));
+    if (!ph || ph === 'any') return;
+    // Group categories render as "Any X" (e.g. "Any Ranged Weapon", "Any Jewel").
+    // The trade site has ONE jewel category — "Any Jewel" — so strip the leading
+    // "any " to recover the `jewel` token our jewel families carry. Group weapon
+    // categories ("Any Ranged Weapon" → "ranged-weapon") still don't match a
+    // specific weapon type, so they remain ambiguous exactly as before.
+    ph = ph.replace(/^any\s+/, '');
+    cats.add(ph.replace(/\s+/g, '-'));
   });
 
   // Search bar → ".multiselect.search-select"; committed base in input.value,

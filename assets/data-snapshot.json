@@ -9,7 +9,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "1-handed",
+      "family": "Claw / Dagger / One Hand Sword +6",
       "types": [
         "claw",
         "dagger",
@@ -468,7 +468,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "1-handed",
+      "family": "Claw / Dagger / One Hand Sword +6",
       "types": [
         "claw",
         "dagger",
@@ -927,7 +927,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "1-handed",
+      "family": "Claw / Dagger / One Hand Sword +6",
       "types": [
         "claw",
         "dagger",
@@ -1386,7 +1386,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "1-handed",
+      "family": "Claw / Dagger / One Hand Sword +6",
       "types": [
         "claw",
         "dagger",
@@ -2990,13 +2990,59 @@
         }
       ]
     },
+    "banner_skills_have_x_increased_area_of_effect": {
+      "display": "Banner Skills have #% increased Area of Effect",
+      "tradeStatId": "explicit.stat_429143663",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "banner_skills_have_x_increased_duration": {
+      "display": "Banner Skills have #% increased Duration",
+      "tradeStatId": "explicit.stat_2720982137",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
     "bow_attacks_fire_x_additional_arrows": {
       "display": "Bow Attacks fire # additional Arrows",
       "tradeStatId": "explicit.stat_3885405204",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "1-handed",
+      "family": "2-handed",
       "types": [
         "bow"
       ],
@@ -3018,6 +3064,29 @@
             [
               1,
               1
+            ]
+          ]
+        }
+      ]
+    },
+    "break_x_increased_armour": {
+      "display": "Break #% increased Armour",
+      "tradeStatId": "explicit.stat_1776411443",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -3101,6 +3170,236 @@
             [
               21,
               30
+            ]
+          ]
+        }
+      ]
+    },
+    "companions_deal_x_increased_damage": {
+      "display": "Companions deal #% increased Damage",
+      "tradeStatId": "explicit.stat_234296660",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "companions_have_x_increased_maximum_life": {
+      "display": "Companions have #% increased maximum Life",
+      "tradeStatId": "explicit.stat_1805182458",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "damage_penetrates_x_cold_resistance": {
+      "display": "Damage Penetrates #% Cold Resistance",
+      "tradeStatId": "explicit.stat_3417711605",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "damage_penetrates_x_fire_resistance": {
+      "display": "Damage Penetrates #% Fire Resistance",
+      "tradeStatId": "explicit.stat_2653955271",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "damage_penetrates_x_lightning_resistance": {
+      "display": "Damage Penetrates #% Lightning Resistance",
+      "tradeStatId": "explicit.stat_818778753",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "damaging_ailments_deal_damage_x_faster": {
+      "display": "Damaging Ailments deal damage #% faster",
+      "tradeStatId": "explicit.stat_538241406",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    "debuffs_on_you_expire_x_faster": {
+      "display": "Debuffs on you expire #% faster",
+      "tradeStatId": "explicit.stat_1238227257",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "empowered_attacks_deal_x_increased_damage": {
+      "display": "Empowered Attacks deal #% increased Damage",
+      "tradeStatId": "explicit.stat_1569101201",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "gain_additional_ailment_threshold_equal_to_x_of_maximum_ener": {
+      "display": "Gain additional Ailment Threshold equal to #% of maximum Energy Shield",
+      "tradeStatId": "explicit.stat_3398301358",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "gain_additional_stun_threshold_equal_to_x_of_maximum_energy_": {
+      "display": "Gain additional Stun Threshold equal to #% of maximum Energy Shield",
+      "tradeStatId": "explicit.stat_416040624",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -3752,6 +4051,29 @@
         }
       ]
     },
+    "gain_x_rage_when_hit_by_an_enemy": {
+      "display": "Gain # Rage when Hit by an Enemy",
+      "tradeStatId": "explicit.stat_3292710273",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              3
+            ]
+          ]
+        }
+      ]
+    },
     "gains_x_charges_per_second": {
       "display": "Gains # Charges per Second",
       "tradeStatId": "explicit.stat_1873752457",
@@ -3919,6 +4241,29 @@
             [
               51,
               56
+            ]
+          ]
+        }
+      ]
+    },
+    "herald_skills_deal_x_increased_damage": {
+      "display": "Herald Skills deal #% increased Damage",
+      "tradeStatId": "explicit.stat_21071013",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
             ]
           ]
         }
@@ -4271,7 +4616,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "1-handed",
+      "family": "2-handed",
       "types": [
         "crossbow"
       ],
@@ -4299,7 +4644,237 @@
       ],
       "_needsCanonicalText": true
     },
+    "mark_skills_have_x_increased_skill_effect_duration": {
+      "display": "Mark Skills have #% increased Skill Effect Duration",
+      "tradeStatId": "explicit.stat_2594634307",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              18,
+              32
+            ]
+          ]
+        }
+      ]
+    },
+    "mark_skills_have_x_increased_use_speed": {
+      "display": "Mark Skills have #% increased Use Speed",
+      "tradeStatId": "explicit.stat_1714971114",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "meta_skills_gain_x_increased_energy": {
+      "display": "Meta Skills gain #% increased Energy",
+      "tradeStatId": "explicit.stat_4236566306",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_deal_x_increased_damage": {
+      "display": "Minions deal #% increased Damage",
+      "tradeStatId": "explicit.stat_1589917703",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_additional_physical_damage_reduction": {
+      "display": "Minions have #% additional Physical Damage Reduction",
+      "tradeStatId": "explicit.stat_3119612865",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_area_of_effect": {
+      "display": "Minions have #% increased Area of Effect",
+      "tradeStatId": "explicit.stat_3811191316",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_attack_and_cast_speed": {
+      "display": "Minions have #% increased Attack and Cast Speed",
+      "tradeStatId": "explicit.stat_3091578504",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_critical_damage_bonus": {
+      "display": "Minions have #% increased Critical Damage Bonus",
+      "tradeStatId": "explicit.stat_1854213750",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_critical_hit_chance": {
+      "display": "Minions have #% increased Critical Hit Chance",
+      "tradeStatId": "explicit.stat_491450213",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "minions_have_x_increased_maximum_life": {
+      "display": "Minions have #% increased maximum Life",
+      "tradeStatId": "explicit.stat_770672621",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_maximum_life_2": {
       "display": "Minions have #% increased maximum Life",
       "tradeStatId": "explicit.stat_770672621",
       "affix": "suffix",
@@ -4367,6 +4942,144 @@
             [
               21,
               25
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_to_all_elemental_resistances": {
+      "display": "Minions have #% to all Elemental Resistances",
+      "tradeStatId": "explicit.stat_1423639565",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_to_chaos_resistance": {
+      "display": "Minions have #% to Chaos Resistance",
+      "tradeStatId": "explicit.stat_3837707023",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              7,
+              13
+            ]
+          ]
+        }
+      ]
+    },
+    "offering_skills_have_x_increased_duration": {
+      "display": "Offering Skills have #% increased Duration",
+      "tradeStatId": "explicit.stat_2957407601",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "offerings_have_x_increased_maximum_life": {
+      "display": "Offerings have #% increased Maximum Life",
+      "tradeStatId": "explicit.stat_3787460122",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "projectiles_have_x_chance_for_an_additional_projectile_when_": {
+      "display": "Projectiles have #% chance for an additional Projectile when Forking",
+      "tradeStatId": "explicit.stat_3003542304",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "projectiles_have_x_chance_to_chain_an_additional_time_from_t": {
+      "display": "Projectiles have #% chance to Chain an additional time from terrain",
+      "tradeStatId": "explicit.stat_4081947835",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              5
             ]
           ]
         }
@@ -4558,6 +5271,75 @@
         }
       ]
     },
+    "recover_x_of_maximum_life_on_kill": {
+      "display": "Recover #% of maximum Life on Kill",
+      "tradeStatId": "explicit.stat_2023107756",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "recover_x_of_maximum_mana_on_kill": {
+      "display": "Recover #% of maximum Mana on Kill",
+      "tradeStatId": "explicit.stat_1030153674",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "triggered_spells_deal_x_increased_spell_damage": {
+      "display": "Triggered Spells deal #% increased Spell Damage",
+      "tradeStatId": "explicit.stat_3067892458",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              18
+            ]
+          ]
+        }
+      ]
+    },
     "x_additional_physical_damage_reduction": {
       "display": "#% additional Physical Damage Reduction",
       "tradeStatId": "explicit.stat_3771516363",
@@ -4620,6 +5402,77 @@
           ]
         }
       ]
+    },
+    "x_chance_for_attack_hits_to_apply_incision": {
+      "display": "#% chance for Attack Hits to apply Incision",
+      "tradeStatId": null,
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ],
+      "_needsCanonicalText": true
+    },
+    "x_chance_to_blind_enemies_on_hit_with_attacks": {
+      "display": "#% chance to Blind Enemies on Hit with Attacks",
+      "tradeStatId": "explicit.stat_318953428",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    "x_chance_to_daze_on_hit": {
+      "display": "#% chance to Daze on Hit",
+      "tradeStatId": null,
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ],
+      "_needsCanonicalText": true
     },
     "x_chance_to_gain_a_charge_when_you_kill_an_enemy": {
       "display": "#% Chance to gain a Charge when you kill an enemy",
@@ -4708,6 +5561,29 @@
         }
       ]
     },
+    "x_chance_to_inflict_bleeding_on_hit": {
+      "display": "#% chance to inflict Bleeding on Hit",
+      "tradeStatId": "explicit.stat_2174054121",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              7
+            ]
+          ]
+        }
+      ]
+    },
     "x_chance_to_pierce_an_enemy": {
       "display": "#% chance to Pierce an Enemy",
       "tradeStatId": "explicit.stat_2321178454",
@@ -4771,6 +5647,52 @@
         }
       ]
     },
+    "x_chance_to_pierce_an_enemy_2": {
+      "display": "#% chance to Pierce an Enemy",
+      "tradeStatId": "explicit.stat_2321178454",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_chance_to_poison_on_hit": {
+      "display": "#% chance to Poison on Hit",
+      "tradeStatId": "explicit.stat_795138349",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
     "x_charm_slot": {
       "display": "# Charm Slot",
       "tradeStatId": "explicit.stat_2582079000",
@@ -4799,6 +5721,144 @@
             [
               1,
               1
+            ]
+          ]
+        }
+      ]
+    },
+    "x_faster_curse_activation": {
+      "display": "#% faster Curse Activation",
+      "tradeStatId": "explicit.stat_1104825894",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_faster_start_of_energy_shield_recharge": {
+      "display": "#% faster start of Energy Shield Recharge",
+      "tradeStatId": "explicit.stat_1782086450",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_accuracy_rating": {
+      "display": "#% increased Accuracy Rating",
+      "tradeStatId": "explicit.stat_624954515",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_accuracy_rating_with_bows": {
+      "display": "#% increased Accuracy Rating with Bows",
+      "tradeStatId": "explicit.stat_169946467",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_amount_of_life_leeched": {
+      "display": "#% increased amount of Life Leeched",
+      "tradeStatId": "explicit.stat_2112395885",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_amount_of_mana_leeched": {
+      "display": "#% increased amount of Mana Leeched",
+      "tradeStatId": "explicit.stat_2839066308",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -4893,6 +5953,75 @@
             [
               41,
               45
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_area_of_effect": {
+      "display": "#% increased Area of Effect",
+      "tradeStatId": "explicit.stat_280731498",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_area_of_effect_of_curses": {
+      "display": "#% increased Area of Effect of Curses",
+      "tradeStatId": "explicit.stat_153777645",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              8,
+              12
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_armour": {
+      "display": "#% increased Armour",
+      "tradeStatId": "explicit.stat_2866361420",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -5272,6 +6401,75 @@
         }
       ]
     },
+    "x_increased_armour_break_duration": {
+      "display": "#% increased Armour Break Duration",
+      "tradeStatId": "explicit.stat_2637470878",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_armour_evasion_and_energy_shield_from_equipped_s": {
+      "display": "#% increased Armour, Evasion and Energy Shield from Equipped Shield",
+      "tradeStatId": "explicit.stat_2523933828",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              18,
+              32
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_attack_damage": {
+      "display": "#% increased Attack Damage",
+      "tradeStatId": "explicit.stat_2843214518",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_attack_speed": {
       "display": "#% increased Attack Speed",
       "tradeStatId": "explicit.stat_681332047",
@@ -5379,6 +6577,167 @@
         }
       ]
     },
+    "x_increased_attack_speed_2": {
+      "display": "#% increased Attack Speed",
+      "tradeStatId": "explicit.stat_681332047",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_attack_speed_with_bows": {
+      "display": "#% increased Attack Speed with Bows",
+      "tradeStatId": "explicit.stat_3759735052",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_attack_speed_with_crossbows": {
+      "display": "#% increased Attack Speed with Crossbows",
+      "tradeStatId": "explicit.stat_1135928777",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_attack_speed_with_quarterstaves": {
+      "display": "#% increased Attack Speed with Quarterstaves",
+      "tradeStatId": "explicit.stat_3283482523",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_attack_speed_with_spears": {
+      "display": "#% increased Attack Speed with Spears",
+      "tradeStatId": "explicit.stat_1165163804",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_bleeding_duration": {
+      "display": "#% increased Bleeding Duration",
+      "tradeStatId": "explicit.stat_1459321413",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_blind_effect": {
+      "display": "#% increased Blind Effect",
+      "tradeStatId": "explicit.stat_1585769763",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_block_chance": {
       "display": "#% increased Block chance",
       "tradeStatId": "explicit.stat_4147897060",
@@ -5457,6 +6816,75 @@
             [
               40,
               45
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_block_chance_2": {
+      "display": "#% increased Block chance",
+      "tradeStatId": "explicit.stat_4147897060",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_bonuses_gained_from_equipped_quiver": {
+      "display": "#% increased bonuses gained from Equipped Quiver",
+      "tradeStatId": "explicit.stat_1200678966",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_cast_speed": {
+      "display": "#% increased Cast Speed",
+      "tradeStatId": "explicit.stat_2891184298",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
             ]
           ]
         }
@@ -5697,6 +7125,29 @@
       ],
       "_needsCanonicalText": true
     },
+    "x_increased_chance_to_inflict_ailments": {
+      "display": "#% increased chance to inflict Ailments",
+      "tradeStatId": "explicit.stat_1772247089",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_chance_to_shock": {
       "display": "#% increased chance to Shock",
       "tradeStatId": "explicit.stat_293638271",
@@ -5756,6 +7207,52 @@
             [
               51,
               60
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_chance_to_shock_2": {
+      "display": "#% increased chance to Shock",
+      "tradeStatId": "explicit.stat_293638271",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_chaos_damage": {
+      "display": "#% increased Chaos Damage",
+      "tradeStatId": "explicit.stat_736967255",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              7,
+              13
             ]
           ]
         }
@@ -6241,6 +7738,29 @@
         }
       ]
     },
+    "x_increased_charm_charges_gained_2": {
+      "display": "#% increased Charm Charges gained",
+      "tradeStatId": "explicit.stat_3585532255",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_charm_effect_duration": {
       "display": "#% increased Charm Effect Duration",
       "tradeStatId": "explicit.stat_1389754388",
@@ -6299,6 +7819,75 @@
             [
               4,
               9
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_charm_effect_duration_2": {
+      "display": "#% increased Charm Effect Duration",
+      "tradeStatId": "explicit.stat_1389754388",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_chill_duration_on_enemies": {
+      "display": "#% increased Chill Duration on Enemies",
+      "tradeStatId": "explicit.stat_3485067555",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_cold_damage": {
+      "display": "#% increased Cold Damage",
+      "tradeStatId": "explicit.stat_3291658075",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -6565,6 +8154,29 @@
         }
       ]
     },
+    "x_increased_cooldown_recovery_rate": {
+      "display": "#% increased Cooldown Recovery Rate",
+      "tradeStatId": "explicit.stat_1004011302",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              3,
+              5
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_critical_damage_bonus": {
       "display": "#% increased Critical Damage Bonus",
       "tradeStatId": "explicit.stat_3556824919",
@@ -6639,6 +8251,29 @@
         }
       ]
     },
+    "x_increased_critical_damage_bonus_2": {
+      "display": "#% increased Critical Damage Bonus",
+      "tradeStatId": "explicit.stat_3556824919",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_critical_damage_bonus_for_attack_damage": {
       "display": "#% increased Critical Damage Bonus for Attack Damage",
       "tradeStatId": "explicit.stat_3714003708",
@@ -6707,6 +8342,52 @@
             [
               10,
               14
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_critical_damage_bonus_for_attack_damage_2": {
+      "display": "#% increased Critical Damage Bonus for Attack Damage",
+      "tradeStatId": "explicit.stat_3714003708",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_critical_damage_bonus_with_spears": {
+      "display": "#% increased Critical Damage Bonus with Spears",
+      "tradeStatId": "explicit.stat_2456523742",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -6786,6 +8467,29 @@
         }
       ]
     },
+    "x_increased_critical_hit_chance_2": {
+      "display": "#% increased Critical Hit Chance",
+      "tradeStatId": "explicit.stat_587431675",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_critical_hit_chance_for_attacks": {
       "display": "#% increased Critical Hit Chance for Attacks",
       "tradeStatId": "explicit.stat_2194114101",
@@ -6854,6 +8558,29 @@
             [
               10,
               14
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_critical_hit_chance_for_attacks_2": {
+      "display": "#% increased Critical Hit Chance for Attacks",
+      "tradeStatId": "explicit.stat_2194114101",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
             ]
           ]
         }
@@ -6935,6 +8662,29 @@
         }
       ]
     },
+    "x_increased_critical_hit_chance_for_spells_2": {
+      "display": "#% increased Critical Hit Chance for Spells",
+      "tradeStatId": "explicit.stat_737908626",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_critical_spell_damage_bonus": {
       "display": "#% increased Critical Spell Damage Bonus",
       "tradeStatId": "explicit.stat_274716455",
@@ -7006,6 +8756,190 @@
             [
               10,
               14
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_critical_spell_damage_bonus_2": {
+      "display": "#% increased Critical Spell Damage Bonus",
+      "tradeStatId": "explicit.stat_274716455",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_crossbow_reload_speed": {
+      "display": "#% increased Crossbow Reload Speed",
+      "tradeStatId": "explicit.stat_3192728503",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_curse_duration": {
+      "display": "#% increased Curse Duration",
+      "tradeStatId": "explicit.stat_3824372849",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_curse_magnitudes": {
+      "display": "#% increased Curse Magnitudes",
+      "tradeStatId": "explicit.stat_2353576063",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_against_enemies_with_fully_broken_armour": {
+      "display": "#% increased Damage against Enemies with Fully Broken Armour",
+      "tradeStatId": "explicit.stat_2301718443",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_if_you_have_consumed_a_corpse_recently": {
+      "display": "#% increased Damage if you have Consumed a Corpse Recently",
+      "tradeStatId": "explicit.stat_2118708619",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_while_shapeshifted": {
+      "display": "#% increased Damage while Shapeshifted",
+      "tradeStatId": "explicit.stat_2440073079",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_while_you_have_an_active_charm": {
+      "display": "#% increased Damage while you have an active Charm",
+      "tradeStatId": "explicit.stat_627767961",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -7084,6 +9018,213 @@
         }
       ]
     },
+    "x_increased_damage_with_bows": {
+      "display": "#% increased Damage with Bows",
+      "tradeStatId": "explicit.stat_4188894176",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_crossbows": {
+      "display": "#% increased Damage with Crossbows",
+      "tradeStatId": "explicit.stat_427684353",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_hits_against_rare_and_unique_enemies": {
+      "display": "#% increased Damage with Hits against Rare and Unique Enemies",
+      "tradeStatId": "explicit.stat_1852872083",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_maces": {
+      "display": "#% increased Damage with Maces",
+      "tradeStatId": "explicit.stat_1181419800",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_plant_skills": {
+      "display": "#% increased Damage with Plant Skills",
+      "tradeStatId": "explicit.stat_2518900926",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_quarterstaves": {
+      "display": "#% increased Damage with Quarterstaves",
+      "tradeStatId": "explicit.stat_4045894391",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_spears": {
+      "display": "#% increased Damage with Spears",
+      "tradeStatId": "explicit.stat_2696027455",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_with_warcries": {
+      "display": "#% increased Damage with Warcries",
+      "tradeStatId": "explicit.stat_1594812856",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_dexterity": {
+      "display": "#% increased Dexterity",
+      "tradeStatId": "explicit.stat_4139681126",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_duration": {
       "display": "#% increased Skill Effect Duration",
       "tradeStatId": "explicit.stat_3377888098",
@@ -7147,13 +9288,174 @@
         }
       ]
     },
+    "x_increased_duration_of_damaging_ailments_on_enemies": {
+      "display": "#% increased Duration of Damaging Ailments on Enemies",
+      "tradeStatId": "explicit.stat_1829102168",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_duration_of_ignite_shock_and_chill_on_enemies": {
+      "display": "#% increased Duration of Ignite, Shock and Chill on Enemies",
+      "tradeStatId": "explicit.stat_1062710370",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_effect_of_prefixes": {
+      "display": "#% increased Effect of Prefixes",
+      "tradeStatId": "explicit.stat_1443502073",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              40,
+              60
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_effect_of_suffixes": {
+      "display": "#% increased Effect of Suffixes",
+      "tradeStatId": "explicit.stat_2475221757",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              40,
+              60
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_effect_of_your_mark_skills": {
+      "display": "#% increased Effect of your Mark Skills",
+      "tradeStatId": "explicit.stat_712554801",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_elemental_ailment_threshold": {
+      "display": "#% increased Elemental Ailment Threshold",
+      "tradeStatId": "explicit.stat_3544800472",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_elemental_damage": {
+      "display": "#% increased Elemental Damage",
+      "tradeStatId": "explicit.stat_3141070085",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_elemental_damage_with_attacks__1": {
       "display": "#% increased Elemental Damage with Attacks",
       "tradeStatId": "explicit.stat_387439868",
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "1-handed",
+      "family": "Claw / Dagger / One Hand Sword +5",
       "types": [
         "claw",
         "dagger",
@@ -7233,7 +9535,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Two Hand Sword / Two Hand Axe / Two Hand Mace +2",
+      "family": "2-handed",
       "types": [
         "two-hand-sword",
         "two-hand-axe",
@@ -7401,6 +9703,29 @@
         }
       ]
     },
+    "x_increased_energy_shield_from_equipped_focus": {
+      "display": "#% increased Energy Shield from Equipped Focus",
+      "tradeStatId": "explicit.stat_3174700878",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              30,
+              50
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_energy_shield_recharge_rate": {
       "display": "#% increased Energy Shield Recharge Rate",
       "tradeStatId": "explicit.stat_2339757871",
@@ -7557,6 +9882,29 @@
             [
               15,
               26
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_evasion_rating": {
+      "display": "#% increased Evasion Rating",
+      "tradeStatId": "explicit.stat_2106365538",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -7737,6 +10085,52 @@
             [
               10,
               13
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_exposure_effect": {
+      "display": "#% increased Exposure Effect",
+      "tradeStatId": "explicit.stat_2074866941",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              8
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_fire_damage": {
+      "display": "#% increased Fire Damage",
+      "tradeStatId": "explicit.stat_3962278098",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -8003,6 +10397,29 @@
         }
       ]
     },
+    "x_increased_flammability_magnitude": {
+      "display": "#% increased Flammability Magnitude",
+      "tradeStatId": "explicit.stat_2968503605",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_flask_charges_gained": {
       "display": "#% increased Flask Charges gained",
       "tradeStatId": "explicit.stat_1836676211",
@@ -8067,6 +10484,52 @@
         {
           "tier": 6,
           "ilvl": 2,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_flask_charges_gained_2": {
+      "display": "#% increased Flask Charges gained",
+      "tradeStatId": "explicit.stat_1836676211",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_flask_effect_duration": {
+      "display": "#% increased Flask Effect Duration",
+      "tradeStatId": "explicit.stat_3741323227",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
           "ranges": [
             [
               5,
@@ -8286,6 +10749,236 @@
         }
       ]
     },
+    "x_increased_freeze_buildup_2": {
+      "display": "#% increased Freeze Buildup",
+      "tradeStatId": "explicit.stat_473429811",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_freeze_buildup_with_quarterstaves": {
+      "display": "#% increased Freeze Buildup with Quarterstaves",
+      "tradeStatId": "explicit.stat_1697447343",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_freeze_threshold": {
+      "display": "#% increased Freeze Threshold",
+      "tradeStatId": "explicit.stat_3780644166",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              18,
+              32
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_global_physical_damage": {
+      "display": "#% increased Global Physical Damage",
+      "tradeStatId": "explicit.stat_1310194496",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_glory_generation_for_banner_skills": {
+      "display": "#% increased Glory generation for Banner Skills",
+      "tradeStatId": "explicit.stat_1869147066",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_hazard_damage": {
+      "display": "#% increased Hazard Damage",
+      "tradeStatId": "explicit.stat_1697951953",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_ignite_magnitude": {
+      "display": "#% increased Ignite Magnitude",
+      "tradeStatId": "explicit.stat_3791899485",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_intelligence": {
+      "display": "#% increased Intelligence",
+      "tradeStatId": "explicit.stat_656461285",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_knockback_distance": {
+      "display": "#% increased Knockback Distance",
+      "tradeStatId": "explicit.stat_565784293",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_life_flask_charges_gained": {
+      "display": "#% increased Life Flask Charges gained",
+      "tradeStatId": "explicit.stat_4009879772",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_life_recovered": {
       "display": "#% increased Life Recovered",
       "tradeStatId": "explicit.stat_1261982764",
@@ -8344,6 +11037,75 @@
             [
               61,
               68
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_life_recovery_from_flasks": {
+      "display": "#% increased Life Recovery from Flasks",
+      "tradeStatId": "explicit.stat_821241191",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_life_regeneration_rate": {
+      "display": "#% increased Life Regeneration rate",
+      "tradeStatId": "explicit.stat_44972811",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_lightning_damage": {
+      "display": "#% increased Lightning Damage",
+      "tradeStatId": "explicit.stat_2231156303",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -8610,6 +11372,167 @@
         }
       ]
     },
+    "x_increased_magnitude_of_abyssal_wasting_you_inflict": {
+      "display": "#% increased Magnitude of Abyssal Wasting you inflict",
+      "tradeStatId": "explicit.stat_4043376133",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_magnitude_of_ailments_you_inflict": {
+      "display": "#% increased Magnitude of Ailments you inflict",
+      "tradeStatId": "explicit.stat_1303248024",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_magnitude_of_bleeding_you_inflict": {
+      "display": "#% increased Magnitude of Bleeding you inflict",
+      "tradeStatId": "explicit.stat_3166958180",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_magnitude_of_damaging_ailments_you_inflict_with_": {
+      "display": "#% increased Magnitude of Damaging Ailments you inflict with Critical Hits",
+      "tradeStatId": "explicit.stat_440490623",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_magnitude_of_poison_you_inflict": {
+      "display": "#% increased Magnitude of Poison you inflict",
+      "tradeStatId": "explicit.stat_2487305362",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_magnitude_of_shock_you_inflict": {
+      "display": "#% increased Magnitude of Shock you inflict",
+      "tradeStatId": "explicit.stat_2527686725",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_mana_flask_charges_gained": {
+      "display": "#% increased Mana Flask Charges gained",
+      "tradeStatId": "explicit.stat_3590792340",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_mana_recovered": {
       "display": "#% increased Mana Recovered",
       "tradeStatId": "explicit.stat_1811130680",
@@ -8668,6 +11591,29 @@
             [
               61,
               68
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_mana_recovery_from_flasks": {
+      "display": "#% increased Mana Recovery from Flasks",
+      "tradeStatId": "explicit.stat_2222186378",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -8752,6 +11698,29 @@
         }
       ]
     },
+    "x_increased_mana_regeneration_rate_2": {
+      "display": "#% increased Mana Regeneration Rate",
+      "tradeStatId": "explicit.stat_789117908",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_maximum_energy_shield": {
       "display": "#% increased maximum Energy Shield",
       "tradeStatId": "explicit.stat_2482852589",
@@ -8830,6 +11799,29 @@
             [
               10,
               13
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_maximum_energy_shield_2": {
+      "display": "#% increased maximum Energy Shield",
+      "tradeStatId": "explicit.stat_2482852589",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -8921,6 +11913,52 @@
         }
       ]
     },
+    "x_increased_melee_damage": {
+      "display": "#% increased Melee Damage",
+      "tradeStatId": "explicit.stat_1002362373",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_melee_damage_if_you_ve_dealt_a_projectile_attack": {
+      "display": "#% increased Melee Damage if you've dealt a Projectile Attack Hit in the past eight seconds",
+      "tradeStatId": "explicit.stat_3028809864",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_movement_speed": {
       "display": "#% increased Movement Speed",
       "tradeStatId": "explicit.stat_2250533757",
@@ -8989,6 +12027,75 @@
             [
               10,
               10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_movement_speed_2": {
+      "display": "#% increased Movement Speed",
+      "tradeStatId": "explicit.stat_2250533757",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_parried_debuff_duration": {
+      "display": "#% increased Parried Debuff Duration",
+      "tradeStatId": "explicit.stat_3401186585",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_parry_damage": {
+      "display": "#% increased Parry Damage",
+      "tradeStatId": "explicit.stat_1569159338",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
             ]
           ]
         }
@@ -9099,7 +12206,76 @@
         }
       ]
     },
+    "x_increased_pin_buildup": {
+      "display": "#% increased Pin Buildup",
+      "tradeStatId": "explicit.stat_3473929743",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_poison_duration": {
+      "display": "#% increased Poison Duration",
+      "tradeStatId": "explicit.stat_2011656677",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_presence_area_of_effect": {
+      "display": "#% increased Presence Area of Effect",
+      "tradeStatId": "explicit.stat_101878827",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_presence_area_of_effect_2": {
       "display": "#% increased Presence Area of Effect",
       "tradeStatId": "explicit.stat_101878827",
       "affix": "suffix",
@@ -9147,6 +12323,52 @@
             [
               13,
               16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_projectile_damage": {
+      "display": "#% increased Projectile Damage",
+      "tradeStatId": "explicit.stat_1839076647",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_projectile_damage_if_you_ve_dealt_a_melee_hit_in": {
+      "display": "#% increased Projectile Damage if you've dealt a Melee Hit in the past eight seconds",
+      "tradeStatId": "explicit.stat_3596695232",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
             ]
           ]
         }
@@ -9210,6 +12432,29 @@
             [
               10,
               17
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_projectile_speed_2": {
+      "display": "#% increased Projectile Speed",
+      "tradeStatId": "explicit.stat_3759663284",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              8
             ]
           ]
         }
@@ -9384,6 +12629,98 @@
             [
               41,
               45
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_shock_duration": {
+      "display": "#% increased Shock Duration",
+      "tradeStatId": "explicit.stat_3668351662",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_skill_effect_duration": {
+      "display": "#% increased Skill Effect Duration",
+      "tradeStatId": "explicit.stat_3377888098",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_skill_speed_while_shapeshifted": {
+      "display": "#% increased Skill Speed while Shapeshifted",
+      "tradeStatId": "explicit.stat_918325986",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_spell_damage": {
+      "display": "#% increased Spell Damage",
+      "tradeStatId": "explicit.stat_2974417149",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
             ]
           ]
         }
@@ -9934,6 +13271,75 @@
         "explicit.stat_1416406066"
       ]
     },
+    "x_increased_strength": {
+      "display": "#% increased Strength",
+      "tradeStatId": "explicit.stat_734614379",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_stun_buildup": {
+      "display": "#% increased Stun Buildup",
+      "tradeStatId": "explicit.stat_239367161",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_stun_buildup_with_maces": {
+      "display": "#% increased Stun Buildup with Maces",
+      "tradeStatId": "explicit.stat_872504239",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_stun_duration": {
       "display": "#% increased Stun Duration",
       "tradeStatId": "explicit.stat_748522257",
@@ -10012,6 +13418,236 @@
             [
               11,
               13
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_stun_threshold": {
+      "display": "#% increased Stun Threshold",
+      "tradeStatId": "explicit.stat_680068163",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              6,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_stun_threshold_if_you_haven_t_been_stunned_recen": {
+      "display": "#% increased Stun Threshold if you haven't been Stunned Recently",
+      "tradeStatId": "explicit.stat_1405298142",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_stun_threshold_while_parrying": {
+      "display": "#% increased Stun Threshold while Parrying",
+      "tradeStatId": "explicit.stat_1911237468",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_thorns_damage": {
+      "display": "#% increased Thorns damage",
+      "tradeStatId": "explicit.stat_1315743832",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_totem_damage": {
+      "display": "#% increased Totem Damage",
+      "tradeStatId": "explicit.stat_3851254963",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              18
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_totem_life": {
+      "display": "#% increased Totem Life",
+      "tradeStatId": "explicit.stat_686254215",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_totem_placement_speed": {
+      "display": "#% increased Totem Placement speed",
+      "tradeStatId": "explicit.stat_3374165039",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_warcry_cooldown_recovery_rate": {
+      "display": "#% increased Warcry Cooldown Recovery Rate",
+      "tradeStatId": "explicit.stat_4159248054",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_warcry_speed": {
+      "display": "#% increased Warcry Speed",
+      "tradeStatId": "explicit.stat_1316278494",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              10,
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_withered_magnitude": {
+      "display": "#% increased Withered Magnitude",
+      "tradeStatId": "explicit.stat_3973629633",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
             ]
           ]
         }
@@ -10271,6 +13907,29 @@
         }
       ]
     },
+    "x_of_damage_is_taken_from_mana_before_life": {
+      "display": "#% of Damage is taken from Mana before Life",
+      "tradeStatId": "explicit.stat_458438597",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
     "x_of_damage_taken_recouped_as_life": {
       "display": "#% of Damage taken Recouped as Life",
       "tradeStatId": "explicit.stat_1444556985",
@@ -10329,6 +13988,29 @@
             [
               10,
               12
+            ]
+          ]
+        }
+      ]
+    },
+    "x_of_damage_taken_recouped_as_life_2": {
+      "display": "#% of Damage taken Recouped as Life",
+      "tradeStatId": "explicit.stat_1444556985",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              3
             ]
           ]
         }
@@ -10436,6 +14118,29 @@
             [
               20,
               23
+            ]
+          ]
+        }
+      ]
+    },
+    "x_of_skill_mana_costs_converted_to_life_costs": {
+      "display": "#% of Skill Mana Costs Converted to Life Costs",
+      "tradeStatId": "explicit.stat_2480498143",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              4,
+              6
             ]
           ]
         }
@@ -11125,6 +14830,30 @@
           ]
         }
       ]
+    },
+    "x_reduced_slowing_potency_of_debuffs_on_you": {
+      "display": "#% reduced Slowing Potency of Debuffs on You",
+      "tradeStatId": null,
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ],
+      "_needsCanonicalText": true
     },
     "x_to_accuracy_rating": {
       "display": "# to Accuracy Rating",
@@ -13593,7 +17322,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "1-handed",
+      "family": "2-handed",
       "types": [
         "bow"
       ],
@@ -13656,7 +17385,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "1-handed",
+      "family": "2-handed",
       "types": [
         "crossbow"
       ],
@@ -14785,6 +18514,29 @@
             [
               14,
               20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_to_maximum_rage": {
+      "display": "# to Maximum Rage",
+      "tradeStatId": "explicit.stat_1181501418",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
             ]
           ]
         }

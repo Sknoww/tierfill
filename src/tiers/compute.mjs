@@ -104,3 +104,39 @@ export function computeAllTiers(stat, mode = 'inclusive') {
     ...computeFilter(stat, t.tier, mode),
   }));
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Single-range (jewel) thresholds.
+ *
+ * Jewel mods don't tier — they carry ONE range (e.g. 10–20% increased Damage),
+ * so the tier dropdown would show a single useless row. But that one range is
+ * wide enough that a few percent swings the price, so instead we slice it into a
+ * handful of MIN thresholds the user can pick from. Breakpoints (user spec):
+ *   Min · 25% · 50% · 75% · 90% · Max
+ * value(p) = lo + p·(hi − lo). Intermediate points round to the nearest integer
+ * (jewel rolls are integers); Min/Max stay exact. Adjacent points that round to
+ * the same MIN are de-duplicated, preferring the higher-% label (so Max always
+ * survives) — only happens on very narrow ranges.
+ * ────────────────────────────────────────────────────────────────────────── */
+export const THRESHOLD_PCTS = [0, 0.25, 0.5, 0.75, 0.9, 1];
+
+// True for the jewel case: a one-rung ladder, which the picker renders as
+// percentile presets rather than tiers.
+export function isSingleRange(stat) {
+  return (stat.tiers || []).length === 1;
+}
+
+export function computeThresholds(stat) {
+  const tier = (stat.tiers || [])[0];
+  if (!tier || !tier.ranges || !tier.ranges.length) return [];
+  const [lo, hi] = tier.ranges[0];
+  const all = THRESHOLD_PCTS.map((p) => ({
+    pct: p,
+    label: p === 0 ? 'Min' : p === 1 ? 'Max' : `${Math.round(p * 100)}%`,
+    min: p === 0 ? lo : p === 1 ? hi : Math.round(lo + p * (hi - lo)),
+    range: [lo, hi],
+  }));
+  // Drop duplicates by `min`, keeping the LAST (highest-%) occurrence so the Max
+  // endpoint is never the one dropped on a narrow range.
+  return all.filter((t, i) => all.findLastIndex((x) => x.min === t.min) === i);
+}

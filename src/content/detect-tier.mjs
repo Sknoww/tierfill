@@ -128,3 +128,22 @@ export function rollQuality(rolls, ranges) {
   if (pos <= 0.34) return 'low';
   return 'mid';
 }
+
+// Where a roll sits in its band as a 0–100 percentage (the single-range / jewel
+// case: "this roll is 82% of the way up its range"). Same averaging axis as
+// rollQuality. Clamped to [0,100]; null for a fixed band with no spread.
+export function rollPercentile(rolls, ranges) {
+  let val; let floor; let ceil;
+  if (ranges.length >= 2 && rolls.length >= 2) {
+    val = (rolls[0] + rolls[1]) / 2;
+    floor = (ranges[0][0] + ranges[1][0]) / 2;
+    ceil = (ranges[0][1] + ranges[1][1]) / 2;
+  } else {
+    val = rolls[0];
+    floor = ranges[0][0];
+    ceil = ranges[0][1];
+  }
+  if (!(ceil > floor)) return null;
+  const pos = (val - floor) / (ceil - floor);
+  return Math.max(0, Math.min(100, Math.round(pos * 100)));
+}

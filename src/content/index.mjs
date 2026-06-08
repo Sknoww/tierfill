@@ -12,7 +12,7 @@
  * Additive-only, idempotent, debounced MutationObserver (PLAN §9 coexistence).
  */
 
-import { computeAllTiers } from '../tiers/compute.mjs';
+import { computeAllTiers, computeThresholds } from '../tiers/compute.mjs';
 import { resolveFamily } from './detect.mjs';
 import { isAffixSplit, buildCombinedFamily } from './affix.mjs';
 import { createTierControl } from '../ui/tier-control.mjs';
@@ -156,8 +156,8 @@ function processRow(row) {
     const combined = buildCombinedFamily(families);
     const resolved = resolveAffixLadder(families, combined);
     const control = createTierControl({
-      families: [resolved], family: resolved, ambiguous: false, minInput, maxInput, computeAllTiers,
-      onChange: (entry, tier) => setSelection(id, { display: entry.display, entry, tier }),
+      families: [resolved], family: resolved, ambiguous: false, minInput, maxInput, computeAllTiers, computeThresholds,
+      onChange: (entry, payload) => setSelection(id, { display: entry.display, entry, ...payload }),
     });
     minInput.parentNode.insertBefore(control.root, minInput);
     rowState.set(row, { update: control.update, families, family: resolved, combined, affixSplit: true });
@@ -168,9 +168,11 @@ function processRow(row) {
   if (!family) return;
 
   const control = createTierControl({
-    families, family, ambiguous, minInput, maxInput, computeAllTiers,
+    families, family, ambiguous, minInput, maxInput, computeAllTiers, computeThresholds,
     // publish the pick to the §9 store so the results annotator can detect tiers.
-    onChange: (entry, tier) => setSelection(id, { display: entry.display, entry, tier }),
+    // `payload` carries { tier } for tiered mods, or { tier, singleRange, min, pct }
+    // for jewels (single-range) so results can badge roll quality instead of a tier.
+    onChange: (entry, payload) => setSelection(id, { display: entry.display, entry, ...payload }),
   });
   minInput.parentNode.insertBefore(control.root, minInput); // left of MIN
   rowState.set(row, { update: control.update, families, family, ambiguous });

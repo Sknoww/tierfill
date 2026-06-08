@@ -132,10 +132,14 @@ export function familyUmbrella(f) {
   return `${sorted[0]} +${sorted.length - 1}`;
 }
 
-export function createTierControl({ families, family, ambiguous, minInput, maxInput, computeAllTiers, onChange }) {
+export function createTierControl({ families, family, ambiguous, minInput, maxInput, computeAllTiers, computeThresholds, onChange }) {
   let current = family;
-  let selectedTier = null; // remembered across family swaps so MIN re-fills automatically
+  let selectedKey = null; // chosen option key, remembered across family swaps so MIN re-fills
   let mode = 'inclusive'; // §11.8 threshold mode (per-control); default = inclusive
+
+  // Single-range (jewel) families don't tier — they carry one range that the picker
+  // renders as percentile MIN presets instead of a tier ladder (see compute.mjs).
+  const isSingle = (fam) => (fam.tiers || []).length === 1;
 
   // Sign-flipped mods (e.g. "increased Charges per use", where better = more negative)
   // fill the row's MAX box with a negative value; every normal mod fills MIN. These
@@ -221,98 +225,154 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
   info.appendChild(tip);
   inner.appendChild(info);
 
+  // Build the panel's option list as a uniform shape so select/apply/re-fill don't
+  // care whether they're driving a tier ladder or a jewel percentile range:
+  //   { key, fill, badge, ranges, tier?, pct?, range? }
+  //     • key   — stable id used to re-apply the same pick after a family/mode swap
+  //     • fill  — the value written into the row's MIN (or MAX, when inverted)
+  //     • badge — the collapsed control's label once picked (e.g. "T3", "75%")
+  function buildOptions() {
+    if (isSingle(current)) {
+      // Reversed to Max→Min so the BEST roll sits at the top, matching the tier
+      // ladder (T1 best-first). computeThresholds stays canonical ascending.
+      return computeThresholds(current).map((t) => ({
+        key: `p${t.pct}`,
+        fill: t.min,
+        badge: t.label,
+        pct: t.pct,
+        range: t.range,
+      })).reverse();
+    }
+    return computeAllTiers(current, mode).map((t) => ({
+      key: `t${t.tier}`,
+      fill: fillOf(t),
+      badge: `T${t.tier}`,
+      tier: t.tier,
+      ranges: t.ranges,
+    }));
+  }
+
   function rebuild() {
-    const tiers = computeAllTiers(current, mode);
-    // Strict tightens MIN above every lower tier — shift the collapsed control
-    // to the amber accent so the active mode is visible without opening the panel.
-    root.classList.toggle('is-strict', mode === 'strict');
+    const single = isSingle(current);
+    const options = buildOptions();
+    // Strict tightens MIN above every lower tier — shift the collapsed control to the
+    // amber accent so the active mode is visible without opening the panel. Jewels
+    // have no Strict/Inclusive distinction, so never accent them.
+    root.classList.toggle('is-strict', !single && mode === 'strict');
+    root.classList.toggle('is-single', single);
     panel.replaceChildren();
 
-    // ── threshold-mode bar (header of the panel) ────────────────────────────
-    const modeBar = document.createElement('div');
-    modeBar.className = 'poe2tf-mode';
-    MODES.forEach((m) => {
-      const mb = document.createElement('button');
-      mb.type = 'button';
-      mb.className = 'poe2tf-mode-btn';
-      mb.textContent = m.label;
-      mb.classList.add(`poe2tf-mode-btn--${m.key}`);
-      if (m.key === mode) mb.classList.add('is-active');
-      mb.addEventListener('click', () => {
-        if (mode === m.key) return;
-        mode = m.key;
-        rebuild(); // recompute mins for the new mode; re-fills MIN if a tier is set
+    // ── threshold-mode bar (header of the panel) — tiered ladders only ──────────
+    // A single-range jewel mod has one band, so Inclusive vs Strict is meaningless;
+    // omit the bar entirely for it.
+    if (!single) {
+      const modeBar = document.createElement('div');
+      modeBar.className = 'poe2tf-mode';
+      MODES.forEach((m) => {
+        const mb = document.createElement('button');
+        mb.type = 'button';
+        mb.className = 'poe2tf-mode-btn';
+        mb.textContent = m.label;
+        mb.classList.add(`poe2tf-mode-btn--${m.key}`);
+        if (m.key === mode) mb.classList.add('is-active');
+        mb.addEventListener('click', () => {
+          if (mode === m.key) return;
+          mode = m.key;
+          rebuild(); // recompute mins for the new mode; re-fills MIN if a tier is set
+        });
+        modeBar.appendChild(mb);
       });
-      modeBar.appendChild(mb);
-    });
-    panel.appendChild(modeBar);
+      panel.appendChild(modeBar);
+    }
 
-    tiers.forEach((t) => {
-      const o = document.createElement('button');
-      o.type = 'button';
-      o.className = 'poe2tf-opt';
-      o.append(
-        mk('span', 'poe2tf-opt-tier', `≈ T${t.tier}`),
-        mk('span', 'poe2tf-opt-min', `${boxLabel().toLowerCase()} ${fmtMin(fillOf(t))}`),
+    options.forEach((o) => {
+      const opt = document.createElement('button');
+      opt.type = 'button';
+      opt.className = 'poe2tf-opt';
+      // Jewels read "75% · min 17"; tiers read "≈ T3 · min 42".
+      opt.append(
+        mk('span', 'poe2tf-opt-tier', single ? o.badge : `≈ ${o.badge}`),
+        mk('span', 'poe2tf-opt-min', `${boxLabel().toLowerCase()} ${fmtMin(o.fill)}`),
       );
-      o.addEventListener('click', () => select(t));
-      panel.appendChild(o);
+      opt.addEventListener('click', () => select(o));
+      panel.appendChild(opt);
     });
-    // Family or mode just changed — if a tier was already chosen, re-fill MIN
-    // with this family/mode's value for the same tier (no need to reopen).
-    if (selectedTier != null) {
-      const match = tiers.find((t) => t.tier === selectedTier);
+    // Family or mode just changed — if an option was already chosen, re-fill MIN with
+    // this family/mode's value for the same option key (no need to reopen).
+    if (selectedKey != null) {
+      const match = options.find((o) => o.key === selectedKey);
       if (match) {
-        applyTier(match);
+        applyOption(match);
         return;
       }
     }
+    // Nothing applied (first render, or a pick that doesn't carry across a gear↔jewel
+    // swap) — reset the collapsed control to its placeholder. `selectedKey` is kept so
+    // toggling back to the original family still re-applies the remembered pick.
+    label.textContent = single ? 'ROLL' : 'TIER';
+    root.classList.remove('is-set');
     updateTip(null);
   }
 
-  function applyTier(t) {
-    setNativeValue(targetInput(), fillOf(t));
-    label.textContent = `T${t.tier}`;
+  function applyOption(o) {
+    setNativeValue(targetInput(), o.fill);
+    label.textContent = o.badge;
     root.classList.add('is-set');
-    selectedTier = t.tier;
-    updateTip(t);
-    // Publish the pick (target tier + resolved family entry) for the §9 results
-    // annotator. The target tier is mode-independent — Strict only changes MIN.
-    if (onChange) onChange(current, t.tier);
+    selectedKey = o.key;
+    updateTip(o);
+    // Publish the pick for the §9 results annotator. Tiered mods carry their target
+    // tier (mode-independent — Strict only changes MIN); jewels carry the picked MIN
+    // and percentile and flag themselves single-range so results badge roll quality.
+    if (onChange) {
+      onChange(current, o.pct != null
+        ? { tier: 1, singleRange: true, min: o.fill, pct: o.pct }
+        : { tier: o.tier });
+    }
   }
 
-  function select(t) {
-    applyTier(t);
+  function select(o) {
+    applyOption(o);
     tierDd.close();
   }
 
-  function updateTip(t) {
-    const modeLabel = (MODES.find((m) => m.key === mode) || MODES[0]).label;
-    const note =
-      mode === 'strict'
-        ? 'Strict — MIN is raised above every lower tier’s top average, so ' +
-          'lucky lower-tier rolls are excluded (may also drop a low-rolled T).'
-        : '≈ approximate — adjacent tiers overlap, so a lucky lower-tier roll ' +
-          'can slip past the filter. Switch to Strict to exclude them.';
+  function updateTip(o) {
+    const single = isSingle(current);
     tip.textContent = '';
     tip.appendChild(mk('div', 'poe2tf-tip-title', current.display));
     if (current.types && current.types.length) {
       tip.appendChild(mk('div', 'poe2tf-tip-fam', familyTypeList(current).join(', ')));
     }
     if (current._note) tip.appendChild(mk('div', 'poe2tf-tip-affix', current._note));
-    const modeRow = mk('div', 'poe2tf-tip-row');
-    modeRow.appendChild(document.createTextNode('mode: '));
-    modeRow.appendChild(mk('b', null, modeLabel));
-    tip.appendChild(modeRow);
-    if (t) {
-      const d = mk('div', 'poe2tf-tip-row');
-      d.appendChild(mk('b', null, `≈ T${t.tier}`));
-      d.appendChild(document.createTextNode(` · fills ${boxLabel()} = ${fmtMin(fillOf(t))}`));
-      tip.appendChild(d);
-      tip.appendChild(mk('div', 'poe2tf-tip-row', `rolls ${fmtRanges(t.ranges)}`));
-    } else {
-      tip.appendChild(mk('div', 'poe2tf-tip-row', `Pick a tier to fill ${boxLabel()}.`));
+
+    // Mode (Inclusive/Strict) only applies to tier ladders, not single-range jewels.
+    if (!single) {
+      const modeLabel = (MODES.find((m) => m.key === mode) || MODES[0]).label;
+      const modeRow = mk('div', 'poe2tf-tip-row');
+      modeRow.appendChild(document.createTextNode('mode: '));
+      modeRow.appendChild(mk('b', null, modeLabel));
+      tip.appendChild(modeRow);
     }
+
+    if (o) {
+      const d = mk('div', 'poe2tf-tip-row');
+      d.appendChild(mk('b', null, single ? o.badge : `≈ ${o.badge}`));
+      d.appendChild(document.createTextNode(` · fills ${boxLabel()} = ${fmtMin(o.fill)}`));
+      tip.appendChild(d);
+      tip.appendChild(mk('div', 'poe2tf-tip-row',
+        single ? `range ${o.range[0]}–${o.range[1]}` : `rolls ${fmtRanges(o.ranges)}`));
+    } else {
+      tip.appendChild(mk('div', 'poe2tf-tip-row',
+        single ? `Pick a roll % to fill ${boxLabel()}.` : `Pick a tier to fill ${boxLabel()}.`));
+    }
+
+    const note = single
+      ? '≈ percentile cuts of this jewel mod’s single roll range — pick a higher % ' +
+        'for a better-rolled jewel.'
+      : mode === 'strict'
+        ? 'Strict — MIN is raised above every lower tier’s top average, so ' +
+          'lucky lower-tier rolls are excluded (may also drop a low-rolled T).'
+        : '≈ approximate — adjacent tiers overlap, so a lucky lower-tier roll ' +
+          'can slip past the filter. Switch to Strict to exclude them.';
     tip.appendChild(mk('div', 'poe2tf-tip-note', note));
   }
 

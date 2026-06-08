@@ -24,7 +24,7 @@
  */
 
 import { getSelections, subscribe } from './store.mjs';
-import { templateToRegex, parseRolls, parseGggTier, parseGggRanges, rollQuality } from './detect-tier.mjs';
+import { templateToRegex, parseRolls, parseGggTier, parseGggRanges, rollQuality, rollPercentile } from './detect-tier.mjs';
 
 const NS = 'poe2tf';
 const DEBUG = false; // flip ON to log the per-match table while diagnosing.
@@ -73,6 +73,22 @@ function badgeLine(line, tier, quality, isOff) {
   line.appendChild(b);
 }
 
+// Jewel (single-range) badge: jewel mods don't tier, so instead of a ≈T verdict we
+// show WHERE the roll sits in its one range as a percentage (the §roll-quality
+// unlock for jewels). Green ✓ when the roll meets the MIN you picked, amber ▼ when
+// it's below — mirroring the tier badge's meets/below coloring on the percentile axis.
+function badgeJewelLine(line, pct, isBelow) {
+  const b = document.createElement('span');
+  b.className = `${NS}-badge${isBelow ? ` ${NS}-badge--off` : ''}`;
+  const glyph = isBelow ? '▼' : '✓';
+  b.appendChild(mk('span', `${NS}-badge-v`, `${glyph} ${pct}%`));
+  b.title = isBelow
+    ? `Below your picked minimum — this roll is ${pct}% of the way up the mod's range.`
+    : `Meets your picked minimum — this roll is ${pct}% of the way up the mod's range.`;
+  line.classList.add(`${NS}-host`);
+  line.appendChild(b);
+}
+
 function annotate() {
   updateToggleVisibility();
   clearAll();
@@ -107,6 +123,19 @@ function annotate() {
       for (const s of compiled) {
         const m = s.re.exec(text);
         if (!m) continue;
+
+        // Jewel (single-range) mods don't carry a tier — badge where the roll sits
+        // in its range as a %. Prefer GGG's printed band; fall back to our snapshot
+        // range when the result line has no bracket. Green/amber off the picked MIN.
+        if (s.singleRange) {
+          const jRanges = parseGggRanges(text) || (s.entry.tiers[0] && s.entry.tiers[0].ranges);
+          const jRolls = parseRolls(m);
+          const pct = jRanges ? rollPercentile(jRolls, jRanges) : null;
+          if (pct == null) continue; // fixed band — nothing to grade
+          badgeJewelLine(line, pct, s.min != null && jRolls[0] < s.min);
+          break;
+        }
+
         // GGG's own tier label + range, read straight off the result line.
         const ggg = parseGggTier(text);
         const ranges = parseGggRanges(text);
@@ -185,6 +214,8 @@ function buildLegend() {
   row(mk('b', `${NS}-lg-off`, '▼ ≈T2'), ' — below it: a lucky lower-tier roll');
   row(mk('span', `${NS}-lg-q`, '·low ·mid ·high'),
     ' — where the roll sits within its own tier (a high lower-tier roll is how it slipped past the filter)');
+  row(mk('b', `${NS}-lg-on`, '✓ 82%'),
+    ' — jewels: how far up the mod’s single range the roll sits (✓ meets your MIN, ▼ below)');
   info.appendChild(tip);
   return info;
 }

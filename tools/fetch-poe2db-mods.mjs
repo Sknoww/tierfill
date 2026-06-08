@@ -240,6 +240,60 @@ async function scrapeFlasks(result, report) {
   }
 }
 
+// ── jewels (generic: Emerald / Ruby / Sapphire) ────────────────────────────────
+// PoE2's generic jewels each carry their own slice of one shared mod pool: a mod
+// common to several bases is byte-identical (verified — 0 cross-base range
+// conflicts), while each base also has base-exclusive mods. So we scrape all three
+// and MERGE by stat text (union), tagging every jewel mod with the single `jewel`
+// trade slot token. Like flasks, we pull EVERY numeric prefix/suffix mod (gen 1/2).
+// Jewel mods are single-tier (one Level — confirmed on the live pages), so each
+// emerges as a one-rung ladder; the picker renders those as percentile presets.
+const JEWEL_PAGES = ['Emerald', 'Ruby', 'Sapphire'];
+const JEWEL_TOKEN = 'jewel';
+
+// PoE2DB glues some HYBRID jewel mods into a single string with two unrelated
+// clauses (e.g. "(5—10)% increased Armour(4—8)% increased Attack Damage"). The
+// trade site filters each clause as its own stat, so a glued two-clause mod can't
+// be one control — we PARK these (count + skip), mirroring build-data's |||||-hybrid
+// park. Two park signals:
+//   • >1 captured roll — a real jewel mod has exactly one roll (generic jewels have
+//     no "# to #" averaged mods — verified).
+//   • a literal digit left in the BLANKED text — a baked-in clause value (e.g.
+//     "15% increased chance to inflict Bleeding(5—10)% …") that captured only the
+//     other clause's roll, so the count check alone misses it. A clean single jewel
+//     mod's only number is the blanked roll, so any surviving digit ⇒ glued clause.
+const isJewelHybrid = (text, values) => values.length !== 1 || /\d/.test(text);
+
+// Scrape the generic jewel pages and merge by stat text → result[bucket][text],
+// each element tagged `types:['jewel']`. Appends (never overwrites) so a jewel mod
+// that shares its text with an existing gear/flask mod becomes a separate FAMILY
+// (build-data splits families by item type) rather than clobbering it.
+async function scrapeJewels(result, report) {
+  const byKey = new Map(); // "bucket::text" -> { bucket, text, values, level }
+  let parked = 0;
+  for (const page of JEWEL_PAGES) {
+    const html = await fetchPage(page);
+    for (const o of extractAllGenMods(html)) {
+      const { text, values } = parseStr(o.str);
+      if (!values.length) continue;
+      if (isJewelHybrid(text, values)) { parked += 1; continue; }
+      const bucket = String(o.ModGenerationTypeID) === '1' ? 'prefix' : 'suffix';
+      const k = `${bucket}::${text.toLowerCase()}`;
+      if (byKey.has(k)) continue; // first base wins (ranges identical across bases)
+      byKey.set(k, { bucket, text, values: values.map((p) => p.map(String)), level: String(o.Level || 1) });
+    }
+  }
+  let added = 0;
+  for (const { bucket, text, values, level } of byKey.values()) {
+    if (!result[bucket]) result[bucket] = {};
+    result[bucket][text] = (result[bucket][text] || []).concat([
+      { affinities: ['normal'], level, values, types: [JEWEL_TOKEN] },
+    ]);
+    added += 1;
+  }
+  report.push({ page: 'Emerald/Ruby/Sapphire', bucket: 'jewel', text: `${added} jewel mods merged (${parked} glued hybrids parked)`, tiers: 1 });
+}
+
 async function main() {
   const result = { prefix: {}, suffix: {} };
   const report = [];
@@ -279,6 +333,7 @@ async function main() {
   }
 
   await scrapeFlasks(result, report);
+  await scrapeJewels(result, report);
 
   // ── report ──
   console.log('fetch-poe2db-mods');
