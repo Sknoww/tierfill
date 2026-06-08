@@ -26,6 +26,7 @@
     {
       "resources": [
         "src/content/index.mjs",
+        "src/content/affix.mjs",
         "src/content/detect.mjs",
         "src/content/store.mjs",
         "src/content/results.mjs",

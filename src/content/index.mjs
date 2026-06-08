@@ -14,6 +14,7 @@
 
 import { computeAllTiers } from '../tiers/compute.mjs';
 import { resolveFamily } from './detect.mjs';
+import { isAffixSplit, buildCombinedFamily } from './affix.mjs';
 import { createTierControl } from '../ui/tier-control.mjs';
 import { setSelection, clearSelection, retainOnly } from './store.mjs';
 import { initResults } from './results.mjs';
@@ -77,6 +78,16 @@ function getStatsGroups() {
   return [...groups];
 }
 
+// Pick the ladder for an affix-split stat (see affix.mjs) given the live item-type
+// context: exactly one affix possible (e.g. gloves → suffix) → that ladder; both
+// possible (amulet/ring/helmet) or item type unknown → the synthesized combined one.
+const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+function resolveAffixLadder(families, combined) {
+  const { family: matched, ambiguous } = resolveFamily(families);
+  if (ambiguous || !matched) return combined;
+  return { ...matched, _note: `${cap(matched.affix)} only on this item type.` };
+}
+
 function processRow(row) {
   const titleEl = row.querySelector('.filter-title');
   if (!titleEl) return;
@@ -91,6 +102,16 @@ function processRow(row) {
   if (row.dataset.poe2tfTpl === cacheKey) {
     const st = rowState.get(row);
     if (!st) return; // row has no control (non-tiered / no data) — nothing to track
+    if (st.affixSplit) {
+      // Re-pick combined vs single-affix ladder for the new item-type context. Compare
+      // by ladder identity (affix), since resolveAffixLadder returns a fresh clone.
+      const resolved = resolveAffixLadder(st.families, st.combined);
+      if (resolved.affix !== st.family.affix) {
+        st.family = resolved;
+        st.update(resolved, false);
+      }
+      return;
+    }
     const { family, ambiguous } = resolveFamily(st.families);
     if (family && (family !== st.family || ambiguous !== st.ambiguous)) {
       st.family = family;
@@ -126,10 +147,26 @@ function processRow(row) {
   const maxInput = boxes[1] || null;
   if (!minInput) return;
 
+  const id = row.dataset.poe2tfId || (row.dataset.poe2tfId = String(++idCounter));
+
+  // Affix-split (rarity): one item-type-aware ladder, no family dropdown. Passing a
+  // single-element `families` keeps the control's dropdown hidden; live re-resolve
+  // swaps the resolved ladder in place via control.update (see the cached branch).
+  if (isAffixSplit(families)) {
+    const combined = buildCombinedFamily(families);
+    const resolved = resolveAffixLadder(families, combined);
+    const control = createTierControl({
+      families: [resolved], family: resolved, ambiguous: false, minInput, maxInput, computeAllTiers,
+      onChange: (entry, tier) => setSelection(id, { display: entry.display, entry, tier }),
+    });
+    minInput.parentNode.insertBefore(control.root, minInput);
+    rowState.set(row, { update: control.update, families, family: resolved, combined, affixSplit: true });
+    return;
+  }
+
   const { family, ambiguous } = resolveFamily(families);
   if (!family) return;
 
-  const id = row.dataset.poe2tfId || (row.dataset.poe2tfId = String(++idCounter));
   const control = createTierControl({
     families, family, ambiguous, minInput, maxInput, computeAllTiers,
     // publish the pick to the §9 store so the results annotator can detect tiers.
