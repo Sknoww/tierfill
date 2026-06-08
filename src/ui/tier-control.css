@@ -24,25 +24,54 @@
   gap: 4px;
 }
 
-/* ── family toggle (1H | 2H) ─────────────────────────────────────────────── */
-.poe2tf-fam {
+/* ── family dropdown (item-type selector; was an inline 1H/2H button row) ────
+   Collapsed trigger is a muted sibling of the tier button; the open panel reuses
+   .poe2tf-panel and lists each ladder's full family name.
+   NOTE: the [hidden] rule is REQUIRED. Without it the `display` below outranks the
+   `hidden` attribute (UA `[hidden]{display:none}` loses to a class selector), so the
+   selector would stay on screen even once the item type is known. */
+.poe2tf-fam-dd {
+  font: inherit;
   display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #221f1b;
   border: 1px solid #46413a;
   border-radius: 2px;
-  overflow: hidden;
-}
-.poe2tf-fam-btn {
-  font: inherit;
-  background: #221f1b;
   color: #97917f;
-  border: 0;
   padding: 2px 7px;
   line-height: 1.4;
   cursor: pointer;
 }
-.poe2tf-fam-btn + .poe2tf-fam-btn { border-left: 1px solid #46413a; }
-.poe2tf-fam-btn:hover { color: #e9dcb8; }
-.poe2tf-fam-btn.is-active { background: #3a3024; color: #e9dcb8; }
+.poe2tf-fam-dd[hidden] { display: none; }
+.poe2tf-fam-dd:hover { border-color: #c8aa6e; color: #e9dcb8; }
+.poe2tf-fam-dd.is-open { border-color: #c8aa6e; color: #e9dcb8; }
+
+.poe2tf-fam-panel { max-width: 280px; }
+.poe2tf-fam-opt {
+  font: inherit;
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 5px 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.poe2tf-fam-opt:hover { background: rgba(200, 170, 110, 0.16); }
+/* Row = umbrella (accent) over its full item-type list (muted, wraps). */
+.poe2tf-fam-opt-name { display: block; color: #c8aa6e; }
+.poe2tf-fam-opt:hover .poe2tf-fam-opt-name { color: #f3e9c9; }
+.poe2tf-fam-opt.is-active .poe2tf-fam-opt-name { color: #e9c97a; }
+.poe2tf-fam-opt-types {
+  display: block;
+  margin-top: 1px;
+  color: #cabf9d;
+  font-size: 0.85em;
+  opacity: 0.7;
+  line-height: 1.35;
+}
 
 /* ── dropdown button (mirrors the MIN/MAX boxes) ─────────────────────────── */
 .poe2tf-dd-btn {
@@ -59,7 +88,7 @@
   cursor: pointer;
 }
 .poe2tf-dd-btn:hover { border-color: #c8aa6e; color: #efe3c2; }
-.poe2tf-control.is-open .poe2tf-dd-btn { border-color: #c8aa6e; }
+.poe2tf-dd-btn.is-open { border-color: #c8aa6e; }
 .poe2tf-control.is-set .poe2tf-label { color: #e9c97a; }
 
 .poe2tf-approx { color: #c8aa6e; }
@@ -161,6 +190,7 @@
 
 .poe2tf-tip-title { color: #efe3c2; margin-bottom: 2px; }
 .poe2tf-tip-fam { color: #c8aa6e; font-size: 0.88em; margin-bottom: 4px; }
+.poe2tf-tip-affix { color: #9a8f78; font-size: 0.86em; margin: -2px 0 4px; }
 .poe2tf-tip-row { margin: 2px 0; }
 .poe2tf-tip-row b { color: #e9c97a; }
 .poe2tf-tip-note {

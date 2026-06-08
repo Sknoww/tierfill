@@ -56,35 +56,80 @@ function mk(tag, className, text) {
   return e;
 }
 
-// True when every family in the set carries a distinct affix (e.g. one prefix +
-// one suffix). Only then is the affix a meaningful disambiguator — otherwise two
-// "prefix" ladders labelled "Prefix"/"Prefix" would be useless.
-function affixesDistinct(families) {
-  const affixes = families.map((f) => f.affix).filter(Boolean);
-  return affixes.length === families.length && new Set(affixes).size === affixes.length;
+// ── family labelling ──────────────────────────────────────────────────────────
+// Both labels derive from a family's `types` array (the reliable source), so the
+// collapsed button and the open panel can never disagree:
+//   • familyUmbrella() — the short collapsed label (a category umbrella, a single
+//     item's name, or, for cross-category bundles, "LeadItem +N");
+//   • familyTypeList() — the full, alphabetical item-type list shown in the panel.
+// The generated `family` string is deliberately NOT used: it was inconsistent (a
+// lone Wand showed as "1-handed"; crossbow/bow — TWO-handed per PoE2DB — broke some
+// hand-class checks, so sibling ladders rendered one generic, one item-list).
+//
+// Categories follow PoE2DB's item tree (poe2db.tw/us/Items). Caster weapons
+// (wand/sceptre/staff) are split from the martial weapons so the caster bundles
+// read "Caster" rather than a hand-class.
+const CASTER_WEAPONS = new Set(['wand', 'sceptre', 'staff']);
+const MELEE_1H = new Set(['claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail']);
+const WEAPON_2H = new Set(['two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'bow', 'crossbow']);
+const OFFHAND = new Set(['quiver', 'shield', 'buckler', 'focus']);
+const ARMOUR = new Set(['gloves', 'boots', 'body-armour', 'helmet']);
+const JEWELLERY = new Set(['amulet', 'ring', 'belt']);
+const FLASKS = new Set(['life-flask', 'mana-flask', 'charm']);
+
+function categoryOf(type) {
+  if (CASTER_WEAPONS.has(type)) return 'caster';
+  if (MELEE_1H.has(type)) return 'm1';
+  if (WEAPON_2H.has(type)) return 'm2';
+  if (OFFHAND.has(type)) return 'offhand';
+  if (ARMOUR.has(type)) return 'armour';
+  if (JEWELLERY.has(type)) return 'jewellery';
+  if (FLASKS.has(type)) return 'flask';
+  return 'other';
 }
 
-// Short toggle label for a family. Priority:
-//   1. weapon ladders collapse to 1H/2H;
-//   2. when the toggled families differ only by affix (e.g. the prefix vs suffix
-//      "increased Rarity" ladders, which share every item type), label by affix —
-//      "Prefix"/"Suffix" — since the item type can't tell them apart;
-//   3. otherwise take the first item-type of the coverage, with an ellipsis when the
-//      family spans more than one type.
-// The full coverage always shows on hover (button title = f.family). Handles both the
-// generator's labels ("1-handed", "Staff", "Wand / Shield / Focus +2") and the older
-// hand-snapshot ones ("1-handed + bow/crossbow").
-function familyLabel(f, families) {
-  const fam = (f.family || '').toLowerCase();
-  if (/(^|\W)(2-hand|two-hand|2h)\b/.test(fam)) return '2H';
-  if (/(^|\W)(1-hand|one-hand|1h)\b/.test(fam)) return '1H';
-  if (f.affix && families && families.length > 1 && affixesDistinct(families)) {
-    return f.affix.charAt(0).toUpperCase() + f.affix.slice(1);
+// "two-hand-sword" → "Two Hand Sword" (PoE2DB spelling: spaces, title-case).
+function prettyType(type) {
+  return String(type || '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Alphabetical, prettified item-type list — the dropdown panel text.
+export function familyTypeList(f) {
+  return (f.types || []).map(prettyType).sort((a, b) => a.localeCompare(b));
+}
+
+// Short collapsed label. Single item → its name; a one-category bundle → that
+// category's umbrella; a pure weapon bundle → One-/Two-Handed by majority; anything
+// spanning incompatible categories → the alphabetically-first item + "+N".
+export function familyUmbrella(f) {
+  const types = f.types || [];
+  if (types.length <= 1) return types.length ? prettyType(types[0]) : '?';
+  const cats = new Set(types.map(categoryOf));
+
+  // Caster: a caster weapon plus only its off-hand / jewellery companions.
+  if (types.some((t) => CASTER_WEAPONS.has(t)) &&
+      [...cats].every((c) => c === 'caster' || c === 'offhand' || c === 'jewellery')) {
+    return 'Caster';
   }
-  const t = (f.types && f.types[0]) || fam || '?';
-  const word = String(t).split(/[-\s]/)[0];
-  const cap = word.charAt(0).toUpperCase() + word.slice(1);
-  return f.types && f.types.length > 1 ? `${cap}…` : cap;
+  // Pure martial-weapon bundle → hand-class by majority. (Bow/crossbow are 2H but
+  // ride the 1H ladder for some mods; the dropdown still shows the true list.)
+  if ([...cats].every((c) => c === 'm1' || c === 'm2')) {
+    const n2 = types.filter((t) => WEAPON_2H.has(t)).length;
+    return n2 > types.length / 2 ? 'Two-Handed' : 'One-Handed';
+  }
+  if (cats.size === 1) {
+    const only = [...cats][0];
+    if (only === 'jewellery') return 'Jewellery';
+    if (only === 'armour') return 'Armour';
+    if (only === 'flask') return 'Flasks';
+    if (only === 'offhand') return 'Off-hand';
+  }
+  // Armour plus its shield/off-hand companion still reads as Armour.
+  if ([...cats].every((c) => c === 'armour' || c === 'offhand')) return 'Armour';
+
+  // Cross-category bundle: alphabetically-first item + count of the rest.
+  const sorted = familyTypeList(f);
+  return `${sorted[0]} +${sorted.length - 1}`;
 }
 
 export function createTierControl({ families, family, ambiguous, minInput, maxInput, computeAllTiers, onChange }) {
@@ -113,31 +158,42 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
   inner.className = 'poe2tf-inner';
   root.appendChild(inner);
 
-  // ── family toggle ─────────────────────────────────────────────────────────
+  // ── family dropdown (item-type selector; was an inline 1H/2H button row) ────
   // Built whenever there's more than one ladder, but only shown while `ambiguous`
-  // (the page couldn't disambiguate). Keeping it built — just hidden — lets the
-  // live re-resolve (index.mjs) flip it on/off without rebuilding the control.
-  let famEl = null;
+  // (the page couldn't disambiguate). Collapsed shows the short umbrella; each open
+  // panel row shows that umbrella over its full item-type list. Keeping it built —
+  // just hidden — lets the live re-resolve (index.mjs) flip it on/off in place.
+  let famBtn = null;   // collapsed trigger
+  let famPanel = null; // option list (fixed-position, like the tier panel)
+  let famLabel = null; // short label inside the trigger
   if (families.length > 1) {
-    famEl = document.createElement('span');
-    famEl.className = 'poe2tf-fam';
+    famBtn = document.createElement('button');
+    famBtn.type = 'button';
+    famBtn.className = 'poe2tf-fam-dd';
+    famLabel = mk('span', 'poe2tf-fam-dd-label', familyUmbrella(current));
+    famBtn.append(famLabel, mk('span', 'poe2tf-caret', '▾'));
+    famBtn.title = familyTypeList(current).join(', ');
+    famBtn.hidden = !ambiguous;
+    inner.appendChild(famBtn);
+
+    famPanel = document.createElement('div');
+    famPanel.className = 'poe2tf-panel poe2tf-fam-panel';
+    famPanel.hidden = true;
     families.forEach((f) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'poe2tf-fam-btn';
-      b._famRef = f; // map button → family for active-state updates
-      b.textContent = familyLabel(f, families);
-      b.title = f.family || '';
-      if (f === current) b.classList.add('is-active');
-      b.addEventListener('click', () => {
-        current = f;
-        famEl.querySelectorAll('.poe2tf-fam-btn').forEach((x) => x.classList.toggle('is-active', x === b));
-        rebuild();
-      });
-      famEl.appendChild(b);
+      const o = document.createElement('button');
+      o.type = 'button';
+      o.className = 'poe2tf-fam-opt';
+      o._famRef = f; // map option → family for active-state updates
+      o.append(mk('span', 'poe2tf-fam-opt-name', familyUmbrella(f)));
+      // Single-item families: the name already IS the item, so skip the redundant list.
+      if ((f.types || []).length > 1) {
+        o.append(mk('span', 'poe2tf-fam-opt-types', familyTypeList(f).join(', ')));
+      }
+      if (f === current) o.classList.add('is-active');
+      o.addEventListener('click', () => selectFamily(f));
+      famPanel.appendChild(o);
     });
-    famEl.hidden = !ambiguous;
-    inner.appendChild(famEl);
+    root.appendChild(famPanel);
   }
 
   // ── dropdown button ───────────────────────────────────────────────────────
@@ -227,7 +283,7 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
 
   function select(t) {
     applyTier(t);
-    close();
+    tierDd.close();
   }
 
   function updateTip(t) {
@@ -240,7 +296,10 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
           'can slip past the filter. Switch to Strict to exclude them.';
     tip.textContent = '';
     tip.appendChild(mk('div', 'poe2tf-tip-title', current.display));
-    if (current.family) tip.appendChild(mk('div', 'poe2tf-tip-fam', current.family));
+    if (current.types && current.types.length) {
+      tip.appendChild(mk('div', 'poe2tf-tip-fam', familyTypeList(current).join(', ')));
+    }
+    if (current._note) tip.appendChild(mk('div', 'poe2tf-tip-affix', current._note));
     const modeRow = mk('div', 'poe2tf-tip-row');
     modeRow.appendChild(document.createTextNode('mode: '));
     modeRow.appendChild(mk('b', null, modeLabel));
@@ -257,32 +316,68 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
     tip.appendChild(mk('div', 'poe2tf-tip-note', note));
   }
 
-  // ── open / close (fixed-position panel so the row never clips it) ──────────
-  function reposition() {
-    const r = btn.getBoundingClientRect();
-    panel.style.left = `${Math.round(r.left)}px`;
-    panel.style.top = `${Math.round(r.bottom + 4)}px`;
-    panel.style.minWidth = `${Math.round(r.width)}px`;
+  // ── dropdown open/close (fixed-position panels so the row never clips them) ─
+  // Shared by the tier dropdown and the family dropdown; opening one closes the
+  // other. Each panel is re-anchored to its trigger on open, and a click outside
+  // the whole control (or any scroll/resize) closes it.
+  const dropdowns = [];
+  function makeDropdown(trigger, panelEl) {
+    function reposition() {
+      const r = trigger.getBoundingClientRect();
+      panelEl.style.left = `${Math.round(r.left)}px`;
+      panelEl.style.top = `${Math.round(r.bottom + 4)}px`;
+      panelEl.style.minWidth = `${Math.round(r.width)}px`;
+    }
+    function onDocDown(e) {
+      if (!root.contains(e.target)) close();
+    }
+    // A scroll of the PAGE detaches the fixed panel from its trigger, so close it —
+    // but ignore the panel's OWN scrolling (dragging its scrollbar or wheeling a long
+    // list), which is capture-phase too and would otherwise snap it shut mid-drag.
+    function onScroll(e) {
+      if (!panelEl.contains(e.target)) close();
+    }
+    function open() {
+      dropdowns.forEach((d) => d.close !== close && d.close()); // close the sibling
+      reposition();
+      panelEl.hidden = false;
+      trigger.classList.add('is-open');
+      document.addEventListener('mousedown', onDocDown, true);
+      window.addEventListener('scroll', onScroll, true);
+      window.addEventListener('resize', close, true);
+    }
+    function close() {
+      panelEl.hidden = true;
+      trigger.classList.remove('is-open');
+      document.removeEventListener('mousedown', onDocDown, true);
+      window.removeEventListener('scroll', onScroll, true);
+      window.removeEventListener('resize', close, true);
+    }
+    function toggle() { panelEl.hidden ? open() : close(); }
+    const api = { open, close, toggle };
+    dropdowns.push(api);
+    trigger.addEventListener('click', toggle);
+    return api;
   }
-  function onDocDown(e) {
-    if (!root.contains(e.target)) close();
+
+  const tierDd = makeDropdown(btn, panel);
+  const famDd = famBtn ? makeDropdown(famBtn, famPanel) : null;
+
+  // Picking a family from the dropdown: swap the active ladder, refresh the
+  // collapsed label + active marker, then rebuild (re-fills MIN for the same tier).
+  function selectFamily(f) {
+    current = f;
+    syncFamilyUi();
+    if (famDd) famDd.close();
+    rebuild();
   }
-  function open() {
-    reposition();
-    panel.hidden = false;
-    root.classList.add('is-open');
-    document.addEventListener('mousedown', onDocDown, true);
-    window.addEventListener('scroll', close, true);
-    window.addEventListener('resize', close, true);
+  function syncFamilyUi() {
+    if (!famBtn) return;
+    famLabel.textContent = familyUmbrella(current);
+    famBtn.title = familyTypeList(current).join(', ');
+    famPanel.querySelectorAll('.poe2tf-fam-opt').forEach((o) =>
+      o.classList.toggle('is-active', o._famRef === current));
   }
-  function close() {
-    panel.hidden = true;
-    root.classList.remove('is-open');
-    document.removeEventListener('mousedown', onDocDown, true);
-    window.removeEventListener('scroll', close, true);
-    window.removeEventListener('resize', close, true);
-  }
-  btn.addEventListener('click', () => (panel.hidden ? open() : close()));
 
   // ── live re-resolve (index.mjs) ───────────────────────────────────────────
   // Called when the page's item-type context changes without the stat itself
@@ -292,9 +387,9 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
   function update(newFamily, newAmbiguous) {
     current = newFamily || current;
     ambiguous = newAmbiguous;
-    if (famEl) {
-      famEl.hidden = !(ambiguous && families.length > 1);
-      famEl.querySelectorAll('.poe2tf-fam-btn').forEach((b) => b.classList.toggle('is-active', b._famRef === current));
+    if (famBtn) {
+      famBtn.hidden = !(ambiguous && families.length > 1);
+      syncFamilyUi();
     }
     rebuild();
   }
