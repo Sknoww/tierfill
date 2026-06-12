@@ -46,6 +46,16 @@ const OUT_PATH = OUT_FLAG !== -1 ? process.argv[OUT_FLAG + 1] : join(root, 'asse
 // didn't join to a GGG id. Written even under --dry.
 const REPORT_FLAG = process.argv.indexOf('--report');
 const REPORT_PATH = REPORT_FLAG !== -1 ? process.argv[REPORT_FLAG + 1] : null;
+// SOURCE: the PoE2DB-direct scrape (tools/data-sources/poe2db-mods.json) is now the DEFAULT,
+// authoritative source. The legacy third-party enhancer dump is opt-in via --base <path>,
+// which also re-enables its supplements (mergeExtraMods, the dedicateWeaponLadders hack) and
+// the §10 GGG overrides — all of which the direct scrape made redundant (each was a patch for
+// an enhancer error; the audit confirmed PoE2DB-raw matches every one). See tools/audit-diff.mjs.
+const BASE_FLAG = process.argv.indexOf('--base');
+const LEGACY = BASE_FLAG !== -1;
+const BASE_PATH = LEGACY ? process.argv[BASE_FLAG + 1] : join(SRC, 'poe2db-mods.json');
+// --no-overrides: skip the §10 GGG override layer (legacy path only; off by default now).
+const NO_OVERRIDES = process.argv.includes('--no-overrides');
 
 // ── normalization ───────────────────────────────────────────────────────────
 // Join key between enhancer stat text and GGG display text: lowercase, drop "+",
@@ -100,27 +110,48 @@ function familyLabelFromTypes(types) {
   return types.length > 3 ? `${list} +${types.length - 3}` : list || 'all';
 }
 
-// Family detection: union-find by SHARED item type. Two tier-elements belong to the
-// same ladder if their `types` sets intersect; a family's coverage is the union of its
-// members' types. (Grouping by exact `types` signature over-splits ladders whose type
-// availability shrinks at higher tiers, e.g. caster cast-speed: wand/shield/focus/…→wand.)
+// Family detection: PER-TYPE LADDER RECONSTRUCTION. Build each item type's own complete
+// ladder (level → ranges, drawn from every tier-element that includes that type), then group
+// types whose ladders are IDENTICAL into one family. This is correct where the old union-find
+// (group by shared type, dedup-by-level keeping broadest) silently lost data: two weapon
+// classes that share their low tiers but DIVERGE higher (wand caps +5 / staff +7 spell-skill
+// levels; bow vs crossbow added damage) were bridged into one family by the shared rungs, then
+// the per-level dedup dropped the divergent values. Per-type reconstruction keeps them apart,
+// folds a type into the ladder it actually matches (bow → the 1H added-damage ladder it shares),
+// and makes the old dedicateWeaponLadders hack unnecessary. A type that carries an extra top
+// tier the others lack (e.g. belt attribute) legitimately becomes its own family.
 function splitFamilies(tierEls) {
-  const n = tierEls.length;
-  const parent = Array.from({ length: n }, (_, i) => i);
-  const find = (x) => (parent[x] === x ? x : (parent[x] = find(parent[x])));
-  for (let i = 0; i < n; i++) {
-    const a = new Set(tierEls[i].types || []);
-    for (let j = i + 1; j < n; j++) {
-      if ((tierEls[j].types || []).some((t) => a.has(t))) parent[find(i)] = find(j);
+  const allTypes = [...new Set(tierEls.flatMap((e) => e.types || []))];
+  // type → (level → representative element). On a (type,level) collision, keep the broadest-
+  // coverage element (most types); the values agree by construction so the choice is cosmetic.
+  const perType = new Map();
+  for (const t of allTypes) {
+    const byLevel = new Map();
+    for (const el of tierEls) {
+      if (!(el.types || []).includes(t)) continue;
+      const lvl = Number(el.level);
+      const cur = byLevel.get(lvl);
+      if (!cur || (el.types || []).length > (cur.types || []).length) byLevel.set(lvl, el);
     }
+    perType.set(t, byLevel);
   }
-  const groups = new Map();
-  tierEls.forEach((el, i) => {
-    const r = find(i);
-    if (!groups.has(r)) groups.set(r, []);
-    groups.get(r).push(el);
-  });
-  return [...groups.values()];
+  // ladder signature: levels high→low with their value ranges. Identical signature ⇒ same family.
+  const sig = (byLevel) =>
+    [...byLevel.entries()]
+      .sort((a, b) => b[0] - a[0])
+      .map(([lvl, el]) => `${lvl}=${JSON.stringify(el.values)}`)
+      .join(';');
+  const bySig = new Map();
+  for (const t of allTypes) {
+    const bl = perType.get(t);
+    const s = sig(bl);
+    if (!bySig.has(s)) bySig.set(s, { types: [], byLevel: bl });
+    bySig.get(s).types.push(t);
+  }
+  // emit one synthetic tier-element per level per family, carrying the family's full type set.
+  return [...bySig.values()].map(({ types, byLevel }) =>
+    [...byLevel.values()].map((el) => ({ ...el, types: types.slice() })),
+  );
 }
 
 // Curated aliases — enhancer stat text → exact GGG display text — for the handful of
@@ -142,13 +173,17 @@ const ALIAS = {
   // (a reduction is a NEGATIVE roll there). Aliased here so it joins the GGG id, and
   // inverted below (see INVERTED) so the control fills MAX with the negative value.
   '#% reduced charges per use': '#% increased Charges per use',
+  // Same sign-flip shape: the body-armour mod reads "reduced Duration of Bleeding on You",
+  // but the trade stat is the positive-axis "increased Duration of Bleeding on You" (a
+  // reduction is a NEGATIVE roll). Aliased to join + inverted below to fill MAX.
+  '#% reduced duration of bleeding on you': '#% increased Duration of Bleeding on You',
 };
 
 // Sign-flipped stats (keyed by normalized SOURCE stat text). For these, a "good" roll is
 // the most NEGATIVE value on the trade stat's axis, so we negate the source ranges and
 // tag the entry `inverted:true`; the UI then fills the row's MAX box instead of MIN.
 // Kept deliberately tiny — the default (MIN-filling) path is untouched for every other mod.
-const INVERTED = new Set(['#% reduced charges per use']);
+const INVERTED = new Set(['#% reduced charges per use', '#% reduced duration of bleeding on you']);
 const negateRanges = (ranges) => ranges.map(([lo, hi]) => [-hi, -lo]);
 
 // ── GGG stats lookup (optional) ───────────────────────────────────────────────
@@ -255,11 +290,13 @@ function dedicateWeaponLadders(enhancer) {
 
 // ── build ─────────────────────────────────────────────────────────────────────
 async function main() {
-  const enhancer = JSON.parse(await readFile(join(SRC, 'enhancer-mods2-data.json'), 'utf8'));
-  const extraMods = await mergeExtraMods(enhancer);
-  dedicateWeaponLadders(enhancer);
+  const enhancer = JSON.parse(await readFile(BASE_PATH, 'utf8'));
+  // Supplements + overrides apply ONLY to the legacy enhancer base; the default PoE2DB-direct
+  // scrape is self-complete (carries flasks/jewels/weapon ladders with correct per-page types).
+  const extraMods = LEGACY ? await mergeExtraMods(enhancer) : 0;
+  if (LEGACY) dedicateWeaponLadders(enhancer);
   const ggg = await loadGggLookup();
-  const overrides = await loadOverrides();
+  const overrides = LEGACY && !NO_OVERRIDES ? await loadOverrides() : null;
   const overridden = [];
 
   const stats = {};

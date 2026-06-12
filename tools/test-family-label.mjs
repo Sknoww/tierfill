@@ -33,33 +33,37 @@ function check(label, got, want) {
   console.log(`  ${ok ? '✅' : '❌'} ${label} → ${JSON.stringify(got)}${ok ? '' : `  (expected ${JSON.stringify(want)})`}`);
   ok ? pass++ : fail++;
 }
+// Resolve a family by its exact type-set and fail cleanly (not a crash) if the snapshot
+// no longer groups those types together — per-type reconstruction can re-shape families.
+function umbrellaOf(display, ...types) {
+  const f = famFor(display, ...types);
+  if (!f) { console.log(`  ❌ no family [${types.join(',')}] for "${display}" — update the test to the snapshot`); fail++; return null; }
+  return familyUmbrella(f);
+}
 
 console.log('\nCollapsed umbrellas:');
 // Single items keep their real name (no more "a lone Wand is 1-handed").
-check('Cold Spell Skills · Wand', familyUmbrella(famFor('# to Level of all Cold Spell Skills', 'wand')), 'Wand');
-check('Cold Spell Skills · Staff', familyUmbrella(famFor('# to Level of all Cold Spell Skills', 'staff')), 'Staff');
-check('Cold Damage · Ring', familyUmbrella(famFor('#% increased Cold Damage', 'ring')), 'Ring');
-// Caster bundle (weapon + off-hands / jewellery).
-check('Cold Damage · wand/shield/focus', familyUmbrella(famFor('#% increased Cold Damage', 'wand', 'shield', 'focus')), 'Caster');
-check('Cast Speed · wand/shield/focus/amulet/ring',
-  familyUmbrella(famFor('#% increased Cast Speed', 'wand', 'shield', 'focus', 'amulet', 'ring')), 'Caster');
-// Weapon bundles → hand-class by majority (bow rides the 1H ladder here).
+check('Cold Spell Skills · Wand', umbrellaOf('# to Level of all Cold Spell Skills', 'wand'), 'Wand');
+check('Cold Spell Skills · Staff', umbrellaOf('# to Level of all Cold Spell Skills', 'staff'), 'Staff');
+check('Cold Damage · Ring', umbrellaOf('#% increased Cold Damage', 'ring'), 'Ring');
+// Caster bundle (caster weapon + off-hand): maximum Mana groups sceptre/wand/focus.
+check('Max Mana · sceptre/wand/focus', umbrellaOf('# to maximum Mana', 'sceptre', 'wand', 'focus'), 'Caster');
+// Weapon bundles → hand-class by majority (bow rides the 1H ladder, crossbow the 2H).
 check('Elem Dmg w/ Attacks · 1H (incl bow)',
-  familyUmbrella(famFor('#% increased Elemental Damage with Attacks', 'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail', 'bow')), 'One-Handed');
+  umbrellaOf('#% increased Elemental Damage with Attacks', 'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail', 'bow'), 'One-Handed');
 check('Elem Dmg w/ Attacks · 2H (incl crossbow)',
-  familyUmbrella(famFor('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'crossbow')), 'Two-Handed');
-// One-category gear/jewellery/flask bundles.
-check('Armour · shield+armour bundle',
-  familyUmbrella(famFor('# to Armour', 'shield', 'gloves', 'boots', 'body-armour', 'helmet')), 'Armour');
-check('Charge · life+mana flask', familyUmbrella(famFor('#% Chance to gain a Charge when you kill an enemy', 'life-flask', 'mana-flask')), 'Flasks');
+  umbrellaOf('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'crossbow'), 'Two-Handed');
+// One-category gear / flask bundles (per-type split groups same-ladder slots).
+check('Armour · gloves+boots bundle', umbrellaOf('# to Armour', 'gloves', 'boots'), 'Armour');
+check('Charge · life/mana flask + charm', umbrellaOf('#% Chance to gain a Charge when you kill an enemy', 'life-flask', 'mana-flask', 'charm'), 'Flasks');
 // Cross-category bundles → alphabetically-first item + count.
 check('Rarity · prefix (helmet/amulet/ring)',
-  familyUmbrella(famFor('#% increased Rarity of Items found', 'helmet', 'amulet', 'ring')), 'Amulet +2');
-check('Max Mana · everything', familyUmbrella(famFor('# to maximum Mana', 'wand', 'sceptre', 'shield', 'focus', 'gloves', 'boots', 'helmet', 'amulet', 'ring', 'belt')), 'Amulet +9');
+  umbrellaOf('#% increased Rarity of Items found', 'helmet', 'amulet', 'ring'), 'Amulet +2');
+check('Max Mana · gloves/boots/belt', umbrellaOf('# to maximum Mana', 'gloves', 'boots', 'belt'), 'Belt +2');
 
 console.log('\nDropdown lists (alphabetical):');
-check('wand/shield/focus → alphabetical',
-  familyTypeList(famFor('#% increased Cold Damage', 'wand', 'shield', 'focus')), ['Focus', 'Shield', 'Wand']);
+check('caster bundle → alphabetical',
+  familyTypeList(famFor('# to maximum Mana', 'sceptre', 'wand', 'focus')), ['Focus', 'Sceptre', 'Wand']);
 check('two-hand bundle → alphabetical',
   familyTypeList(famFor('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'crossbow')),
   ['Crossbow', 'Quarterstaff', 'Two Hand Axe', 'Two Hand Mace', 'Two Hand Sword']);
