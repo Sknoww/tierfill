@@ -1,38 +1,44 @@
 /*
- * refresh — one-command per-patch data refresh (PLAN §5 "refresh transport").
+ * refresh — one-command per-patch data refresh (PoE2DB-direct).
  *
- *   node tools/refresh.mjs            # fetch latest enhancer data, rebuild snapshot, warn on new unjoined mods
- *   node tools/refresh.mjs --dry      # fetch + show what changed this patch, write NOTHING
- *   node tools/refresh.mjs --no-fetch # skip the download, just rebuild + report (use after a manual GGG re-capture)
+ *   node tools/refresh.mjs            # re-scrape PoE2DB, rebuild snapshot, warn on new unjoined mods
+ *   node tools/refresh.mjs --dry      # scrape report only — writes NOTHING, no rebuild
+ *   node tools/refresh.mjs --no-fetch # skip the scrape, just rebuild + report (after a manual GGG re-capture)
  *
  * What it does (and deliberately does NOT do):
- *   • Downloads the latest enhancer mods2-data.json (PoE2DB-derived, the only input
- *     that changes per patch) from GitHub raw → tools/data-sources/. GitHub has no
- *     Cloudflare block, so plain node fetch works.
- *   • Runs the existing build-data.mjs to regenerate assets/data-snapshot.json.
+ *   • Re-scrapes every PoE2DB item-class page (tools/scrape-poe2db.mjs) → poe2db-mods.json,
+ *     the authoritative per-patch input. Backs up the previous scrape first.
+ *   • Runs build-data.mjs (which now DEFAULTS to this source) to regenerate
+ *     assets/data-snapshot.json.
  *   • Reports which stat texts were added/removed this patch, and — the key signal —
  *     which NEWLY-ADDED mods did NOT join to a GGG stat id. Those are the ones that
  *     need a fresh GGG /api/trade2/data/stats capture (which can't be auto-downloaded:
  *     GGG is Cloudflare-blocked to server-side fetch; it's a manual browser capture).
- *   • Does NOT touch the GGG capture, the overrides, or the manifest version — those
- *     stay manual on purpose (ids/text rarely change; version bump is your call).
+ *   • Does NOT touch the GGG capture or the manifest version — those stay manual on
+ *     purpose (ids/text rarely change; version bump is your call).
  */
-import { readFile, writeFile, copyFile, unlink } from 'node:fs/promises';
+import { readFile, copyFile, unlink } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { spawn } from 'node:child_process';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = join(here, 'data-sources');
-const ENHANCER = join(SRC, 'enhancer-mods2-data.json');
-const BACKUP = `${ENHANCER}.bak`;
+const POE2DB = join(SRC, 'poe2db-mods.json');
+const BACKUP = `${POE2DB}.bak`;
 const REPORT_TMP = join(SRC, '.refresh-report.tmp.json');
-
-const ENHANCER_URL =
-  'https://raw.githubusercontent.com/ghostscript3r/poe-trade-official-site-enhancer/master/json/mods2-data.json';
 
 const DRY = process.argv.includes('--dry');
 const NO_FETCH = process.argv.includes('--no-fetch');
+
+// Spawn the PoE2DB scraper. With --dry it prints its report and writes nothing.
+function runScrape(args = []) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [join(here, 'scrape-poe2db.mjs'), ...args], { stdio: 'inherit' });
+    child.on('error', reject);
+    child.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`scrape-poe2db.mjs exited ${code}`))));
+  });
+}
 
 // prefix+suffix stat texts as a flat Set of "bucket:text" (build-data ingests only
 // these two buckets; implicit is skipped, so we ignore it here for an honest diff).
@@ -61,30 +67,32 @@ async function main() {
   let removed = new Set();
 
   if (NO_FETCH) {
-    console.log('--no-fetch: skipping download, rebuilding from the current source files.\n');
+    console.log('--no-fetch: skipping the scrape, rebuilding from the current source files.\n');
+  } else if (DRY) {
+    // Honest dry-run of the fetch step: the scraper prints what it found and writes nothing.
+    console.log('--dry: scraping PoE2DB (writes nothing, no rebuild)…\n');
+    await runScrape(['--dry']);
+    console.log('\n--dry: source file and snapshot are unchanged.');
+    return;
   } else {
-    // 1. read the current file (for diff + backup). Missing is fine (first run).
+    // 1. read the current scrape (for the diff + backup). Missing is fine (first run).
     let oldData = null;
     try {
-      oldData = JSON.parse(await readFile(ENHANCER, 'utf8'));
+      oldData = JSON.parse(await readFile(POE2DB, 'utf8'));
     } catch {
-      console.log('(no existing enhancer file — treating every mod as new)');
+      console.log('(no existing poe2db-mods.json — treating every mod as new)');
     }
+    if (oldData) await copyFile(POE2DB, BACKUP);
 
-    // 2. fetch the latest. Validate BEFORE touching anything on disk so a bad
-    //    download can never corrupt the working snapshot inputs.
-    console.log(`fetching ${ENHANCER_URL}`);
-    const res = await fetch(ENHANCER_URL);
-    if (!res.ok) throw new Error(`download failed: HTTP ${res.status}`);
-    const text = await res.text();
-    let newData;
-    try {
-      newData = JSON.parse(text);
-    } catch (e) {
-      throw new Error(`download is not valid JSON: ${e.message}`);
-    }
+    // 2. re-scrape PoE2DB (writes poe2db-mods.json). The scraper validates per page and
+    //    throws on a hard failure, so a broken run surfaces here before the rebuild.
+    console.log('re-scraping PoE2DB…\n' + '─'.repeat(60));
+    await runScrape();
+    console.log('─'.repeat(60));
+
+    const newData = JSON.parse(await readFile(POE2DB, 'utf8'));
     if (!newData.prefix || !newData.suffix) {
-      throw new Error('download is missing the prefix/suffix buckets — refusing to use it');
+      throw new Error('scrape produced no prefix/suffix buckets — refusing to rebuild');
     }
 
     // 3. diff stat texts (prefix+suffix)
@@ -95,8 +103,8 @@ async function main() {
 
     const fmt = (d) =>
       `prefix ${Object.keys(d.prefix || {}).length} · suffix ${Object.keys(d.suffix || {}).length}`;
-    console.log(`\n  current: ${oldData ? fmt(oldData) : '(none)'}`);
-    console.log(`  fetched: ${fmt(newData)}`);
+    console.log(`\n  previous: ${oldData ? fmt(oldData) : '(none)'}`);
+    console.log(`  scraped:  ${fmt(newData)}`);
     console.log(`  added stat texts:   ${added.size}`);
     console.log(`  removed stat texts: ${removed.size}`);
     if (added.size) {
@@ -107,21 +115,7 @@ async function main() {
       console.log('\n  - removed:');
       for (const k of [...removed].sort()) console.log(`      ${k}`);
     }
-
-    if (DRY) {
-      console.log('\n--dry: nothing written. Source file and snapshot are unchanged.');
-      return;
-    }
-
-    // 4. back up the old file, then write the new one
-    if (oldData) await copyFile(ENHANCER, BACKUP);
-    await writeFile(ENHANCER, text);
-    console.log(`\n✅ updated ${ENHANCER}${oldData ? `  (backup: ${BACKUP})` : ''}`);
-  }
-
-  if (DRY) {
-    console.log('\n--dry: nothing written.');
-    return;
+    if (oldData) console.log(`\n  (backup: ${BACKUP})`);
   }
 
   // 5. rebuild the snapshot, capturing the machine-readable report
