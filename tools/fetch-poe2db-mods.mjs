@@ -294,6 +294,86 @@ async function scrapeJewels(result, report) {
   report.push({ page: 'Emerald/Ruby/Sapphire', bucket: 'jewel', text: `${added} jewel mods merged (${parked} glued hybrids parked)`, tiers: 1 });
 }
 
+// ── weapon added-damage ladders (Bow / Crossbow) ───────────────────────────────
+// Bow & Crossbow are two-handed but roll their OWN added Physical/Fire/Cold/Lightning
+// damage ladders — much higher than melee, and different from each other. The enhancer
+// source wrongly lumps them into the one-hand melee group, so we scrape each weapon's
+// real ladder straight off its class page. We emit under the SAME lowercase stat key the
+// enhancer uses ("adds # to # fire damage" …) so build-data merges them in and then
+// splits them out as dedicated families (see build-data dedicateWeaponLadders).
+const WEAPON_ADD_PAGES = [
+  { page: 'Bows', token: 'bow' },
+  { page: 'Crossbows', token: 'crossbow' },
+];
+const WEAPON_ADD_FAMILIES = new Set(['PhysicalDamage', 'FireDamage', 'ColdDamage', 'LightningDamage']);
+
+// Parse an "Adds <lo> to <hi> <Element> Damage" row into a stat key + two [min,max]
+// sub-rolls. Each operand is either a "(x—y)" range OR a bare fixed number — at the
+// bottom tiers the low roll bottoms out at a literal "1" with no parens (e.g. lightning
+// "Adds 1 to (13—19)"), which a parens-only parser would miss. Returns string pairs to
+// match the enhancer shape; build-data coerces with Number(). null if it isn't this form.
+function parseAddedDamage(str) {
+  const plain = decode(stripTags(str)).replace(/\s+/g, ' ').trim();
+  const m = plain.match(/^Adds\s+(.+?)\s+to\s+(.+?)\s+(\w+)\s+Damage/i);
+  if (!m) return null;
+  const operand = (t) => {
+    const r = t.match(/\(\s*([\d.]+)\s*[-–—]\s*([\d.]+)\s*\)/);
+    if (r) return [r[1], r[2]];
+    const s = t.match(/([\d.]+)/);
+    return s ? [s[1], s[1]] : null;
+  };
+  const lo = operand(m[1]);
+  const hi = operand(m[2]);
+  if (!lo || !hi) return null;
+  return { key: `adds # to # ${m[3].toLowerCase()} damage`, values: [lo, hi] };
+}
+
+// Keep only the real prefix tier rows: gen type 1, two sub-rolls, and NOT an essence/
+// currency variant — those carry a `Code` and render their Name as an <a> link, and
+// would duplicate a tier's values. Corruption implicits (gen 5) are dropped by the gen
+// check.
+function isRealWeaponAddRow(o) {
+  if (String(o.ModGenerationTypeID) !== '1') return false;
+  if (o.Code || /</.test(o.Name || '')) return false;
+  return (o.ModFamilyList || []).some((f) => WEAPON_ADD_FAMILIES.has(f));
+}
+
+async function scrapeWeaponAddedDamage(result, report) {
+  for (const { page, token } of WEAPON_ADD_PAGES) {
+    const html = await fetchPage(page);
+    const byText = new Map(); // stat key -> tier els
+    const re = /"ModGenerationTypeID"/g;
+    let m;
+    const seen = new Set();
+    while ((m = re.exec(html))) {
+      const obj = enclosingObject(html, m.index);
+      if (!obj) continue;
+      let o;
+      try { o = JSON.parse(obj); } catch { continue; }
+      if (!isRealWeaponAddRow(o)) continue;
+      const parsed = parseAddedDamage(o.str);
+      if (!parsed) continue;
+      const dedupe = `${o.Name}|${o.Level}|${o.str}`;
+      if (seen.has(dedupe)) continue;
+      seen.add(dedupe);
+      const els = byText.get(parsed.key) || [];
+      els.push({
+        affinities: ['normal'],
+        key: decode(stripTags(o.str)).replace(/\s+/g, ' ').trim(),
+        level: String(o.Level),
+        values: parsed.values,
+        types: [token],
+      });
+      byText.set(parsed.key, els);
+    }
+    for (const [text, els] of byText) {
+      els.sort((a, b) => Number(b.level) - Number(a.level));
+      result.prefix[text] = (result.prefix[text] || []).concat(els);
+      report.push({ page, bucket: 'prefix', text: `${text} [${token}]`, tiers: els.length });
+    }
+  }
+}
+
 async function main() {
   const result = { prefix: {}, suffix: {} };
   const report = [];
@@ -334,6 +414,7 @@ async function main() {
 
   await scrapeFlasks(result, report);
   await scrapeJewels(result, report);
+  await scrapeWeaponAddedDamage(result, report);
 
   // ── report ──
   console.log('fetch-poe2db-mods');

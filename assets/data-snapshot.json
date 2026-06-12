@@ -9,7 +9,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "Claw / Dagger / One Hand Sword +6",
+      "family": "1-handed",
       "types": [
         "claw",
         "dagger",
@@ -17,9 +17,7 @@
         "one-hand-axe",
         "one-hand-mace",
         "spear",
-        "flail",
-        "bow",
-        "crossbow"
+        "flail"
       ],
       "tiers": [
         {
@@ -320,6 +318,312 @@
         }
       ]
     },
+    "adds_x_to_x_cold_damage__3": {
+      "display": "Adds # to # Cold Damage",
+      "tradeStatId": "explicit.stat_1037193709",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Bow",
+      "types": [
+        "bow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              72,
+              81
+            ],
+            [
+              110,
+              123
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              55,
+              69
+            ],
+            [
+              83,
+              106
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              40,
+              53
+            ],
+            [
+              62,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              31,
+              38
+            ],
+            [
+              47,
+              59
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              22,
+              29
+            ],
+            [
+              34,
+              44
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              17,
+              20
+            ],
+            [
+              26,
+              32
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              11,
+              15
+            ],
+            [
+              17,
+              24
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              6,
+              9
+            ],
+            [
+              10,
+              16
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              3,
+              5
+            ],
+            [
+              6,
+              9
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "adds_x_to_x_cold_damage__4": {
+      "display": "Adds # to # Cold Damage",
+      "tradeStatId": "explicit.stat_1037193709",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Crossbow",
+      "types": [
+        "crossbow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              112,
+              124
+            ],
+            [
+              168,
+              189
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              84,
+              107
+            ],
+            [
+              126,
+              161
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              60,
+              80
+            ],
+            [
+              92,
+              121
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              46,
+              57
+            ],
+            [
+              70,
+              88
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              32,
+              43
+            ],
+            [
+              49,
+              66
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              25,
+              30
+            ],
+            [
+              38,
+              46
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              16,
+              23
+            ],
+            [
+              25,
+              35
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              10,
+              14
+            ],
+            [
+              15,
+              23
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              5,
+              8
+            ],
+            [
+              9,
+              14
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        }
+      ]
+    },
     "adds_x_to_x_cold_damage_to_attacks": {
       "display": "Adds # to # Cold damage to Attacks",
       "tradeStatId": "explicit.stat_4067062424",
@@ -468,7 +772,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "Claw / Dagger / One Hand Sword +6",
+      "family": "1-handed",
       "types": [
         "claw",
         "dagger",
@@ -476,9 +780,7 @@
         "one-hand-axe",
         "one-hand-mace",
         "spear",
-        "flail",
-        "bow",
-        "crossbow"
+        "flail"
       ],
       "tiers": [
         {
@@ -779,6 +1081,312 @@
         }
       ]
     },
+    "adds_x_to_x_fire_damage__3": {
+      "display": "Adds # to # Fire Damage",
+      "tradeStatId": "explicit.stat_709508406",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Bow",
+      "types": [
+        "bow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              88,
+              101
+            ],
+            [
+              133,
+              154
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              62,
+              85
+            ],
+            [
+              101,
+              129
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              47,
+              59
+            ],
+            [
+              74,
+              97
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              35,
+              44
+            ],
+            [
+              56,
+              71
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              25,
+              33
+            ],
+            [
+              38,
+              54
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              20,
+              24
+            ],
+            [
+              32,
+              37
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              13,
+              19
+            ],
+            [
+              21,
+              29
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              7,
+              11
+            ],
+            [
+              13,
+              19
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              4,
+              6
+            ],
+            [
+              7,
+              10
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    "adds_x_to_x_fire_damage__4": {
+      "display": "Adds # to # Fire Damage",
+      "tradeStatId": "explicit.stat_709508406",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Crossbow",
+      "types": [
+        "crossbow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              135,
+              156
+            ],
+            [
+              205,
+              236
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              102,
+              130
+            ],
+            [
+              155,
+              198
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              73,
+              97
+            ],
+            [
+              112,
+              149
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              56,
+              70
+            ],
+            [
+              84,
+              107
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              39,
+              53
+            ],
+            [
+              59,
+              80
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              30,
+              37
+            ],
+            [
+              45,
+              56
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              19,
+              27
+            ],
+            [
+              30,
+              42
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              11,
+              17
+            ],
+            [
+              19,
+              28
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              6,
+              9
+            ],
+            [
+              10,
+              16
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        }
+      ]
+    },
     "adds_x_to_x_fire_damage_to_attacks": {
       "display": "Adds # to # Fire damage to Attacks",
       "tradeStatId": "explicit.stat_1573130764",
@@ -927,7 +1535,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "Claw / Dagger / One Hand Sword +6",
+      "family": "1-handed",
       "types": [
         "claw",
         "dagger",
@@ -935,9 +1543,7 @@
         "one-hand-axe",
         "one-hand-mace",
         "spear",
-        "flail",
-        "bow",
-        "crossbow"
+        "flail"
       ],
       "tiers": [
         {
@@ -1238,6 +1844,312 @@
         }
       ]
     },
+    "adds_x_to_x_lightning_damage__3": {
+      "display": "Adds # to # Lightning Damage",
+      "tradeStatId": "explicit.stat_3336890334",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Bow",
+      "types": [
+        "bow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              1,
+              12
+            ],
+            [
+              202,
+              234
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              1,
+              10
+            ],
+            [
+              157,
+              196
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              1,
+              8
+            ],
+            [
+              111,
+              152
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              1,
+              6
+            ],
+            [
+              85,
+              107
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              63,
+              82
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              1,
+              3
+            ],
+            [
+              55,
+              60
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              36,
+              52
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              20,
+              30
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              1,
+              1
+            ],
+            [
+              13,
+              19
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    "adds_x_to_x_lightning_damage__4": {
+      "display": "Adds # to # Lightning Damage",
+      "tradeStatId": "explicit.stat_3336890334",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Crossbow",
+      "types": [
+        "crossbow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 81,
+          "ranges": [
+            [
+              1,
+              19
+            ],
+            [
+              310,
+              358
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 75,
+          "ranges": [
+            [
+              1,
+              16
+            ],
+            [
+              239,
+              300
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 65,
+          "ranges": [
+            [
+              1,
+              13
+            ],
+            [
+              168,
+              231
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 60,
+          "ranges": [
+            [
+              1,
+              8
+            ],
+            [
+              128,
+              162
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 54,
+          "ranges": [
+            [
+              1,
+              6
+            ],
+            [
+              93,
+              122
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 46,
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              80,
+              88
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 33,
+          "ranges": [
+            [
+              1,
+              4
+            ],
+            [
+              53,
+              76
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 16,
+          "ranges": [
+            [
+              1,
+              3
+            ],
+            [
+              31,
+              43
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 8,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              19,
+              27
+            ]
+          ]
+        },
+        {
+          "tier": 10,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              1
+            ],
+            [
+              7,
+              10
+            ]
+          ]
+        }
+      ]
+    },
     "adds_x_to_x_lightning_damage_to_attacks": {
       "display": "Adds # to # Lightning damage to Attacks",
       "tradeStatId": "explicit.stat_1754445556",
@@ -1386,7 +2298,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": true,
-      "family": "Claw / Dagger / One Hand Sword +6",
+      "family": "1-handed",
       "types": [
         "claw",
         "dagger",
@@ -1394,9 +2306,7 @@
         "one-hand-axe",
         "one-hand-mace",
         "spear",
-        "flail",
-        "bow",
-        "crossbow"
+        "flail"
       ],
       "tiers": [
         {
@@ -1656,6 +2566,284 @@
         {
           "tier": 9,
           "ilvl": 2,
+          "ranges": [
+            [
+              2,
+              3
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    "adds_x_to_x_physical_damage__3": {
+      "display": "Adds # to # Physical Damage",
+      "tradeStatId": "explicit.stat_1940865751",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Bow",
+      "types": [
+        "bow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 75,
+          "ranges": [
+            [
+              26,
+              39
+            ],
+            [
+              44,
+              66
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 65,
+          "ranges": [
+            [
+              21,
+              31
+            ],
+            [
+              36,
+              53
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 60,
+          "ranges": [
+            [
+              16,
+              24
+            ],
+            [
+              28,
+              42
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 54,
+          "ranges": [
+            [
+              13,
+              20
+            ],
+            [
+              23,
+              35
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 46,
+          "ranges": [
+            [
+              10,
+              15
+            ],
+            [
+              18,
+              26
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 33,
+          "ranges": [
+            [
+              8,
+              12
+            ],
+            [
+              14,
+              21
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 16,
+          "ranges": [
+            [
+              6,
+              9
+            ],
+            [
+              11,
+              16
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 8,
+          "ranges": [
+            [
+              4,
+              6
+            ],
+            [
+              7,
+              11
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 1,
+          "ranges": [
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    "adds_x_to_x_physical_damage__4": {
+      "display": "Adds # to # Physical Damage",
+      "tradeStatId": "explicit.stat_1940865751",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": true,
+      "family": "Crossbow",
+      "types": [
+        "crossbow"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 75,
+          "ranges": [
+            [
+              37,
+              55
+            ],
+            [
+              63,
+              94
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 65,
+          "ranges": [
+            [
+              29,
+              44
+            ],
+            [
+              50,
+              75
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 60,
+          "ranges": [
+            [
+              23,
+              35
+            ],
+            [
+              39,
+              59
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 54,
+          "ranges": [
+            [
+              19,
+              29
+            ],
+            [
+              33,
+              49
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 46,
+          "ranges": [
+            [
+              14,
+              21
+            ],
+            [
+              25,
+              37
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 33,
+          "ranges": [
+            [
+              11,
+              17
+            ],
+            [
+              20,
+              30
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 16,
+          "ranges": [
+            [
+              8,
+              12
+            ],
+            [
+              15,
+              22
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 8,
+          "ranges": [
+            [
+              5,
+              8
+            ],
+            [
+              10,
+              15
+            ]
+          ]
+        },
+        {
+          "tier": 9,
+          "ilvl": 1,
           "ranges": [
             [
               2,
@@ -3042,7 +4230,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "2-handed",
+      "family": "Bow",
       "types": [
         "bow"
       ],
@@ -4616,7 +5804,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "2-handed",
+      "family": "Crossbow",
       "types": [
         "crossbow"
       ],
@@ -17322,7 +18510,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "2-handed",
+      "family": "Bow",
       "types": [
         "bow"
       ],
@@ -17385,7 +18573,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "2-handed",
+      "family": "Crossbow",
       "types": [
         "crossbow"
       ],

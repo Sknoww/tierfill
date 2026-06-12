@@ -85,6 +85,11 @@ const ALL_WEAPON = new Set([...ONE_H, ...TWO_H]);
 const pretty = (t) => t.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 function familyLabelFromTypes(types) {
   const set = new Set(types);
+  // Bow & Crossbow are mechanically two-handed but each carry their OWN added-damage
+  // ladder, distinct from the 2-handed melee umbrella (see dedicateWeaponLadders). A
+  // pure bow/crossbow family is therefore labeled by weapon, not hand-class — otherwise
+  // three families ("2-handed", Bow, Crossbow) would collide on one added-damage stat.
+  if (set.size === 1 && (set.has('bow') || set.has('crossbow'))) return pretty([...set][0]);
   if ([...set].every((t) => ALL_WEAPON.has(t))) {
     const has2 = [...set].some((t) => TWO_H.has(t));
     const has1 = [...set].some((t) => ONE_H.has(t));
@@ -215,10 +220,44 @@ async function mergeExtraMods(enhancer) {
   return added;
 }
 
+// ── dedicated weapon ladders (Bow / Crossbow added damage) ─────────────────────
+// The enhancer source lumps bow & crossbow into the ONE-HAND melee group for the four
+// "Adds # to #" damage prefixes, giving them badly understated rolls. fetch-poe2db-mods
+// scrapes each weapon's real (much higher) ladder into poe2db-extra-mods.json as a
+// single-type bow/crossbow family. Once those are merged, this strips bow/crossbow from
+// the multi-type melee ladders of the SAME stat text — so the union-find family split
+// (which groups by shared type) keeps the dedicated ladders separate instead of folding
+// them back into the 1H group. Self-gating: a token is only stripped where a dedicated
+// single-type ladder for it exists, so a build with no extra-mods file is unchanged.
+const WEAPON_ADD_TEXTS = new Set([
+  'adds # to # physical damage',
+  'adds # to # fire damage',
+  'adds # to # cold damage',
+  'adds # to # lightning damage',
+]);
+function dedicateWeaponLadders(enhancer) {
+  let stripped = 0;
+  for (const [text, els] of Object.entries(enhancer.prefix || {})) {
+    if (!WEAPON_ADD_TEXTS.has(text.toLowerCase())) continue;
+    const dedicated = new Set();
+    for (const el of els) if ((el.types || []).length === 1) dedicated.add(el.types[0]);
+    if (!dedicated.size) continue;
+    for (const el of els) {
+      if ((el.types || []).length > 1) {
+        const before = el.types.length;
+        el.types = el.types.filter((t) => !dedicated.has(t));
+        if (el.types.length !== before) stripped += 1;
+      }
+    }
+  }
+  return stripped;
+}
+
 // ── build ─────────────────────────────────────────────────────────────────────
 async function main() {
   const enhancer = JSON.parse(await readFile(join(SRC, 'enhancer-mods2-data.json'), 'utf8'));
   const extraMods = await mergeExtraMods(enhancer);
+  dedicateWeaponLadders(enhancer);
   const ggg = await loadGggLookup();
   const overrides = await loadOverrides();
   const overridden = [];
