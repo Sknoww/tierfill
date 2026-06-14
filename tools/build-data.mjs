@@ -306,6 +306,7 @@ async function main() {
     unmatchedGgg: [],
     ambiguousGgg: [],
     dupLevel: [],
+    prunedRung: [],
     skippedOverride: [],
     counts: { keys: 0, entries: 0, families: 0 },
   };
@@ -355,8 +356,30 @@ async function main() {
           if (!cur || (el.types || []).length > (cur.types || []).length) byLevel.set(lvl, el);
         }
         if (byLevel.size !== els.length) report.dupLevel.push(`${statText} [${familyLabelFromTypes(types)}]`);
+
+        // Prune redundant rungs that REPEAT a value already reachable at a LOWER ilvl.
+        // PoE2DB lists a foreign base's tier on a class page it shares a stat with — e.g.
+        // the Ring's "+1 to Level of all Spell Skills" (ilvl 45) also appears on the Amulet
+        // page, landing in the amulet ladder as a second +1 ABOVE the +2 (ilvl 41) and
+        // breaking tier numbering (T4=1,T3=2,T2=1,T1=3 instead of T3=1,T2=2,T1=3). Walking
+        // ilvl ASCENDING, drop any rung whose value floor EXACTLY equals one already kept:
+        // that value is obtainable at a lower ilvl, so the higher-ilvl rung is pure noise.
+        // Exact-floor match (not mere non-monotonicity) deliberately spares the distinct case
+        // of two genuinely different ladders overlapping on one type (handled separately).
+        const floorOf = (el) => (el.values || []).reduce((s, p) => s + Number(p[0]), 0);
+        const seenFloor = new Set();
+        const kept = [];
+        for (const el of [...byLevel.values()].sort((a, b) => Number(a.level) - Number(b.level))) {
+          const f = floorOf(el);
+          if (seenFloor.has(f)) {
+            report.prunedRung.push(`${statText} [${familyLabelFromTypes(types)}] ilvl ${el.level} (value ${f} already at lower ilvl)`);
+            continue;
+          }
+          seenFloor.add(f);
+          kept.push(el);
+        }
         // tier 1 = best = highest ilvl requirement. Sort by level desc.
-        const sorted = [...byLevel.values()].sort((a, b) => Number(b.level) - Number(a.level));
+        const sorted = kept.sort((a, b) => Number(b.level) - Number(a.level));
 
         let tiers = sorted.map((el, i) => ({
           tier: i + 1,
@@ -464,6 +487,10 @@ async function main() {
     console.log(`ambiguous vs GGG: ${report.ambiguousGgg.length}`);
   }
   if (report.dupLevel.length) console.log(`dup level/family: ${report.dupLevel.length}  → ${report.dupLevel.join(', ')}`);
+  if (report.prunedRung.length) {
+    console.log(`pruned rungs:     ${report.prunedRung.length}  (redundant value already reachable at lower ilvl)`);
+    for (const p of report.prunedRung) console.log(`  ⌫ ${p}`);
+  }
   if (ggg && report.unmatchedGgg.length) {
     console.log('\nunmatched against GGG (will ship with raw enhancer text, tradeStatId=null):');
     for (const u of report.unmatchedGgg) console.log(`  · ${u}`);
