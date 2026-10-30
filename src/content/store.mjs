@@ -1,5 +1,5 @@
 /*
- * Shared selection store (§9).
+ * Shared selection store.
  *
  * The per-row tier controls publish the user's current pick here; the results
  * annotator subscribes and re-draws. A tiny in-memory pub/sub bus decouples the

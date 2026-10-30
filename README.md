@@ -38,6 +38,8 @@ meets your target tier, amber when it's below:
   of the two rolls; TierFill computes the right value automatically.
 - **Inclusive / Strict modes** — *Inclusive* never misses a tier (but can leak lucky lower-tier
   rolls); *Strict* only keeps results that are genuinely at the tier or better.
+- **Jewel percentile picker** — jewel mods have one wide range instead of tiers, so you pick a
+  minimum by roll percentile (Min / 25% / 50% / 75% / 90% / Max).
 - **Result tier badges** — each searched mod on a result listing is annotated with its tier and
   roll quality, read straight from the trade site's own data, so you can see at a glance which
   results actually hit your target tier.
@@ -47,9 +49,9 @@ meets your target tier, amber when it's below:
 ## Scope & limitations
 
 TierFill works on **explicit** stat mods — the regular prefixes and suffixes that roll on
-weapons, armour, jewellery, and **life & mana flasks** (recovery, charges, and the rest of
-the flask mod pool). Rows it has tier data for get a picker; everything else is left
-untouched, including:
+weapons, armour, jewellery, jewels, charms, and **life & mana flasks** (recovery, charges, and
+the rest of the flask mod pool). Rows it has tier data for get a picker; everything else is
+left untouched, including:
 
 - **Pseudo** mods (e.g. `+#% total Elemental Resistance`),
 - **implicit, rune, crafted, and enchant** mods,
@@ -60,8 +62,8 @@ those rows just behave as the trade site's normal number boxes.
 
 ## Install
 
-- **Firefox:** _[Add-ons listing — coming soon]_
-- **Chrome / Edge / Brave:** _[Chrome Web Store listing — coming soon]_
+- **Firefox:** [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/tierfill-poe2-trade/)
+- **Chrome / Edge / Brave:** [Chrome Web Store](https://chromewebstore.google.com/detail/gglcnglencknfbdejeepmfibimnlicjd)
 
 <details>
 <summary>Manual install (for development)</summary>
@@ -86,15 +88,15 @@ browser. See [PRIVACY.md](PRIVACY.md).
 
 ## Data & credits
 
-Tier data is derived from community sources — the mod ladders trace back to
-[PoE2DB](https://poe2db.tw/), by way of the
-[poe-trade-official-site-enhancer](https://github.com/ghostscript3r/poe-trade-official-site-enhancer)
-project's pre-tiered dataset, joined with Path of Exile 2's own trade stat list and corrected
-against the trade site's authoritative tier ranges. Thanks to those projects and maintainers.
+Tier data is scraped from [PoE2DB](https://poe2db.tw/) and joined with Path of Exile 2's own
+trade stat list. Earlier versions were built on the pre-tiered dataset from
+[poe-trade-official-site-enhancer](https://github.com/ghostscript3r/poe-trade-official-site-enhancer).
+Thanks to those projects and maintainers.
 
-**Rebuilding the data.** The large build inputs are not committed (they're re-obtainable). The
-scripts in `tools/` regenerate the bundled snapshot: running `node tools/refresh.mjs` pulls the
-latest community dataset and rebuilds `assets/data-snapshot.json`.
+**Rebuilding the data.** The large build inputs are not committed. `node tools/refresh.mjs`
+re-scrapes PoE2DB and rebuilds `assets/data-snapshot.json`. It also needs
+`tools/data-sources/ggg-trade2-stats.json`, a manual browser capture of the trade site's
+`/api/trade2/data/stats` response; without it, mods have no display text or stat ids.
 
 ## Disclaimer
 

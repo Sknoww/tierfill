@@ -1,24 +1,24 @@
 /*
- * The per-row tier control (§11.6, "Left of MIN (inline)" placement).
+ * The per-row tier control ("Left of MIN (inline)" placement).
  *
  * Renders:  [1H|2H?]  ≈ TIER ▾   ⓘ
  *   • optional 1H/2H family toggle — only when the page didn't disambiguate
  *   • a custom dropdown (matches the site's dark small-caps theme; a native
  *     <select> would render an OS-styled option list and break the look)
- *   • a threshold-mode bar inside the dropdown panel (§11.8) — Inclusive |
+ *   • a threshold-mode bar inside the dropdown panel — Inclusive |
  *     Strict, per-control, defaulting to Inclusive
  *   • an ⓘ tooltip: exact sub-ranges, the computed MIN, the active mode, and
  *     the overlap caveat
  *
  * Picking a tier writes the computed MIN into the row's first .minmax input via
- * the spike-confirmed native-setter + input/change/blur (PLAN §10). It never
+ * the spike-confirmed native-setter + input/change/blur (CONTEXT.md, Writing to the site). It never
  * triggers the search — the user still clicks the native Search button.
  *
  * Sign-flipped (`inverted`) stats — e.g. "increased Charges per use", where a good
  * roll is NEGATIVE — fill the row's MAX box instead, with the tier's least-negative
  * bound. That fork is localized to a few helpers; the MIN path is otherwise unchanged.
  *
- * §11.8 threshold modes (UI only; the math lives in compute.mjs):
+ * Threshold modes (UI only; the math lives in compute.mjs):
  *   • Inclusive (default) — min = tier average floor; never misses a T, but a
  *     lucky lower-tier roll can slip past.
  *   • Strict — min raised just above every lower tier's max average, so results
@@ -135,7 +135,7 @@ export function familyUmbrella(f) {
 export function createTierControl({ families, family, ambiguous, minInput, maxInput, computeAllTiers, computeThresholds, onChange }) {
   let current = family;
   let selectedKey = null; // chosen option key, remembered across family swaps so MIN re-fills
-  let mode = 'inclusive'; // §11.8 threshold mode (per-control); default = inclusive
+  let mode = 'inclusive'; // threshold mode (per-control); default = inclusive
 
   // Single-range (jewel) families don't tier — they carry one range that the picker
   // renders as percentile MIN presets instead of a tier ladder (see compute.mjs).
@@ -320,7 +320,7 @@ export function createTierControl({ families, family, ambiguous, minInput, maxIn
     root.classList.add('is-set');
     selectedKey = o.key;
     updateTip(o);
-    // Publish the pick for the §9 results annotator. Tiered mods carry their target
+    // Publish the pick for the results annotator. Tiered mods carry their target
     // tier (mode-independent — Strict only changes MIN); jewels carry the picked MIN
     // and percentile and flag themselves single-range so results badge roll quality.
     if (onChange) {

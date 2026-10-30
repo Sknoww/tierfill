@@ -1,7 +1,7 @@
 /*
- * §11.5 validation harness — run with: node tools/validate.mjs
+ * Validation harness — run with: node tools/validate.mjs
  *
- * Part 1: self-tests the compute layer against cases we CONFIRMED live (PLAN §4/§6),
+ * Part 1: self-tests the compute layer against cases we CONFIRMED live (CONTEXT.md),
  *         independent of the snapshot's (still unverified) numbers.
  * Part 2: loads assets/data-snapshot.json and prints each tier's computed min per mode,
  *         so the values can be spot-checked against live trade searches.
@@ -23,7 +23,7 @@ function check(label, got, want) {
 
 console.log('Part 1 — compute self-tests (confirmed cases):');
 
-// Averaged mod, the PLAN §6 worked example: T1 Adds (12–19) to (22–32) → inclusive min 17.
+// Averaged mod, the CONTEXT.md worked example: T1 Adds (12–19) to (22–32) → inclusive min 17.
 const averaged = {
   isAveraged: true,
   tiers: [
@@ -55,7 +55,7 @@ check('inverted T1 exact-band', computeFilter(inverted, 1, 'exact-band'), { min:
 check('inverted has no min key (fills MAX only)', computeFilter(inverted, 1).min, undefined);
 
 // Average-model sanity: live item "Adds 14 to 26" → average 20. A tier whose inclusive
-// floor ≤ 20 must include it; > 20 must exclude it. (PLAN §4: min 19 shows, 21 hides.)
+// floor ≤ 20 must include it; > 20 must exclude it. (CONTEXT.md: min 19 shows, 21 hides.)
 const avg = (lo, hi) => (lo + hi) / 2;
 check('live: avg(14,26) = 20', avg(14, 26), 20);
 check('live: 20 >= floor(17) shows', 20 >= 17, true);

@@ -2,14 +2,14 @@
  * Item-type / weapon-family detection (live, DOM-first — no search fired).
  * Source of truth for the selectors: spike/FINDINGS.md §4.
  *
- * Purpose for §11.6: a stat like "Adds # to # Physical Damage" has TWO ladders
+ * Purpose: a stat like "Adds # to # Physical Damage" has TWO ladders
  * (1H/bow vs 2H/quarterstaff). When the page tells us the item family, we pick
  * the right ladder and hide the manual toggle; when it's unknown/ambiguous, the
  * caller shows a 1H/2H toggle instead.
  *
  * NOTE (heuristic): we match the *display* text the site exposes (category
  * placeholder like "Dagger", or a committed base name) against each family's
- * `types` tokens. A precise category.option → family map is §11.7 data work;
+ * `types` tokens. A precise category.option → family map is parked data work;
  * this is a best-effort first cut and is intentionally conservative — when it
  * can't tell, it reports `ambiguous` so the user decides.
  */

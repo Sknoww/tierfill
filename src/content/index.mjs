@@ -1,7 +1,7 @@
 /*
- * Content app — §11.6 picker (per-row inline form factor).
+ * Content app — tier picker (per-row inline form factor).
  *
- * Flow (PLAN §11.6, FINDINGS §3):
+ * Flow (FINDINGS §3):
  *   1. find every Stats group via the "+ Add Stat Filter" anchor → .filter-group
  *   2. for each stat row (.filter.full-span), read .filter-title, strip the
  *      leading type token (explicit/pseudo/…) → the stat template (with #)
@@ -9,7 +9,7 @@
  *   4. resolve the weapon family (auto when the page tells us, toggle otherwise)
  *   5. inject a namespaced tier control LEFT of the row's first MIN input
  *
- * Additive-only, idempotent, debounced MutationObserver (PLAN §9 coexistence).
+ * Additive-only, idempotent, debounced MutationObserver (CONTEXT.md, Coexistence).
  */
 
 import { computeAllTiers, computeThresholds } from '../tiers/compute.mjs';
@@ -38,7 +38,7 @@ const TYPE_TOKENS = new Set([
 const TIERED_TOKENS = new Set(['explicit', 'desecrated', 'fractured']);
 
 let INDEX = null; // normalized display text → [stat entries] (one per family)
-let idCounter = 0; // stable per-row id for the §9 selection store
+let idCounter = 0; // stable per-row id for the selection store
 // row → { update, families, family, ambiguous } for live family re-resolve. Lets a
 // later item-type change swap the control's ladder in place without destroying it
 // (and without clobbering the user's chosen tier). WeakMap so removed rows GC away.
@@ -169,7 +169,7 @@ function processRow(row) {
 
   const control = createTierControl({
     families, family, ambiguous, minInput, maxInput, computeAllTiers, computeThresholds,
-    // publish the pick to the §9 store so the results annotator can detect tiers.
+    // publish the pick to the store so the results annotator can detect tiers.
     // `payload` carries { tier } for tiered mods, or { tier, singleRange, min, pct }
     // for jewels (single-range) so results can badge roll quality instead of a tier.
     onChange: (entry, payload) => setSelection(id, { display: entry.display, entry, ...payload }),
@@ -183,7 +183,7 @@ function scan() {
   for (const group of getStatsGroups()) {
     group.querySelectorAll('.filter.full-span').forEach(processRow);
   }
-  // Reconcile the §9 store: drop selections whose row/control is gone (e.g. the
+  // Reconcile the store: drop selections whose row/control is gone (e.g. the
   // user deleted the stat filter), so we stop annotating results for it.
   const live = new Set();
   document.querySelectorAll('.filter.full-span').forEach((row) => {
@@ -204,7 +204,7 @@ async function init() {
   const res = await fetch(RT.getURL('assets/data-snapshot.json'));
   INDEX = buildIndex(await res.json());
   scan();
-  initResults(); // §9 result annotator (own observer; default OFF until toggled)
+  initResults(); // result annotator (own observer; default ON)
   // Watch childList for added/removed rows AND a narrow set of attributes: the item
   // type is committed via a `modified` class + placeholder/value change (FINDINGS §4),
   // which a childList-only observer misses — so inference would never re-run after the

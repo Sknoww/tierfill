@@ -1,4 +1,8 @@
-# --- Local-only development material (kept on disk, not published) ---
+# --- Local-only project docs and development material ---
+# Never published. Backed up to the private repo Sknoww/tierfill-private; clone it
+# next to this repo and run `python sync.py install` to restore them.
+/ROADMAP.md
+/CONTEXT.md
 docs/
 spike/
 
@@ -16,10 +20,8 @@ icons/*
 /Screenshot*.png
 
 # --- Build inputs for the data pipeline ---
-# Only our hand-authored override layer is committed; the rest are large and/or
-# third-party and are re-obtainable (see README → "Rebuilding the data snapshot").
-tools/data-sources/*
-!tools/data-sources/ggg-overrides.json
+# Large and third-party (see README → "Rebuilding the data").
+tools/data-sources/
 
 # --- Packaging / build artifacts ---
 dist/

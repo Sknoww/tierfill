@@ -1,5 +1,5 @@
 /*
- * §11.7 — build-data: regenerate assets/data-snapshot.json from source data.
+ * build-data: regenerate assets/data-snapshot.json from source data.
  *
  *   node tools/build-data.mjs                 # build → assets/data-snapshot.json
  *   node tools/build-data.mjs --dry           # print report only, write nothing
@@ -20,12 +20,12 @@
  *       rows actually match (enhancer keys are lowercased and drop the leading "+").
  *       Shape: { result: [ { id, label, entries: [ {id, text, type}... ] } ] }
  *
- * Decisions baked in (PLAN §11.7, this session):
+ * Decisions baked in (see CONTEXT.md):
  *   • Explicit only — ingest the `prefix` + `suffix` buckets (both render as "explicit"
  *     on trade); SKIP `implicit` (implicits aren't tier-searched). [user call]
  *   • Hybrid `|||||` two-stat affixes are PARKED (need GGG to disambiguate). [user call]
  *   • Family split is generalized off the `types` signature: within one stat text, tier
- *     elements carrying different `types` sets become separate family ladders (§11.5).
+ *     elements carrying different `types` sets become separate family ladders.
  *
  * Output schema is unchanged from the hand-built snapshot so compute.mjs, validate.mjs
  * and the content script keep working:
@@ -49,12 +49,12 @@ const REPORT_PATH = REPORT_FLAG !== -1 ? process.argv[REPORT_FLAG + 1] : null;
 // SOURCE: the PoE2DB-direct scrape (tools/data-sources/poe2db-mods.json) is now the DEFAULT,
 // authoritative source. The legacy third-party enhancer dump is opt-in via --base <path>,
 // which also re-enables its supplements (mergeExtraMods, the dedicateWeaponLadders hack) and
-// the §10 GGG overrides — all of which the direct scrape made redundant (each was a patch for
+// the GGG overrides — all of which the direct scrape made redundant (each was a patch for
 // an enhancer error; the audit confirmed PoE2DB-raw matches every one). See tools/audit-diff.mjs.
 const BASE_FLAG = process.argv.indexOf('--base');
 const LEGACY = BASE_FLAG !== -1;
 const BASE_PATH = LEGACY ? process.argv[BASE_FLAG + 1] : join(SRC, 'poe2db-mods.json');
-// --no-overrides: skip the §10 GGG override layer (legacy path only; off by default now).
+// --no-overrides: skip the GGG override layer (legacy path only; off by default now).
 const NO_OVERRIDES = process.argv.includes('--no-overrides');
 
 // ── normalization ───────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ async function loadGggLookup() {
 }
 
 // ── GGG override ladders (optional) ───────────────────────────────────────────
-// §10: where the enhancer source ladder is structurally wrong (FINDINGS §13a), a
+// Where the enhancer source ladder is structurally wrong (FINDINGS §13a), a
 // GGG-authoritative ladder (built by tools/build-overrides.mjs from /fetch capture)
 // REPLACES the source tiers for that stat id. Keyed by tradeStatId.
 async function loadOverrides() {
@@ -392,7 +392,7 @@ async function main() {
           }),
         }));
 
-        // §10: GGG-authoritative override REPLACES this ladder when the stat id (and
+        // GGG-authoritative override REPLACES this ladder when the stat id (and
         // family, if specified) matches. Re-rank best→worst by the tier floor so the
         // tier numbers stay 1=best regardless of the override file's ordering.
         const ovList = (overrides && tradeStatId && overrides.get(tradeStatId)) || [];

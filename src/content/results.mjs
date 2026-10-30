@@ -1,5 +1,5 @@
 /*
- * Result post-filtering / annotation (§9, the §7b precision unlock).
+ * Result post-filtering / annotation (the per-tier precision unlock).
  *
  * The trade server only filters averaged mods on (low+high)/2, so lucky
  * lower-tier rolls leak past a tier filter. But every result listing prints its
@@ -20,7 +20,7 @@
  * widen the selector. One listing = `div.row` under `.results`/`.resultset`.
  * Additive-only, namespaced `poe2tf-`,
  * idempotent (re-applies on every results re-render). Coexists with TFT /
- * better-trading result decoration (PLAN §9).
+ * better-trading result decoration (CONTEXT.md, Coexistence).
  */
 
 import { getSelections, subscribe } from './store.mjs';
@@ -74,7 +74,7 @@ function badgeLine(line, tier, quality, isOff) {
 }
 
 // Jewel (single-range) badge: jewel mods don't tier, so instead of a ≈T verdict we
-// show WHERE the roll sits in its one range as a percentage (the §roll-quality
+// show WHERE the roll sits in its one range as a percentage (the roll-quality
 // unlock for jewels). Green ✓ when the roll meets the MIN you picked, amber ▼ when
 // it's below — mirroring the tier badge's meets/below coloring on the percentile axis.
 function badgeJewelLine(line, pct, isBelow) {
@@ -95,7 +95,7 @@ function annotate() {
   if (!enabled) return;
 
   const sels = getSelections().filter((s) => s.tier != null && s.entry);
-  if (!sels.length) { if (DEBUG) console.log('[poe2tf §9] no selections with a tier'); return; }
+  if (!sels.length) { if (DEBUG) console.log('[poe2tf results] no selections with a tier'); return; }
   // Sign-flipped (inverted) mods print the OPPOSITE-polarity wording on results — e.g.
   // "28% reduced Charges per use" for the stat whose canonical text is "increased
   // Charges per use" — so we match against that wording. The GGG tier bracket (e.g.
@@ -110,9 +110,9 @@ function annotate() {
   const rows = document.querySelectorAll('.results .row, .resultset .row');
   const diag = [];
   if (DEBUG) {
-    console.log(`[poe2tf §9] enabled. selections:`, compiled.map((s) =>
+    console.log(`[poe2tf results] enabled. selections:`, compiled.map((s) =>
       `T${s.tier} "${s.display}" /${s.re.source}/`));
-    console.log(`[poe2tf §9] rows matched by .results .row/.resultset .row = ${rows.length};` +
+    console.log(`[poe2tf results] rows matched by .results .row/.resultset .row = ${rows.length};` +
       ` .item-mod--explicit/--desecrated/--fractured page-wide = ${document.querySelectorAll('.item-mod--explicit, .item-mod--desecrated, .item-mod--fractured').length}`);
   }
 
@@ -153,7 +153,7 @@ function annotate() {
   });
 
   if (DEBUG) {
-    console.log(`[poe2tf §9] badged ${diag.length} line(s).`);
+    console.log(`[poe2tf results] badged ${diag.length} line(s).`);
     if (diag.length && console.table) console.table(diag);
   }
 }

@@ -1,7 +1,7 @@
 /*
- * Pure tier-detection helpers for the §9 result annotator (no DOM — unit-tested
+ * Pure tier-detection helpers for the result annotator (no DOM — unit-tested
  * in node via tools/validate.mjs). Given a result listing's printed mod text and
- * a snapshot stat entry, work out which tier the roll actually is — the §7b
+ * a snapshot stat entry, work out which tier the roll actually is — the
  * precision the server's average-only filter can't provide.
  */
 
@@ -32,7 +32,7 @@ export function parseRolls(match) {
 
 /**
  * Detect a roll's real tier by testing BOTH sub-rolls against each tier's ranges
- * (true §7b precision). When a lucky roll straddles tiers (low in T2, high in
+ * (true per-tier precision). When a lucky roll straddles tiers (low in T2, high in
  * T1) no single tier contains both — fall back to the average band and mark it
  * approximate (`exact:false`).
  * @returns {{tier:number, exact:boolean}|null}
@@ -74,9 +74,9 @@ export function detectFromText(entry, text) {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
- * §9 GGG-sourced parsing (the chosen approach: read GGG's OWN tier label +
+ * GGG-sourced parsing (the chosen approach: read GGG's OWN tier label +
  * range off the result mod line, e.g.  "P2 [20—24 to 33—36] Adds 22 to 35 …").
- * GGG's tier is authoritative — our snapshot drifts (see the §11.7 audit TODO),
+ * GGG's tier is authoritative — our snapshot drifts (see Result badges in CONTEXT.md),
  * so result annotation uses these, not detectTier().
  * ────────────────────────────────────────────────────────────────────────── */
 

@@ -1,14 +1,14 @@
 /*
  * PoE2 Tier Filter — tier → value computation (pure, framework-agnostic ESM).
  *
- * Source of truth: docs/PLAN.md §6–§7.
+ * Source of truth: CONTEXT.md, Tier computation.
  *  • Single-value mod  → min = tier.ranges[0][0]   (the tier's floor)
  *  • Averaged mod (two sub-rolls, e.g. "Adds # to #") → the trade min box compares
  *    against (lowRoll + highRoll) / 2, so for "tier T or better":
  *        inclusive min = (loMin + hiMin) / 2
- *    Confirmed live (PLAN §4): item "Adds 14 to 26" → average 20; min 19 shows, 21 hides.
+ *    Confirmed live (CONTEXT.md): item "Adds 14 to 26" → average 20; min 19 shows, 21 hides.
  *
- * `ranges` shape (per PLAN §5):
+ * `ranges` shape (see Data pipeline in CONTEXT.md):
  *   single  : [[min, max]]
  *   averaged: [[loMin, loMax], [hiMin, hiMax]]
  *

@@ -1,8 +1,8 @@
 /*
- * §9 detection self-tests — validates src/content/detect-tier.mjs against the
+ * Detection self-tests — validates src/content/detect-tier.mjs against the
  * real shipped snapshot. Run: node tools/test-detect.mjs
  *
- * These cover the lucky-roll case that motivates §9: a max-rolled lower tier
+ * These cover the lucky-roll case that motivates this: a max-rolled lower tier
  * that the server's average filter lets through must be detected as its TRUE
  * (lower) tier so the annotator can flag/dim it.
  */
@@ -38,7 +38,7 @@ console.log(`\n[${fire.key}] ${fire.display}  (averaged=${fire.isAveraged})`);
 fire.tiers.forEach((t) => console.log(`    T${t.tier} ranges=${JSON.stringify(t.ranges)}`));
 
 console.log('\nDetection:');
-// Expectations track the GGG-authoritative fire ladder (§13b override): T1 25-29/
+// Expectations track the GGG-authoritative fire ladder (FINDINGS §13b override): T1 25-29/
 // 37-45, T2 20-24/33-36, T3 13-19/27-32, … Adds 17 to 27 → 17∈[13,19], 27∈[27,32] = T3.
 check('"Adds 17 to 27 Fire damage to Attacks" (the probed lucky roll)',
   detectFromText(fire, 'Adds 17 to 27 Fire damage to Attacks'), { tier: 3, exact: true });
@@ -58,7 +58,7 @@ check('non-matching mod text → null',
 check('does not match the local (no "to Attacks") variant',
   templateToRegex(fire.display).test('Adds 17 to 27 Fire Damage'), false);
 
-// ── §9 GGG-sourced parsing (the chosen approach) — strings from the live probe ──
+// ── GGG-sourced parsing (the chosen approach) — strings from the live probe ──
 console.log('\nGGG tier parsing (from result mod text):');
 // Exact line captured from a result (em-dash separators, no space before "Adds").
 const LINE = 'P2 [20—24 to 33—36]Adds 22 to 35 Fire damage to Attacks';
@@ -79,7 +79,7 @@ check('single-value parseGggRanges → [[41,53]]', parseGggRanges('S3 [41—53] 
 check('single-value 47 in [41,53] → mid', rollQuality([47], [[41, 53]]), 'mid');
 
 // Desecrated mod line — carries GGG's tier bracket exactly like an explicit one,
-// so the class-agnostic parsers handle it unchanged (the §9 fix only widens the
+// so the class-agnostic parsers handle it unchanged (the fix only widens the
 // DOM selector). Exact textContent captured from a desecrated result line.
 const DESECRATED = 'P4 [6—10 to 12—17]Adds 6 to 16 Physical Damage to AttacksAnnealed (≥54)';
 check('desecrated parseGggTier → P4', parseGggTier(DESECRATED), { affix: 'P', tier: 4 });
@@ -110,5 +110,5 @@ const invRolls = parseRolls(invRe.exec(INVERTED)).map((v) => -v); // sign-flippe
 check('inverted rolls extracted + negated → [-28]', invRolls, [-28]);
 check('inverted -28 in [[-29,-27]] → mid', rollQuality(invRolls, [[-29, -27]]), 'mid');
 
-console.log(`\n${fail === 0 ? '✅ all §9 detection tests passed' : `❌ ${fail} failed`} (${pass} passed)`);
+console.log(`\n${fail === 0 ? '✅ all detection tests passed' : `❌ ${fail} failed`} (${pass} passed)`);
 process.exit(fail === 0 ? 0 : 1);

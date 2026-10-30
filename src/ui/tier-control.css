@@ -1,5 +1,5 @@
 /*
- * Tier control styling — namespaced poe2tf-, additive-only (PLAN §8/§9).
+ * Tier control styling — namespaced poe2tf-, additive-only (CONTEXT.md, Coexistence).
  *
  * Meshing rules:
  *   • font is INHERITED so we ride the site's Fontin small-caps automatically
@@ -93,7 +93,7 @@
 
 .poe2tf-approx { color: #c8aa6e; }
 
-/* Strict mode (§11.8) — amber accent on the collapsed control so the active
+/* Strict mode — amber accent on the collapsed control so the active
    mode is legible without opening the panel. Same warm family as the gold,
    just hotter/tighter. */
 .poe2tf-control.is-strict .poe2tf-approx { color: #e6a23c; }
@@ -114,7 +114,7 @@
 }
 .poe2tf-panel[hidden] { display: none; }
 
-/* ── threshold-mode bar (§11.8) — header row inside the panel ─────────────── */
+/* ── threshold-mode bar — header row inside the panel ─────────────── */
 .poe2tf-mode {
   display: flex;
   gap: 2px;

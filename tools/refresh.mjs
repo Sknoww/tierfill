@@ -141,7 +141,7 @@ async function main() {
       for (const k of newlyUnmatched.sort()) console.log(`      ${k}`);
       console.log(
         '\n  These need a fresh GGG /api/trade2/data/stats capture to get a tier control.\n' +
-          '  Re-capture it in the browser (PLAN §5 / FINDINGS §11), drop it at\n' +
+          '  Re-capture it in the browser (FINDINGS §11), drop it at\n' +
           `      ${join(SRC, 'ggg-trade2-stats.json')}\n` +
           '  then re-run:  node tools/refresh.mjs --no-fetch',
       );
