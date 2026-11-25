@@ -31,7 +31,7 @@ searched mods on results with their real tier.
 | Coverage | Explicit mods only; rows without data get no control rather than a guess |
 | Matching | Exact stat text, because local `Adds # to # Physical Damage` and global `... to Attacks` are different mods |
 | Data delivery | Bundled snapshot only; refreshed offline per patch and shipped in a release |
-| Data source | PoE2DB scrape joined to GGG's trade stat list |
+| Data source | PoE2DB scrape joined to GGG's trade stat list; the RePoE game-file export is the second source, cross-checked every refresh |
 | Tier label | Always "≈ T{n}", because tier overlap can't be fully eliminated |
 | Privacy | No data collection and no network requests; any change must be called out in the store privacy practices |
 
@@ -94,18 +94,29 @@ GGG /api/trade2/data/stats (browser fetch) -> data-sources/ggg-trade2-stats.json
                                   tools/build-data.mjs -> assets/data-snapshot.json
                                                                                      v
                          tools/check-data.mjs -> gates + data-sources/patch-diff.md
+                                                                                     ^
+RePoE mods.json + base_items.json -> tools/repoe.mjs -> data-sources/repoe/ ─────────┘
 ```
 
-- **Per patch:** `node tools/refresh.mjs` re-scrapes, rebuilds and runs `check-data.mjs`.
+- **Per patch:** `node tools/refresh.mjs` re-scrapes, downloads RePoE, rebuilds and runs `check-data.mjs`.
   `--dry` writes nothing; `--no-fetch` rebuilds after a fresh GGG fetch. The scraper stops
   on any failed or near-empty page; `--allow-drop` accepts a pool that really halved.
 - **Item classes:** `tools/item-classes.json` maps each class's GGG trade category to its
-  snapshot token, PoE2DB pages and hand class. A new class on patch day is one entry
+  snapshot token, PoE2DB pages, RePoE `item_class`(es) and hand class. A new class on patch day is one entry
   there; `check-data` fails on any GGG category that is neither mapped nor `ignored`.
 - **Checks:** `check-data` fails on missing pages, unmapped categories, unknown tokens, a
   still-scraped stat losing its trade id, or an item type losing all its data. Everything
   else (family moves, tier-count and T1 changes, out-of-order ladders, new unjoined stats,
   GGG additions, a weapon T1 table) goes in `patch-diff.md` for a person to judge.
+- **RePoE cross-check** (`tools/repoe.mjs`): builds ladders from the game's Mods table
+  ([repoe-fork](https://repoe-fork.github.io/poe2/)) and lists every tier, level, range or
+  item-class disagreement with PoE2DB in `patch-diff.md`. Only a whole class missing on one
+  side is a gate. A class gets a mod if any released, for-sale base can roll it: the first
+  `spawn_weights` tag the base carries decides. Abyss (`desecrated`) mods count, because
+  PoE2DB lists them too. Mods that roll only through a tag no base carries
+  (`genesis_tree_*`, `breach_desecration`) can't be placed, so they're listed as explained.
+  RePoE lagged 10–22h behind past launches, so on launch day it's a day+1 check, and the
+  fallback if PoE2DB breaks.
 - **GGG lists** (`/api/trade2/data/stats`, `/items`, `/filters`) are fetched from a
   browser on the trade site, with no login; server-side fetches are Cloudflare-blocked.
   `node tools/capture-ggg.mjs` prints a console snippet that downloads all three, then
@@ -149,7 +160,7 @@ automate searches or add load to GGG's servers.
 ## Testing and release
 
 - **Tests:** `node tools/validate.mjs`, plus `tools/test-affix.mjs`, `test-detect.mjs`,
-  `test-family-label.mjs` and `test-jewel.mjs`. There are no dependencies or `package.json`.
+  `test-family-label.mjs`, `test-jewel.mjs`, `test-check-data.mjs` and `test-repoe.mjs`. There are no dependencies or `package.json`.
 - **Release:** bump `manifest.json`, tag `vX.Y.Z` and push. The workflow checks the tag
   against the manifest and attaches both store zips to a GitHub Release.
 - **Store submission:** follow `docs/submission-template.md`; standing listing copy is in

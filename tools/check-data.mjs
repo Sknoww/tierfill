@@ -25,6 +25,9 @@
  *   • ladders whose values don't improve with every tier (minus known cases)
  *   • new stats without a GGG trade id, and GGG explicit stats added since the last capture
  *   • T1 of the four added-damage prefixes per weapon class
+ *   • the RePoE cross-check (tools/repoe.mjs): every tier, required-level, range or
+ *     item-class disagreement between the PoE2DB scrape and the game-file export. Only a
+ *     whole item class missing on one side fails a gate (6).
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
@@ -33,6 +36,7 @@ import { dirname, join, resolve } from 'node:path';
 import { CLASSES, IGNORED } from './item-classes.mjs';
 import { MIN_ROWS, previousRowCounts } from './scrape-poe2db.mjs';
 import { categoryOptions } from './capture-ggg.mjs';
+import { REPOE_DIR, buildLadders, crossCheck, fetchedAt } from './repoe.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -84,7 +88,7 @@ const explicitIds = (stats) =>
   new Map(((stats && stats.result) || []).filter((g) => g.id === 'explicit').flatMap((g) => g.entries).map((e) => [e.id, e.text]));
 
 // ── gates ──────────────────────────────────────────────────────────────────────
-export function runGates({ snap, prev, classes = CLASSES, ignored = IGNORED, scrape, filters, gggStats }) {
+export function runGates({ snap, prev, classes = CLASSES, ignored = IGNORED, scrape, filters, gggStats, repoe }) {
   const errors = [];
   const known = new Set(classes.map((c) => c.token));
 
@@ -137,12 +141,16 @@ export function runGates({ snap, prev, classes = CLASSES, ignored = IGNORED, scr
     const nowTokens = tokensOf(snap);
     for (const t of tokensOf(prev)) if (!nowTokens.has(t)) errors.push(`Item type "${t}" had tier data before and has none now.`);
   }
+
+  // 6. RePoE and PoE2DB agree on which item classes have mods at all
+  if (repoe && scrape) errors.push(...crossCheck({ scrape, repoe, classes }).gate);
   return errors;
 }
 
 // ── report ─────────────────────────────────────────────────────────────────────
-export function buildReport({ snap, prev, gggStats, gggPrev, classes = CLASSES }) {
-  const r = { addedStats: [], removedStats: [], moved: [], ladders: [], order: [], unjoined: [], gggAdded: [], weaponT1: [] };
+export function buildReport({ snap, prev, gggStats, gggPrev, classes = CLASSES, scrape, repoe }) {
+  const r = { addedStats: [], removedStats: [], moved: [], ladders: [], order: [], unjoined: [], gggAdded: [], weaponT1: [], repoe: null };
+  if (repoe && scrape) r.repoe = crossCheck({ scrape, repoe, classes });
   const now = byDisplayType(snap);
   const before = prev ? byDisplayType(prev) : new Map();
 
@@ -209,7 +217,7 @@ export function buildReport({ snap, prev, gggStats, gggPrev, classes = CLASSES }
   return r;
 }
 
-export function renderMarkdown({ errors, report: r, prevLabel }) {
+export function renderMarkdown({ errors, report: r, prevLabel, repoeLabel = 'not fetched' }) {
   const out = [];
   const list = (title, items, empty) => {
     out.push(`## ${title} (${items.length})`, '');
@@ -234,6 +242,24 @@ export function renderMarkdown({ errors, report: r, prevLabel }) {
   out.push(`| --- | ${ADDED_DAMAGE.map(() => '---').join(' | ')} |`);
   for (const row of r.weaponT1) out.push(`| ${row.join(' | ')} |`);
   out.push('');
+
+  out.push('# RePoE cross-check', '');
+  if (!r.repoe) {
+    out.push(`No RePoE export (${repoeLabel}). Run \`node tools/repoe.mjs\` or \`node tools/refresh.mjs\`.`, '');
+  } else {
+    const x = r.repoe;
+    out.push(
+      `PoE2DB scrape vs the RePoE game-file export (fetched ${repoeLabel}). Values read "PoE2DB vs RePoE"; tiers pair up by required level.`,
+      'RePoE has lagged 10–22h behind past launches, so on launch day a long list may only mean RePoE is still a patch behind.',
+      '',
+    );
+    list('Stats whose item classes disagree', x.classes, 'None.');
+    list('Ladders whose tiers, levels or ranges disagree', x.ladders, 'None.');
+    list('Stats only on PoE2DB', x.onlyPoe2db, 'None.');
+    list('Stats only in RePoE', x.onlyRepoe, 'None.');
+    out.push(`<details><summary>Explained: RePoE rolls these through a crafting-mechanic tag no base carries (${x.explained.length})</summary>`, '');
+    out.push(...(x.explained.length ? x.explained.map((i) => `- ${i}`) : ['None.']), '', '</details>', '');
+  }
   return out.join('\n');
 }
 
@@ -269,10 +295,15 @@ async function main() {
     filters: await readJson(join(SRC, 'ggg-trade2-filters.json')),
     gggStats: await readJson(join(SRC, 'ggg-trade2-stats.json')),
     gggPrev: await readJson(join(SRC, 'ggg-trade2-stats.prev.json')),
+    repoe: null,
   };
+  const mods = await readJson(join(REPOE_DIR, 'mods.json'));
+  const baseItems = await readJson(join(REPOE_DIR, 'base_items.json'));
+  if (mods && baseItems) inputs.repoe = buildLadders({ mods, baseItems });
+  const repoeLabel = inputs.repoe ? await fetchedAt() : 'not fetched';
   const errors = runGates(inputs);
   const report = buildReport(inputs);
-  await writeFile(REPORT, renderMarkdown({ errors, report, prevLabel }));
+  await writeFile(REPORT, renderMarkdown({ errors, report, prevLabel, repoeLabel }));
 
   console.log('check-data');
   console.log('─'.repeat(60));
@@ -283,6 +314,12 @@ async function main() {
   console.log(`ladders out of order:         ${n('order')}`);
   console.log(`new stats without a trade id: ${n('unjoined')}`);
   console.log(`GGG explicit stats added:     ${n('gggAdded')}`);
+  if (report.repoe) {
+    const x = report.repoe;
+    console.log(`RePoE disagreements:          ${x.classes.length} class, ${x.ladders.length} ladder, ${x.onlyPoe2db.length} PoE2DB-only, ${x.onlyRepoe.length} RePoE-only (+${x.explained.length} explained)`);
+  } else {
+    console.log('RePoE cross-check:            skipped (no export; run node tools/repoe.mjs)');
+  }
   console.log(`report: ${REPORT}`);
   if (errors.length) {
     console.error(`\n✖ ${errors.length} hard gate failure(s):`);

@@ -15,6 +15,9 @@
  *     which NEWLY-ADDED mods did NOT join to a GGG stat id. Those are the ones that
  *     need a fresh GGG capture (Cloudflare blocks server-side fetches, so it comes from a
  *     browser tab: `node tools/capture-ggg.mjs` prints the snippet and the steps).
+ *   • Downloads the RePoE game-file export (tools/repoe.mjs, ~22 MB) into
+ *     tools/data-sources/repoe/, the second source check-data cross-checks PoE2DB against.
+ *     A failed download only warns: the check then uses the last copy, or skips.
  *   • Runs tools/check-data.mjs: hard gates against the committed snapshot, plus the
  *     tools/data-sources/patch-diff.md report a person reads before release. A failed gate
  *     fails the refresh.
@@ -25,6 +28,7 @@ import { readFile, copyFile, unlink } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { spawn } from 'node:child_process';
+import { fetchRepoe } from './repoe.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = join(here, 'data-sources');
@@ -123,6 +127,14 @@ async function main() {
       for (const k of [...removed].sort()) console.log(`      ${k}`);
     }
     if (oldData) console.log(`\n  (backup: ${BACKUP})`);
+
+    // 4. the RePoE export, for check-data's cross-check. Never fatal: it is a second opinion.
+    console.log('\ndownloading the RePoE export…');
+    try {
+      await fetchRepoe();
+    } catch (e) {
+      console.log(`⚠ RePoE download failed (${e.message}); the cross-check uses the last copy, if any.`);
+    }
   }
 
   // 5. rebuild the snapshot, capturing the machine-readable report

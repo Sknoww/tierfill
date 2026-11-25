@@ -1,5 +1,5 @@
 {
-  "_note": "Single source for every item class TierFill covers: its GGG trade category (from /api/trade2/data/filters, type_filters → category), the token used in snapshot `types`, the PoE2DB page slug(s) the scraper reads, and its hand class. tools/scrape-poe2db.mjs and tools/build-data.mjs read this; tools/check-data.mjs fails if a GGG category is neither here nor in `ignored`. Order here is the order of `types` arrays. To add a class: one entry here, then re-run tools/refresh.mjs.",
+  "_note": "Single source for every item class TierFill covers: its GGG trade category (from /api/trade2/data/filters, type_filters → category), the token used in snapshot `types`, the PoE2DB page slug(s) the scraper reads, the RePoE base_items item_class(es) tools/repoe.mjs cross-checks against, and its hand class. tools/scrape-poe2db.mjs and tools/build-data.mjs read this; tools/check-data.mjs fails if a GGG category is neither here nor in `ignored`. Order here is the order of `types` arrays. To add a class: one entry here, then re-run tools/refresh.mjs.",
   "classes": [
     {
       "token": "claw",
@@ -9,6 +9,9 @@
       "hand": "1h",
       "pages": [
         "Claws"
+      ],
+      "repoe": [
+        "Claw"
       ]
     },
     {
@@ -19,6 +22,9 @@
       "hand": "1h",
       "pages": [
         "Daggers"
+      ],
+      "repoe": [
+        "Dagger"
       ]
     },
     {
@@ -29,6 +35,9 @@
       "hand": "1h",
       "pages": [
         "One_Hand_Swords"
+      ],
+      "repoe": [
+        "One Hand Sword"
       ]
     },
     {
@@ -39,6 +48,9 @@
       "hand": "1h",
       "pages": [
         "One_Hand_Axes"
+      ],
+      "repoe": [
+        "One Hand Axe"
       ]
     },
     {
@@ -49,6 +61,9 @@
       "hand": "1h",
       "pages": [
         "One_Hand_Maces"
+      ],
+      "repoe": [
+        "One Hand Mace"
       ]
     },
     {
@@ -59,6 +74,9 @@
       "hand": "1h",
       "pages": [
         "Spears"
+      ],
+      "repoe": [
+        "Spear"
       ]
     },
     {
@@ -69,6 +87,9 @@
       "hand": "1h",
       "pages": [
         "Flails"
+      ],
+      "repoe": [
+        "Flail"
       ]
     },
     {
@@ -79,6 +100,9 @@
       "hand": "1h",
       "pages": [
         "Sceptres"
+      ],
+      "repoe": [
+        "Sceptre"
       ]
     },
     {
@@ -89,6 +113,9 @@
       "hand": "1h",
       "pages": [
         "Wands"
+      ],
+      "repoe": [
+        "Wand"
       ]
     },
     {
@@ -99,6 +126,9 @@
       "hand": "2h",
       "pages": [
         "Two_Hand_Swords"
+      ],
+      "repoe": [
+        "Two Hand Sword"
       ]
     },
     {
@@ -109,6 +139,9 @@
       "hand": "2h",
       "pages": [
         "Two_Hand_Axes"
+      ],
+      "repoe": [
+        "Two Hand Axe"
       ]
     },
     {
@@ -119,6 +152,9 @@
       "hand": "2h",
       "pages": [
         "Two_Hand_Maces"
+      ],
+      "repoe": [
+        "Two Hand Mace"
       ]
     },
     {
@@ -129,6 +165,9 @@
       "hand": "2h",
       "pages": [
         "Quarterstaves"
+      ],
+      "repoe": [
+        "Warstaff"
       ]
     },
     {
@@ -139,6 +178,9 @@
       "hand": "2h",
       "pages": [
         "Talismans"
+      ],
+      "repoe": [
+        "Talisman"
       ]
     },
     {
@@ -149,6 +191,9 @@
       "hand": "2h",
       "pages": [
         "Staves"
+      ],
+      "repoe": [
+        "Staff"
       ]
     },
     {
@@ -159,6 +204,9 @@
       "hand": "2h",
       "pages": [
         "Bows"
+      ],
+      "repoe": [
+        "Bow"
       ]
     },
     {
@@ -169,6 +217,9 @@
       "hand": "2h",
       "pages": [
         "Crossbows"
+      ],
+      "repoe": [
+        "Crossbow"
       ]
     },
     {
@@ -178,6 +229,9 @@
       "kind": "offhand",
       "pages": [
         "Quivers"
+      ],
+      "repoe": [
+        "Quiver"
       ]
     },
     {
@@ -187,6 +241,9 @@
       "kind": "offhand",
       "pages": [
         "Foci"
+      ],
+      "repoe": [
+        "Focus"
       ]
     },
     {
@@ -199,6 +256,10 @@
         "Shields_str_dex",
         "Shields_str_int",
         "Bucklers"
+      ],
+      "repoe": [
+        "Shield",
+        "Buckler"
       ]
     },
     {
@@ -213,6 +274,9 @@
         "Gloves_str_dex",
         "Gloves_str_int",
         "Gloves_dex_int"
+      ],
+      "repoe": [
+        "Gloves"
       ]
     },
     {
@@ -227,6 +291,9 @@
         "Boots_str_dex",
         "Boots_str_int",
         "Boots_dex_int"
+      ],
+      "repoe": [
+        "Boots"
       ]
     },
     {
@@ -241,6 +308,9 @@
         "Body_Armours_str_dex",
         "Body_Armours_str_int",
         "Body_Armours_dex_int"
+      ],
+      "repoe": [
+        "Body Armour"
       ]
     },
     {
@@ -255,6 +325,9 @@
         "Helmets_str_dex",
         "Helmets_str_int",
         "Helmets_dex_int"
+      ],
+      "repoe": [
+        "Helmet"
       ]
     },
     {
@@ -264,6 +337,9 @@
       "kind": "jewellery",
       "pages": [
         "Amulets"
+      ],
+      "repoe": [
+        "Amulet"
       ]
     },
     {
@@ -273,6 +349,9 @@
       "kind": "jewellery",
       "pages": [
         "Rings"
+      ],
+      "repoe": [
+        "Ring"
       ]
     },
     {
@@ -282,6 +361,9 @@
       "kind": "jewellery",
       "pages": [
         "Belts"
+      ],
+      "repoe": [
+        "Belt"
       ]
     },
     {
@@ -293,6 +375,9 @@
         "Emerald",
         "Ruby",
         "Sapphire"
+      ],
+      "repoe": [
+        "Jewel"
       ]
     },
     {
@@ -302,6 +387,9 @@
       "kind": "flask",
       "pages": [
         "Life_Flasks"
+      ],
+      "repoe": [
+        "LifeFlask"
       ]
     },
     {
@@ -311,6 +399,9 @@
       "kind": "flask",
       "pages": [
         "Mana_Flasks"
+      ],
+      "repoe": [
+        "ManaFlask"
       ]
     },
     {
@@ -320,6 +411,9 @@
       "kind": "flask",
       "pages": [
         "Charms"
+      ],
+      "repoe": [
+        "UtilityFlask"
       ]
     }
   ],
