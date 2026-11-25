@@ -1,17 +1,3 @@
-# --- Local-only project docs and development material ---
-# Never published. Backed up to the private repo Sknoww/tierfill-private; clone it
-# next to this repo and run `python sync.py install` to restore them.
-/ROADMAP.md
-/CONTEXT.md
-docs/
-spike/
-
-# Icon working files — only the three sized PNGs are published
-icons/*
-!icons/icon-16.png
-!icons/icon-48.png
-!icons/icon-128.png
-
 # Source art dropped in the repo root (Midjourney renders, references)
 /Snow_*.png
 /exalted.jpg
@@ -20,7 +6,7 @@ icons/*
 /Screenshot*.png
 
 # --- Build inputs for the data pipeline ---
-# Large and third-party (see README → "Rebuilding the data").
+# Large, third-party and re-made each patch (see README → "Rebuilding the data").
 tools/data-sources/
 
 # --- Packaging / build artifacts ---

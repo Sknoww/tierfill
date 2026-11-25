@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "PoE2 Tier Filter — Spike",
+  "version": "0.0.6",
+  "description": "Spike 2 + item-type probe + §10 tier-range audit capture: rate-limit-safe stat add (autocomplete / ?q= URL), search monitor, live item detection, and GGG `/fetch` magnitude accumulation with file export for the snapshot↔GGG drift audit.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "poe2-tier-filter-spike@local",
+      "strict_min_version": "128.0"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.pathofexile.com/trade2/*",
+        "https://pathofexile.com/trade2/*"
+      ],
+      "js": ["spike2-page.js"],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.pathofexile.com/trade2/*",
+        "https://pathofexile.com/trade2/*"
+      ],
+      "js": ["spike2.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}
