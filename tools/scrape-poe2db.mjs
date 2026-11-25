@@ -32,7 +32,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import { PAGES, TOKEN_ORDER } from './item-classes.mjs';
+import { PAGES, SPAWN_TAGS, TOKEN_ORDER } from './item-classes.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = join(here, 'data-sources');
@@ -108,6 +108,10 @@ function parseClause(html) {
     values.push(['1', '1']);
     text = text.replace(/\b(an|a)\s+additional\s+([A-Za-z]+)\b/i, (_x, _a, noun) => `# additional ${/s$/i.test(noun) ? noun : noun + 's'}`);
   }
+  // Untranslated second stat: PoE2DB prints a stat the game shows no text for as its raw id
+  // and roll ("minion area of effect +% [3,6]"). It still rolls, so the mod is a hybrid.
+  const raw = !values.length && text.match(/\[(-?[\d.]+)(?:,(-?[\d.]+))?\]$/);
+  if (raw) values.push([raw[1], raw[2] ?? raw[1]]);
   return { text, values };
 }
 
@@ -173,8 +177,10 @@ async function fetchPage(slug) {
 //   • rows carrying a `Code` (essence / currency-stamped variants) — they duplicate a
 //     normal tier's values and would double up the ladder.
 //   • rows with no numeric roll — no ladder to build.
+//   • rows that can't roll on this class: their spawn tags name a specific tag (anything but
+//     "default") and none of the class's `spawnTags`. Only for classes that declare them.
 // Dedupes within the page by Name|Level|str. Returns [{bucket, key, level, values, raw}].
-function extractRows(html, report) {
+export function extractRows(html, report, spawnTags = null) {
   const rows = [];
   const re = /"ModGenerationTypeID"/g;
   const seen = new Set();
@@ -187,6 +193,13 @@ function extractRows(html, report) {
     const gen = String(o.ModGenerationTypeID);
     if (gen !== '1' && gen !== '2') continue;
     if (o.Code) continue; // essence / currency variant — duplicate values
+    if (spawnTags && Array.isArray(o.spawn_no)) {
+      const specific = o.spawn_no.filter((t) => t !== 'default');
+      if (specific.length && !specific.some((t) => spawnTags.has(t))) {
+        (report.offClass ??= []).push(`${decode(stripTags(o.str)).replace(/\s+/g, ' ').trim()} (${specific.join(', ')})`);
+        continue;
+      }
+    }
     const dedupe = `${o.Name}|${o.Level}|${o.str}`;
     if (seen.has(dedupe)) continue;
     seen.add(dedupe);
@@ -271,7 +284,7 @@ async function main() {
       report.pageFail.push(`${slug}: ${e.message}`);
       continue;
     }
-    const rows = extractRows(html, report);
+    const rows = extractRows(html, report, SPAWN_TAGS.get(token));
     pageOk += 1;
     report.pages.push({ slug, token, rows: rows.length });
     for (const r of rows) {
@@ -317,6 +330,7 @@ async function main() {
   console.log(`suffix keys:      ${suffixKeys}`);
   console.log(`tier elements:    ${totalEls}  (after cross-page type union)`);
   console.log(`parked (hybrid):  ${report.parked.length}`);
+  if (report.offClass?.length) console.log(`off-class rows:   ${report.offClass.length} dropped (spawn tags exclude the page's class)`);
   if (ONLY_PAGE) {
     console.log(`\n--page ${ONLY_PAGE}: per-row dump`);
     for (const bucket of ['prefix', 'suffix']) {

@@ -2,7 +2,7 @@
  * Scrape-gate tests — the fail-fast rules in scrape-poe2db.mjs (issue #1).
  * Run: node tools/test-scrape-gate.mjs
  */
-import { pageGate, previousRowCounts, MIN_ROWS } from './scrape-poe2db.mjs';
+import { pageGate, previousRowCounts, MIN_ROWS, extractRows } from './scrape-poe2db.mjs';
 
 let pass = 0, fail = 0;
 const check = (name, cond) => { if (cond) pass++; else { fail++; console.log(`✖ ${name}`); } };
@@ -34,6 +34,21 @@ check('--allow-drop turns a halved page into a warning', g.errors.length === 0 &
 
 g = pageGate([{ slug: 'Bows', rows: 5 }], ['Rings: timeout'], prev, { allowDrop: true });
 check('--allow-drop never excuses near-empty or failed pages', g.errors.length === 2);
+
+// row filters (issue #22)
+const v = (lo, hi) => `<span class='mod-value'>(${lo}<span class=\"ndash\">—</span>${hi})</span>`;
+const page = (...objs) => objs.map((o) => JSON.stringify({ Name: 'n', Level: '10', ModGenerationTypeID: '1', ...o })).join(',');
+let report = { parked: [] };
+let rows = extractRows(page(
+  { str: `Grants ${v(51, 56)}% of Life Recovery to Minions`, spawn_no: ['life_flask', 'default'] },
+  { str: `${v(23, 30)}% increased Charges`, spawn_no: ['default'] },
+  { str: `${v(41, 45)}% increased Recovery rate`, spawn_no: ['life_flask', 'mana_flask', 'default'] },
+), report, new Set(['mana_flask']));
+check('off-class row dropped, default and shared rows kept', rows.length === 2 && report.offClass.length === 1 && !rows.some((r) => /minions/.test(r.key)));
+check('no spawnTags → no filter', extractRows(page({ str: `Grants ${v(51, 56)}% of Life Recovery to Minions`, spawn_no: ['life_flask'] }), { parked: [] }).length === 1);
+report = { parked: [] };
+rows = extractRows(page({ str: `Minions have ${v(4, 8)}% increased maximum Life<br><span class=\"secondary\">minion area of effect +% [3,6]</span>` }), report);
+check('untranslated second stat parks a hybrid', rows.length === 0 && report.parked.length === 1);
 
 if (fail) { console.log(`\n✖ ${fail} scrape-gate test(s) failed (${pass} passed)`); process.exit(1); }
 console.log(`✅ all scrape-gate tests passed (${pass} passed)`);

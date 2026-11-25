@@ -5178,10 +5178,9 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Life Flask / Mana Flask",
+      "family": "Life Flask",
       "types": [
-        "life-flask",
-        "mana-flask"
+        "life-flask"
       ],
       "tiers": [
         {
@@ -6905,8 +6904,8 @@
           "ilvl": 1,
           "ranges": [
             [
-              4,
-              8
+              5,
+              15
             ]
           ]
         }
@@ -8635,7 +8634,7 @@
           "ranges": [
             [
               10,
-              15
+              18
             ]
           ]
         }
@@ -10285,6 +10284,99 @@
             [
               10,
               20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_armour_evasion_and_energy_shield": {
+      "display": "#% increased Armour, Evasion and Energy Shield",
+      "tradeStatId": "explicit.stat_3523867985",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Body Armour",
+      "types": [
+        "body-armour"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 75,
+          "ranges": [
+            [
+              101,
+              110
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 65,
+          "ranges": [
+            [
+              92,
+              100
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 60,
+          "ranges": [
+            [
+              80,
+              91
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 54,
+          "ranges": [
+            [
+              68,
+              79
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 46,
+          "ranges": [
+            [
+              56,
+              67
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 33,
+          "ranges": [
+            [
+              43,
+              55
+            ]
+          ]
+        },
+        {
+          "tier": 7,
+          "ilvl": 16,
+          "ranges": [
+            [
+              27,
+              42
+            ]
+          ]
+        },
+        {
+          "tier": 8,
+          "ilvl": 2,
+          "ranges": [
+            [
+              15,
+              26
             ]
           ]
         }

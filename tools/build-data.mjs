@@ -102,6 +102,22 @@ function familyLabelFromTypes(types) {
   return types.length > 3 ? `${list} +${types.length - 3}` : list || 'all';
 }
 
+// Two tier elements at one level of one ladder: keep the broadest-coverage one (most item
+// types). On a tie they are two real mods with one stat, such as the Kurgal and Ulaman Abyss
+// "% chance for Flasks you use to not consume Charges" (10–15 and 10–18, both level 65), so
+// the tier spans both: lowest floor, highest ceiling.
+function keepAtLevel(cur, el) {
+  if (!cur) return el;
+  const a = (cur.types || []).length, b = (el.types || []).length;
+  if (a !== b) return b > a ? el : cur;
+  if (cur.values.length !== el.values.length) return cur;
+  const values = cur.values.map(([lo, hi], i) => [
+    String(Math.min(Number(lo), Number(el.values[i][0]))),
+    String(Math.max(Number(hi), Number(el.values[i][1]))),
+  ]);
+  return { ...cur, values };
+}
+
 // Family detection: PER-TYPE LADDER RECONSTRUCTION. Build each item type's own complete
 // ladder (level → ranges, drawn from every tier-element that includes that type), then group
 // types whose ladders are IDENTICAL into one family. This is correct where the old union-find
@@ -114,8 +130,7 @@ function familyLabelFromTypes(types) {
 // tier the others lack (e.g. belt attribute) legitimately becomes its own family.
 function splitFamilies(tierEls) {
   const allTypes = [...new Set(tierEls.flatMap((e) => e.types || []))];
-  // type → (level → representative element). On a (type,level) collision, keep the broadest-
-  // coverage element (most types); the values agree by construction so the choice is cosmetic.
+  // type → (level → representative element). On a (type,level) collision, see keepAtLevel.
   const perType = new Map();
   for (const t of allTypes) {
     const byLevel = new Map();
@@ -123,7 +138,7 @@ function splitFamilies(tierEls) {
       if (!(el.types || []).includes(t)) continue;
       const lvl = Number(el.level);
       const cur = byLevel.get(lvl);
-      if (!cur || (el.types || []).length > (cur.types || []).length) byLevel.set(lvl, el);
+      byLevel.set(lvl, keepAtLevel(cur, el));
     }
     perType.set(t, byLevel);
   }
@@ -345,7 +360,7 @@ async function main() {
         for (const el of els) {
           const lvl = Number(el.level);
           const cur = byLevel.get(lvl);
-          if (!cur || (el.types || []).length > (cur.types || []).length) byLevel.set(lvl, el);
+          byLevel.set(lvl, keepAtLevel(cur, el));
         }
         if (byLevel.size !== els.length) report.dupLevel.push(`${statText} [${familyLabelFromTypes(types)}]`);
 

@@ -21,6 +21,8 @@ check('decimal is a scaled roll', parseMod('Gains 0.15 Charges per Second', st([
 check('word rung becomes # additional', same(parseMod('Loads an additional bolt', st([1, 1])), { key: 'loads # additional bolts', values: [[1, 1]] }));
 check('hybrid is skipped', parseMod('(10-15)% increased Armour\n+(5-8) to maximum Life', st([10, 15], [5, 8])) === null);
 check('unrolled second line is fine', parseMod('(61-68)% increased Life Recovered\nCannot be used', st([61, 68])).key === '#% increased life recovered');
+check('stat with no text makes a hybrid', parseMod('[Minion|Minions] have (4-8)% increased maximum Life', [{ id: 'aoe', min: 3, max: 6 }, { id: 'life', min: 4, max: 8 }]) === null);
+check('fixed stat with no text is fine', parseMod('(10-15)% increased Charges', [{ id: 'a', min: 10, max: 15 }, { id: 'b', min: 1, max: 1 }]).key === '#% increased charges');
 check('RePoE wording alias', parseMod('Grenade Skills have +1 Cooldown Use', st([1, 1])).key === 'grenade skills have # cooldown uses');
 
 // spawn rule: first tag the base carries wins
@@ -86,6 +88,10 @@ const lvl = crossCheck({ scrape: { prefix: { '# to maximum life': [row(1, [[10, 
 check('extra level reported', lvl.ladders.some((l) => /levels only on PoE2DB: 5; only on RePoE: 20/.test(l)));
 
 const gone = crossCheck({ scrape: { prefix: { a: [row(1, [[1, 2]], ['ring', 'belt', 'jewel'])] }, suffix: {} }, repoe: { prefix: { a: [{ level: 1, values: [[1, 2]], types: ['ring', 'belt'] }] }, suffix: {} }, classes });
+const two = (vals) => ({ prefix: { a: vals.map((v) => ({ level: 65, values: [v], types: ['belt'] })) }, suffix: {} });
+const dup = crossCheck({ scrape: two([[10, 18]]), repoe: two([[10, 15], [10, 18]]), classes });
+check('two mods at one level are one tier spanning both', dup.ladders.length === 0 && dup.classes.length === 0);
+check('identical mods at one level are one tier', crossCheck({ scrape: two([[8, 15]]), repoe: two([[8, 15], [8, 15]]), classes }).ladders.length === 0);
 check('whole class missing in RePoE is a gate', gone.gate.length === 1 && /"jewel"/.test(gone.gate[0]));
 
 // check-data wiring

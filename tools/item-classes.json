@@ -1,5 +1,5 @@
 {
-  "_note": "Single source for every item class TierFill covers: its GGG trade category (from /api/trade2/data/filters, type_filters → category), the token used in snapshot `types`, the PoE2DB page slug(s) the scraper reads, the RePoE base_items item_class(es) tools/repoe.mjs cross-checks against, and its hand class. tools/scrape-poe2db.mjs and tools/build-data.mjs read this; tools/check-data.mjs fails if a GGG category is neither here nor in `ignored`. Order here is the order of `types` arrays. To add a class: one entry here, then re-run tools/refresh.mjs.",
+  "_note": "Single source for every item class TierFill covers: its GGG trade category (from /api/trade2/data/filters, type_filters → category), the token used in snapshot `types`, the PoE2DB page slug(s) the scraper reads, the RePoE base_items item_class(es) tools/repoe.mjs cross-checks against, its hand class, and optionally `spawnTags`: the spawn tags its bases carry, so the scraper drops a sibling class's rows that its PoE2DB page also lists. tools/scrape-poe2db.mjs and tools/build-data.mjs read this; tools/check-data.mjs fails if a GGG category is neither here nor in `ignored`. Order here is the order of `types` arrays. To add a class: one entry here, then re-run tools/refresh.mjs.",
   "classes": [
     {
       "token": "claw",
@@ -307,7 +307,8 @@
         "Body_Armours_int",
         "Body_Armours_str_dex",
         "Body_Armours_str_int",
-        "Body_Armours_dex_int"
+        "Body_Armours_dex_int",
+        "Body_Armours_str_dex_int"
       ],
       "repoe": [
         "Body Armour"
@@ -388,6 +389,9 @@
       "pages": [
         "Life_Flasks"
       ],
+      "spawnTags": [
+        "life_flask"
+      ],
       "repoe": [
         "LifeFlask"
       ]
@@ -399,6 +403,9 @@
       "kind": "flask",
       "pages": [
         "Mana_Flasks"
+      ],
+      "spawnTags": [
+        "mana_flask"
       ],
       "repoe": [
         "ManaFlask"

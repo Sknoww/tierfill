@@ -104,6 +104,11 @@ RePoE mods.json + base_items.json -> tools/repoe.mjs -> data-sources/repoe/ â”€â
 - **Item classes:** `tools/item-classes.json` maps each class's GGG trade category to its
   snapshot token, PoE2DB pages, RePoE `item_class`(es) and hand class. A new class on patch day is one entry
   there; `check-data` fails on any GGG category that is neither mapped nor `ignored`.
+  A class page can list a sibling class's mods (the Mana Flask page shows the life-flask-only
+  minion recovery mod), so flask classes set `spawnTags` and the scraper drops rows whose
+  PoE2DB spawn tags exclude them. A PoE2DB mod whose second stat has no text (`[3,6]`) is a hybrid.
+- **Same-level tiers:** two mods with one stat at one level (Kurgal and Ulaman Abyss mods) are
+  one tier spanning both rolls, in the snapshot and in the RePoE cross-check.
 - **Checks:** `check-data` fails on missing pages, unmapped categories, unknown tokens, a
   still-scraped stat losing its trade id, or an item type losing all its data. Everything
   else (family moves, tier-count and T1 changes, out-of-order ladders, new unjoined stats,

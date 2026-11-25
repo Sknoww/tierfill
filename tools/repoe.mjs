@@ -77,6 +77,10 @@ export function parseMod(text, stats = null) {
   const clauses = String(text || '').split('\n').map((l) => parseClause(l, statValues)).filter((c) => c.text);
   const rolled = clauses.filter((c) => c.values.length);
   if (rolled.length !== 1) return null;
+  // A stat that rolls but has no text (the Abyss jewel "Minions have #% increased maximum
+  // Life" also rolls minion area of effect) makes the mod a hybrid.
+  const ranged = (stats || []).filter((st) => st.min !== st.max).length;
+  if (ranged > rolled[0].values.filter(([lo, hi]) => lo !== hi).length) return null;
   const key = keyOf(rolled[0].text);
   return { key: TEXT_ALIAS[key] || key, values: rolled[0].values };
 }
@@ -141,7 +145,21 @@ function index(data) {
       }
     }
   }
-  for (const m of idx.values()) for (const rows of m.values()) rows.sort((a, b) => b.level - a.level);
+  // Two mods with one stat at one level are one tier spanning both, as build-data makes them
+  // (the Kurgal and Ulaman Abyss belt mods; two identical Kurgal mace mods).
+  for (const m of idx.values()) {
+    for (const [t, rows] of m) {
+      const byLevel = new Map();
+      for (const r of rows) {
+        const cur = byLevel.get(r.level);
+        if (!cur) byLevel.set(r.level, r);
+        else if (cur.values.length === r.values.length) {
+          byLevel.set(r.level, { level: r.level, values: cur.values.map(([lo, hi], i) => [Math.min(lo, r.values[i][0]), Math.max(hi, r.values[i][1])]) });
+        }
+      }
+      m.set(t, [...byLevel.values()].sort((a, b) => b.level - a.level));
+    }
+  }
   return idx;
 }
 
