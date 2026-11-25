@@ -32,6 +32,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { PAGES, TOKEN_ORDER } from './item-classes.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = join(here, 'data-sources');
@@ -49,42 +50,9 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
 
 // ── page → trade `types` token map ──────────────────────────────────────────────
-// Every token here matches the vocabulary build-data.mjs and the enhancer source use.
+// Pages, tokens and token order all come from tools/item-classes.json (see item-classes.mjs).
 // Armour is reachable ONLY via the single-material sub-pages (<Slot>_<attr>); the
 // aggregate pages (Gloves, Body_Armours, …) are JS-gated and serve 0 inline mods.
-// Shields split str / str_dex / str_int + Bucklers (the pure-dex shield class).
-const ARMOUR_MATERIALS = ['str', 'dex', 'int', 'str_dex', 'str_int', 'dex_int'];
-const PAGES = [
-  // one-handed weapons
-  ['Claws', 'claw'], ['Daggers', 'dagger'], ['Wands', 'wand'], ['Sceptres', 'sceptre'],
-  ['Spears', 'spear'], ['Flails', 'flail'],
-  ['One_Hand_Swords', 'one-hand-sword'], ['One_Hand_Axes', 'one-hand-axe'], ['One_Hand_Maces', 'one-hand-mace'],
-  // two-handed weapons
-  ['Two_Hand_Swords', 'two-hand-sword'], ['Two_Hand_Axes', 'two-hand-axe'], ['Two_Hand_Maces', 'two-hand-mace'],
-  ['Quarterstaves', 'quarterstaff'], ['Staves', 'staff'], ['Bows', 'bow'], ['Crossbows', 'crossbow'],
-  // off-hands
-  ['Quivers', 'quiver'], ['Foci', 'focus'],
-  // armour (single-material matrix)
-  ...ARMOUR_MATERIALS.flatMap((m) => [
-    [`Body_Armours_${m}`, 'body-armour'], [`Helmets_${m}`, 'helmet'],
-    [`Gloves_${m}`, 'gloves'], [`Boots_${m}`, 'boots'],
-  ]),
-  ['Shields_str', 'shield'], ['Shields_str_dex', 'shield'], ['Shields_str_int', 'shield'], ['Bucklers', 'shield'],
-  // jewellery
-  ['Amulets', 'amulet'], ['Rings', 'ring'], ['Belts', 'belt'],
-  // jewels (generic — one shared pool, single-tier rolls), flasks, charms
-  ['Emerald', 'jewel'], ['Ruby', 'jewel'], ['Sapphire', 'jewel'],
-  ['Life_Flasks', 'life-flask'], ['Mana_Flasks', 'mana-flask'], ['Charms', 'charm'],
-];
-
-// Canonical token order for stable, readable `types` arrays (purely cosmetic; build-data
-// treats `types` as a set). Weapons → off-hands → armour → jewellery → jewel/flask/charm.
-const TOKEN_ORDER = [
-  'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail', 'sceptre', 'wand',
-  'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'staff', 'bow', 'crossbow',
-  'quiver', 'focus', 'shield', 'gloves', 'boots', 'body-armour', 'helmet', 'amulet', 'ring', 'belt',
-  'jewel', 'life-flask', 'mana-flask', 'charm',
-];
 const tokenRank = (t) => { const i = TOKEN_ORDER.indexOf(t); return i === -1 ? TOKEN_ORDER.length : i; };
 
 // ── HTML/JSON helpers ───────────────────────────────────────────────────────────

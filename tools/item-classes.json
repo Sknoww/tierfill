@@ -1,0 +1,321 @@
+{
+  "_note": "Single source for every item class TierFill covers: its GGG trade category (from /api/trade2/data/filters, type_filters → category), the token used in snapshot `types`, the PoE2DB page slug(s) the scraper reads, and its hand class. tools/scrape-poe2db.mjs and tools/build-data.mjs read this; tools/check-data.mjs fails if a GGG category is neither here nor in `ignored`. Order here is the order of `types` arrays. To add a class: one entry here, then re-run tools/refresh.mjs.",
+  "classes": [
+    {
+      "token": "claw",
+      "category": "weapon.claw",
+      "text": "Claw",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Claws"
+      ]
+    },
+    {
+      "token": "dagger",
+      "category": "weapon.dagger",
+      "text": "Dagger",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Daggers"
+      ]
+    },
+    {
+      "token": "one-hand-sword",
+      "category": "weapon.onesword",
+      "text": "One-Handed Sword",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "One_Hand_Swords"
+      ]
+    },
+    {
+      "token": "one-hand-axe",
+      "category": "weapon.oneaxe",
+      "text": "One-Handed Axe",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "One_Hand_Axes"
+      ]
+    },
+    {
+      "token": "one-hand-mace",
+      "category": "weapon.onemace",
+      "text": "One-Handed Mace",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "One_Hand_Maces"
+      ]
+    },
+    {
+      "token": "spear",
+      "category": "weapon.spear",
+      "text": "Spear",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Spears"
+      ]
+    },
+    {
+      "token": "flail",
+      "category": "weapon.flail",
+      "text": "Flail",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Flails"
+      ]
+    },
+    {
+      "token": "sceptre",
+      "category": "weapon.sceptre",
+      "text": "Sceptre",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Sceptres"
+      ]
+    },
+    {
+      "token": "wand",
+      "category": "weapon.wand",
+      "text": "Wand",
+      "kind": "weapon",
+      "hand": "1h",
+      "pages": [
+        "Wands"
+      ]
+    },
+    {
+      "token": "two-hand-sword",
+      "category": "weapon.twosword",
+      "text": "Two-Handed Sword",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Two_Hand_Swords"
+      ]
+    },
+    {
+      "token": "two-hand-axe",
+      "category": "weapon.twoaxe",
+      "text": "Two-Handed Axe",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Two_Hand_Axes"
+      ]
+    },
+    {
+      "token": "two-hand-mace",
+      "category": "weapon.twomace",
+      "text": "Two-Handed Mace",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Two_Hand_Maces"
+      ]
+    },
+    {
+      "token": "quarterstaff",
+      "category": "weapon.warstaff",
+      "text": "Quarterstaff",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Quarterstaves"
+      ]
+    },
+    {
+      "token": "staff",
+      "category": "weapon.staff",
+      "text": "Staff",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Staves"
+      ]
+    },
+    {
+      "token": "bow",
+      "category": "weapon.bow",
+      "text": "Bow",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Bows"
+      ]
+    },
+    {
+      "token": "crossbow",
+      "category": "weapon.crossbow",
+      "text": "Crossbow",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Crossbows"
+      ]
+    },
+    {
+      "token": "quiver",
+      "category": "armour.quiver",
+      "text": "Quiver",
+      "kind": "offhand",
+      "pages": [
+        "Quivers"
+      ]
+    },
+    {
+      "token": "focus",
+      "category": "armour.focus",
+      "text": "Focus",
+      "kind": "offhand",
+      "pages": [
+        "Foci"
+      ]
+    },
+    {
+      "token": "shield",
+      "category": "armour.shield",
+      "text": "Shield",
+      "kind": "offhand",
+      "pages": [
+        "Shields_str",
+        "Shields_str_dex",
+        "Shields_str_int",
+        "Bucklers"
+      ]
+    },
+    {
+      "token": "gloves",
+      "category": "armour.gloves",
+      "text": "Gloves",
+      "kind": "armour",
+      "pages": [
+        "Gloves_str",
+        "Gloves_dex",
+        "Gloves_int",
+        "Gloves_str_dex",
+        "Gloves_str_int",
+        "Gloves_dex_int"
+      ]
+    },
+    {
+      "token": "boots",
+      "category": "armour.boots",
+      "text": "Boots",
+      "kind": "armour",
+      "pages": [
+        "Boots_str",
+        "Boots_dex",
+        "Boots_int",
+        "Boots_str_dex",
+        "Boots_str_int",
+        "Boots_dex_int"
+      ]
+    },
+    {
+      "token": "body-armour",
+      "category": "armour.chest",
+      "text": "Body Armour",
+      "kind": "armour",
+      "pages": [
+        "Body_Armours_str",
+        "Body_Armours_dex",
+        "Body_Armours_int",
+        "Body_Armours_str_dex",
+        "Body_Armours_str_int",
+        "Body_Armours_dex_int"
+      ]
+    },
+    {
+      "token": "helmet",
+      "category": "armour.helmet",
+      "text": "Helmet",
+      "kind": "armour",
+      "pages": [
+        "Helmets_str",
+        "Helmets_dex",
+        "Helmets_int",
+        "Helmets_str_dex",
+        "Helmets_str_int",
+        "Helmets_dex_int"
+      ]
+    },
+    {
+      "token": "amulet",
+      "category": "accessory.amulet",
+      "text": "Amulet",
+      "kind": "jewellery",
+      "pages": [
+        "Amulets"
+      ]
+    },
+    {
+      "token": "ring",
+      "category": "accessory.ring",
+      "text": "Ring",
+      "kind": "jewellery",
+      "pages": [
+        "Rings"
+      ]
+    },
+    {
+      "token": "belt",
+      "category": "accessory.belt",
+      "text": "Belt",
+      "kind": "jewellery",
+      "pages": [
+        "Belts"
+      ]
+    },
+    {
+      "token": "jewel",
+      "category": "jewel",
+      "text": "Any Jewel",
+      "kind": "jewel",
+      "pages": [
+        "Emerald",
+        "Ruby",
+        "Sapphire"
+      ]
+    },
+    {
+      "token": "life-flask",
+      "category": "flask.life",
+      "text": "Life Flask",
+      "kind": "flask",
+      "pages": [
+        "Life_Flasks"
+      ]
+    },
+    {
+      "token": "mana-flask",
+      "category": "flask.mana",
+      "text": "Mana Flask",
+      "kind": "flask",
+      "pages": [
+        "Mana_Flasks"
+      ]
+    },
+    {
+      "token": "charm",
+      "category": "flask.charm",
+      "text": "Charm",
+      "kind": "flask",
+      "pages": [
+        "Charms"
+      ]
+    }
+  ],
+  "ignored": {
+    "weapon.unarmed": "Not an item",
+    "weapon.rod": "Fishing Rod: no explicit mod ladders",
+    "armour.buckler": "Bucklers share the shield token for now (their PoE2DB page is in shield's pages); see #11"
+  }
+}

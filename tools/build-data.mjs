@@ -34,6 +34,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { ONE_H, TWO_H } from './item-classes.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -80,17 +81,8 @@ const slug = (s) =>
 // (caster gear, armour bases, …) falls back to a faithful humanized list of its types.
 // The UI only surfaces this when a stat is multi-family, so single-family stats don't
 // depend on it being pretty — but it must be UNIQUE per family within a stat.
-// Hand-class per PoE2DB's item tree (poe2db.tw/us/Items): Bows and Crossbows are
-// TWO-handed (a prior version listed them as one-handed, which mislabeled some
-// mixed weapon bundles).
-const ONE_H = new Set([
-  'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace',
-  'spear', 'flail', 'sceptre', 'wand',
-]);
-const TWO_H = new Set([
-  'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'staff',
-  'bow', 'crossbow',
-]);
+// Hand class comes from tools/item-classes.json (each class's `hand`), so a new or
+// re-grouped weapon class is one JSON edit, not a code change.
 const ALL_WEAPON = new Set([...ONE_H, ...TWO_H]);
 const pretty = (t) => t.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 function familyLabelFromTypes(types) {
