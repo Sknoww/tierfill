@@ -163,6 +163,8 @@ automate searches or add load to GGG's servers.
   `test-family-label.mjs`, `test-jewel.mjs`, `test-check-data.mjs` and `test-repoe.mjs`. There are no dependencies or `package.json`.
 - **Release:** bump `manifest.json`, tag `vX.Y.Z` and push. The workflow checks the tag
   against the manifest and attaches both store zips to a GitHub Release.
+- **Launch day:** `docs/launch-runbook.md`, with the submission pre-drafted in
+  `docs/submission-1.0-launch.md`.
 - **Store submission:** follow `docs/submission-template.md`; standing listing copy is in
   `docs/PUBLISHING.md`.
 - **Listings:** [Firefox](https://addons.mozilla.org/en-US/firefox/addon/tierfill-poe2-trade/),

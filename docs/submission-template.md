@@ -36,6 +36,22 @@
 ```
 Changelog
 
+v1.2.1
+• Fixed scrambled tier numbers on several ladders where PoE2DB had mixed in
+  tiers belonging to other item bases. Affected "Level of all Spell Skills"
+  and "Level of all Minion Skills", the Remnants collection range, and Belt
+  mana regeneration — these now show the correct tiers in the right order.
+
+v1.2.0
+• Rebuilt every mod's tier data directly from PoE2DB. Many weapon mods had been
+  showing values that were too low — most noticeably caster staves, which were
+  sharing the wand tiers for Spell Damage, Critical Spell Damage Bonus, Gain #%
+  of Damage as Extra Fire/Cold/Lightning, and maximum Mana. Those now use the
+  correct (higher) staff tiers.
+• Around 230 more mods now have a tier picker and result badges.
+• Corrected an over-inflated Block ladder, removed some phantom tiers, and fixed
+  understated charm recovery.
+
 v1.1.1
 • Bows and crossbows now use their own added-damage tiers for "Adds # to #"
   Physical / Fire / Cold / Lightning Damage. They had been using the lower
