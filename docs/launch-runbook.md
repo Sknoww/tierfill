@@ -32,7 +32,7 @@ whole day on one machine. To use a fresh clone, run step 0 there first.
 | T | **GGG capture #1.** The trade lists only change when the realm opens. Print the snippet, paste it into devtools on `pathofexile.com/trade2`, then split the downloaded file. | `node tools/capture-ggg.mjs` then `node tools/capture-ggg.mjs --downloads` | 5 min |
 | T | Rebuild against the fresh GGG stats without re-scraping. | `node tools/refresh.mjs --no-fetch` | 1 min |
 | T → T+30m | **Review `tools/data-sources/patch-diff.md`** against the patch notes and the baseline. For each flagged ladder decide: expected (patch notes), source error, or our bug. Add new unjoined stats and new GGG explicit stats as `/idea` issues unless they're trivial. | read | 20–30 min |
-| T+30m | **Live spot-check.** Pick about 5 ladders: a changed one, a new class, an averaged `Adds # to #`, Rarity, and a jewel. Search each on the live trade site with the TierFill MIN and confirm the results match the tier. Use `node tools/validate.mjs` for the computed MINs. Until #20 lands, this is done by hand. | `node tools/validate.mjs` | 15 min |
+| T+30m | **Live spot-check.** Print the snippet and paste it into devtools on `pathofexile.com/trade2`. It records the listings the page already loads and runs no searches. Search by hand for 10–20 mods: the printed list plus every changed ladder and any new class. Run `tierfillSpot.save()`, then check the file. Every band it lists as disagreeing is GGG's own tier range missing from the snapshot: treat it like a `patch-diff.md` flag. Bases newer than the local RePoE copy are checked against every family of the stat, so on launch day a new class's bands may match the wrong family. | `node tools/spot-check.mjs` then `node tools/spot-check.mjs --downloads` | 15 min |
 | T+1h | **GGG capture #2.** GGG often adjusts the stat list in the first hour. Capture again and rebuild. If `patch-diff.md` changed since the review, re-read only the new lines. | capture as above, then `node tools/refresh.mjs --no-fetch` | 10 min |
 | T+1h | Run the tests. | `node tools/validate.mjs` and each `tools/test-*.mjs` | 1 min |
 | T+1h | **Commit the data.** | `git add assets/data-snapshot.json tools/item-classes.json` then `git commit -m "Refresh the snapshot for PoE2 1.0"` | 2 min |
@@ -68,8 +68,9 @@ them. Once a day until the hotfixes slow down:
 1. `node tools/refresh.mjs`. It also downloads RePoE and compares against the
    committed snapshot.
 2. If `git diff --stat assets/data-snapshot.json` is empty, stop.
-3. Otherwise review `patch-diff.md`, spot-check the changed ladders, and capture
-   GGG again if new stats didn't join.
+3. Otherwise review `patch-diff.md`, run the live spot-check
+   (`node tools/spot-check.mjs`) with the changed ladders among the searches, and
+   capture GGG again if new stats didn't join.
 4. Ship a patch release (`X.Y.Z+1`) with the same commit, tag, submit steps as
    above. Batch small changes, because each submission goes through store review.
 

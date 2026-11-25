@@ -123,6 +123,10 @@ RePoE mods.json + base_items.json -> tools/repoe.mjs -> data-sources/repoe/ â”€â
   splits that file into `tools/data-sources/`. The trade page's CSP blocks posting to a
   local server, so the download step is needed. `tools/data-sources/` is gitignored and
   not backed up, so a fresh clone re-fetches and re-scrapes.
+- **Live spot-check** (`tools/spot-check.mjs`): a console snippet keeps the `/api/trade2/fetch/`
+  responses the trade page already loads while you search by hand, and the script checks each
+  listing's GGG tier band against the snapshot. Bands match by value within the base's item type
+  family, not by rank, because GGG ranks tiers per base. Hybrid mods aren't judged.
 - **Item families:** one stat can have different ladders per item type. They're split by
   union-find on shared `types`, and a toggle appears when the item type is ambiguous.
 - **Snapshot entries** hold `tradeStatId`, `display`, `affix`, `isAveraged`, `family`,
@@ -160,7 +164,7 @@ automate searches or add load to GGG's servers.
 ## Testing and release
 
 - **Tests:** `node tools/validate.mjs`, plus `tools/test-affix.mjs`, `test-detect.mjs`,
-  `test-family-label.mjs`, `test-jewel.mjs`, `test-check-data.mjs` and `test-repoe.mjs`. There are no dependencies or `package.json`.
+  `test-family-label.mjs`, `test-jewel.mjs`, `test-check-data.mjs`, `test-repoe.mjs` and `test-spot-check.mjs`. There are no dependencies or `package.json`.
 - **Release:** bump `manifest.json`, tag `vX.Y.Z` and push. The workflow checks the tag
   against the manifest and attaches both store zips to a GitHub Release.
 - **Launch day:** `docs/launch-runbook.md`, with the submission pre-drafted in
