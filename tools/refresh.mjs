@@ -15,6 +15,9 @@
  *     which NEWLY-ADDED mods did NOT join to a GGG stat id. Those are the ones that
  *     need a fresh GGG capture (Cloudflare blocks server-side fetches, so it comes from a
  *     browser tab: `node tools/capture-ggg.mjs` prints the snippet and the steps).
+ *   • Runs tools/check-data.mjs: hard gates against the committed snapshot, plus the
+ *     tools/data-sources/patch-diff.md report a person reads before release. A failed gate
+ *     fails the refresh.
  *   • Does NOT touch the GGG capture or the manifest version — those stay manual on
  *     purpose (ids/text rarely change; version bump is your call).
  */
@@ -52,17 +55,18 @@ function statKeys(data) {
   return keys;
 }
 
-function runBuild(args) {
+function runTool(script, args = []) {
   return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [join(here, 'build-data.mjs'), ...args], {
+    const child = spawn(process.execPath, [join(here, script), ...args], {
       stdio: 'inherit',
     });
     child.on('error', reject);
     child.on('close', (code) =>
-      code === 0 ? resolve() : reject(new Error(`build-data.mjs exited ${code}`)),
+      code === 0 ? resolve() : reject(new Error(`${script} exited ${code}`)),
     );
   });
 }
+const runBuild = (args) => runTool('build-data.mjs', args);
 
 async function main() {
   let added = new Set();
@@ -154,7 +158,18 @@ async function main() {
     }
   }
 
-  console.log('\nDone. Next: bump the version in manifest.json and reload the extension.');
+  // 7. hard gates + patch-diff report (tools/check-data.mjs) against the committed snapshot
+  console.log('\nchecking the new snapshot…\n' + '─'.repeat(60));
+  try {
+    await runTool('check-data.mjs');
+  } catch {
+    throw new Error(
+      'the new snapshot failed a hard gate (listed above). It was written but must not ship:\n' +
+        '  fix the cause and re-run, or restore it with  git checkout assets/data-snapshot.json',
+    );
+  }
+
+  console.log('\nDone. Next: read tools/data-sources/patch-diff.md, run the tests, then bump the version.');
 }
 
 main().catch((e) => {

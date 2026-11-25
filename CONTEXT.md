@@ -92,11 +92,20 @@ PoE2DB item-class pages -> tools/scrape-poe2db.mjs -> data-sources/poe2db-mods.j
 GGG /api/trade2/data/stats (browser fetch) -> data-sources/ggg-trade2-stats.json ────┤
                                                                                      v
                                   tools/build-data.mjs -> assets/data-snapshot.json
+                                                                                     v
+                         tools/check-data.mjs -> gates + data-sources/patch-diff.md
 ```
 
-- **Per patch:** `node tools/refresh.mjs` re-scrapes and rebuilds, and warns about newly
-  added mods that didn't join to a GGG id. `--dry` writes nothing; `--no-fetch` rebuilds
-  after a fresh GGG fetch.
+- **Per patch:** `node tools/refresh.mjs` re-scrapes, rebuilds and runs `check-data.mjs`.
+  `--dry` writes nothing; `--no-fetch` rebuilds after a fresh GGG fetch. The scraper stops
+  on any failed or near-empty page; `--allow-drop` accepts a pool that really halved.
+- **Item classes:** `tools/item-classes.json` maps each class's GGG trade category to its
+  snapshot token, PoE2DB pages and hand class. A new class on patch day is one entry
+  there; `check-data` fails on any GGG category that is neither mapped nor `ignored`.
+- **Checks:** `check-data` fails on missing pages, unmapped categories, unknown tokens, a
+  still-scraped stat losing its trade id, or an item type losing all its data. Everything
+  else (family moves, tier-count and T1 changes, out-of-order ladders, new unjoined stats,
+  GGG additions, a weapon T1 table) goes in `patch-diff.md` for a person to judge.
 - **GGG lists** (`/api/trade2/data/stats`, `/items`, `/filters`) are fetched from a
   browser on the trade site, with no login; server-side fetches are Cloudflare-blocked.
   `node tools/capture-ggg.mjs` prints a console snippet that downloads all three, then
