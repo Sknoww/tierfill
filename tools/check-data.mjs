@@ -45,7 +45,6 @@ export const T1_SHIFT = 0.15;
 const IN_SCOPE = /^(weapon|armour|accessory|flask)\.|^jewel$/;
 // Ladders known not to improve with every tier, as "display [token]". Each needs an issue.
 export const KNOWN_ORDER_EXCEPTIONS = new Set([
-  '#% increased Spell Damage [amulet]', // two real ladders mixed into one (#12)
   '#% increased Exposure Effect [ring]', // two real ladders mixed into one (#12)
 ]);
 export const ADDED_DAMAGE = ['Physical', 'Fire', 'Cold', 'Lightning'].map((e) => `Adds # to # ${e} Damage`);

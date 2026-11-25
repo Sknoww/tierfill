@@ -51,8 +51,8 @@ check('Max Mana · sceptre/wand/focus', umbrellaOf('# to maximum Mana', 'sceptre
 // Weapon bundles → hand-class by majority (bow rides the 1H ladder, crossbow the 2H).
 check('Elem Dmg w/ Attacks · 1H (incl bow)',
   umbrellaOf('#% increased Elemental Damage with Attacks', 'claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail', 'bow'), 'One-Handed');
-check('Elem Dmg w/ Attacks · 2H (incl crossbow)',
-  umbrellaOf('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'crossbow'), 'Two-Handed');
+check('Elem Dmg w/ Attacks · 2H (incl crossbow, talisman)',
+  umbrellaOf('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'talisman', 'crossbow'), 'Two-Handed');
 // One-category gear / flask bundles (per-type split groups same-ladder slots).
 check('Armour · gloves+boots bundle', umbrellaOf('# to Armour', 'gloves', 'boots'), 'Armour');
 check('Charge · life/mana flask + charm', umbrellaOf('#% Chance to gain a Charge when you kill an enemy', 'life-flask', 'mana-flask', 'charm'), 'Flasks');
@@ -65,8 +65,8 @@ console.log('\nDropdown lists (alphabetical):');
 check('caster bundle → alphabetical',
   familyTypeList(famFor('# to maximum Mana', 'sceptre', 'wand', 'focus')), ['Focus', 'Sceptre', 'Wand']);
 check('two-hand bundle → alphabetical',
-  familyTypeList(famFor('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'crossbow')),
-  ['Crossbow', 'Quarterstaff', 'Two Hand Axe', 'Two Hand Mace', 'Two Hand Sword']);
+  familyTypeList(famFor('#% increased Elemental Damage with Attacks', 'two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'talisman', 'crossbow')),
+  ['Crossbow', 'Quarterstaff', 'Talisman', 'Two Hand Axe', 'Two Hand Mace', 'Two Hand Sword']);
 
 console.log('\nInvariants across every multi-family stat:');
 for (const [display, fams] of groups) {

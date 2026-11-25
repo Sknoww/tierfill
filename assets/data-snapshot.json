@@ -175,6 +175,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "crossbow"
       ],
       "tiers": [
@@ -633,6 +634,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "crossbow"
       ],
       "tiers": [
@@ -1091,6 +1093,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "crossbow"
       ],
       "tiers": [
@@ -1535,6 +1538,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "crossbow"
       ],
       "tiers": [
@@ -3044,12 +3048,20 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -3072,12 +3084,20 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -3100,12 +3120,20 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -3312,7 +3340,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +8",
+      "family": "Claw / Dagger / One Hand Sword +9",
       "types": [
         "claw",
         "dagger",
@@ -3324,7 +3352,8 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
-        "quarterstaff"
+        "quarterstaff",
+        "talisman"
       ],
       "tiers": [
         {
@@ -3580,6 +3609,30 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "two-hand-mace",
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              86,
+              99
+            ]
+          ]
+        }
+      ]
+    },
+    "empowered_attacks_deal_x_increased_damage__2": {
+      "display": "Empowered Attacks deal #% increased Damage",
+      "tradeStatId": "explicit.stat_1569101201",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "one-hand-mace"
@@ -3592,29 +3645,6 @@
             [
               41,
               59
-            ]
-          ]
-        }
-      ]
-    },
-    "empowered_attacks_deal_x_increased_damage__2": {
-      "display": "Empowered Attacks deal #% increased Damage",
-      "tradeStatId": "explicit.stat_1569101201",
-      "affix": "prefix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "2-handed",
-      "types": [
-        "two-hand-mace"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              86,
-              99
             ]
           ]
         }
@@ -4003,7 +4033,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +13",
+      "family": "Claw / Dagger / One Hand Sword +14",
       "types": [
         "claw",
         "dagger",
@@ -4017,6 +4047,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "staff",
         "bow",
         "crossbow",
@@ -4185,7 +4216,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +13",
+      "family": "Claw / Dagger / One Hand Sword +14",
       "types": [
         "claw",
         "dagger",
@@ -4199,6 +4230,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "staff",
         "bow",
         "crossbow",
@@ -4356,6 +4388,29 @@
             [
               2,
               3
+            ]
+          ]
+        }
+      ]
+    },
+    "gain_x_of_damage_as_extra_chaos_damage": {
+      "display": "Gain #% of Damage as Extra Chaos Damage",
+      "tradeStatId": "explicit.stat_3398787959",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "staff"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              40,
+              50
             ]
           ]
         }
@@ -4937,7 +4992,30 @@
         }
       ]
     },
-    "gain_x_rage_on_melee_hit": {
+    "gain_x_rage_on_melee_hit__1": {
+      "display": "Gain # Rage on Melee Hit",
+      "tradeStatId": "explicit.stat_2709367754",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              3,
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    "gain_x_rage_on_melee_hit__2": {
       "display": "Gain # Rage on Melee Hit",
       "tradeStatId": "explicit.stat_2709367754",
       "affix": "suffix",
@@ -5034,7 +5112,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -5047,6 +5125,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -5585,7 +5664,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -5598,6 +5677,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -5650,7 +5730,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -5663,6 +5743,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -5841,10 +5922,11 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Two Hand Mace",
+      "family": "One Hand Mace / Two Hand Mace / Talisman",
       "types": [
         "one-hand-mace",
-        "two-hand-mace"
+        "two-hand-mace",
+        "talisman"
       ],
       "tiers": [
         {
@@ -5911,9 +5993,31 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Jewel",
       "types": [
-        "amulet",
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_deal_x_increased_damage__2": {
+      "display": "Minions deal #% increased Damage",
+      "tradeStatId": "explicit.stat_1589917703",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -5999,30 +6103,7 @@
         }
       ]
     },
-    "minions_deal_x_increased_damage__2": {
-      "display": "Minions deal #% increased Damage",
-      "tradeStatId": "explicit.stat_1589917703",
-      "affix": "prefix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Jewel",
-      "types": [
-        "jewel"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 1,
-          "ranges": [
-            [
-              5,
-              15
-            ]
-          ]
-        }
-      ]
-    },
-    "minions_deal_x_increased_damage_if_you_ve_hit_recently": {
+    "minions_deal_x_increased_damage_if_you_ve_hit_recently__1": {
       "display": "Minions deal #% increased Damage if you've Hit Recently",
       "tradeStatId": "explicit.stat_2337295272",
       "affix": "prefix",
@@ -6046,15 +6127,37 @@
         }
       ]
     },
+    "minions_deal_x_increased_damage_if_you_ve_hit_recently__2": {
+      "display": "Minions deal #% increased Damage if you've Hit Recently",
+      "tradeStatId": "explicit.stat_2337295272",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              60,
+              79
+            ]
+          ]
+        }
+      ]
+    },
     "minions_deal_x_increased_damage_with_command_skills": {
       "display": "Minions deal #% increased Damage with Command Skills",
       "tradeStatId": "explicit.stat_3742865955",
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -6172,9 +6275,8 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -6236,9 +6338,31 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Jewel",
       "types": [
-        "amulet",
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_attack_and_cast_speed__2": {
+      "display": "Minions have #% increased Attack and Cast Speed",
+      "tradeStatId": "explicit.stat_3091578504",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -6278,29 +6402,6 @@
           "ranges": [
             [
               3,
-              4
-            ]
-          ]
-        }
-      ]
-    },
-    "minions_have_x_increased_attack_and_cast_speed__2": {
-      "display": "Minions have #% increased Attack and Cast Speed",
-      "tradeStatId": "explicit.stat_3091578504",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Jewel",
-      "types": [
-        "jewel"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 1,
-          "ranges": [
-            [
-              2,
               4
             ]
           ]
@@ -6359,9 +6460,31 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Jewel",
       "types": [
-        "amulet",
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              15,
+              25
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_increased_critical_damage_bonus__2": {
+      "display": "Minions have #% increased Critical Damage Bonus",
+      "tradeStatId": "explicit.stat_1854213750",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -6427,9 +6550,9 @@
         }
       ]
     },
-    "minions_have_x_increased_critical_damage_bonus__2": {
-      "display": "Minions have #% increased Critical Damage Bonus",
-      "tradeStatId": "explicit.stat_1854213750",
+    "minions_have_x_increased_critical_hit_chance__1": {
+      "display": "Minions have #% increased Critical Hit Chance",
+      "tradeStatId": "explicit.stat_491450213",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
@@ -6443,22 +6566,21 @@
           "ilvl": 1,
           "ranges": [
             [
-              15,
-              25
+              10,
+              20
             ]
           ]
         }
       ]
     },
-    "minions_have_x_increased_critical_hit_chance__1": {
+    "minions_have_x_increased_critical_hit_chance__2": {
       "display": "Minions have #% increased Critical Hit Chance",
       "tradeStatId": "explicit.stat_491450213",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Ring",
       "types": [
-        "amulet",
         "ring"
       ],
       "tiers": [
@@ -6524,38 +6646,14 @@
         }
       ]
     },
-    "minions_have_x_increased_critical_hit_chance__2": {
-      "display": "Minions have #% increased Critical Hit Chance",
-      "tradeStatId": "explicit.stat_491450213",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Jewel",
-      "types": [
-        "jewel"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 1,
-          "ranges": [
-            [
-              10,
-              20
-            ]
-          ]
-        }
-      ]
-    },
     "minions_have_x_increased_immobilisation_buildup": {
       "display": "Minions have #% increased Immobilisation buildup",
       "tradeStatId": "explicit.stat_1485480327",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -6723,9 +6821,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring / Belt",
+      "family": "Ring / Belt",
       "types": [
-        "amulet",
         "ring",
         "belt"
       ],
@@ -6821,9 +6918,8 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -6921,9 +7017,31 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Jewel",
       "types": [
-        "amulet",
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    "minions_have_x_to_all_elemental_resistances__2": {
+      "display": "Minions have #% to all Elemental Resistances",
+      "tradeStatId": "explicit.stat_1423639565",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -6989,29 +7107,6 @@
         }
       ]
     },
-    "minions_have_x_to_all_elemental_resistances__2": {
-      "display": "Minions have #% to all Elemental Resistances",
-      "tradeStatId": "explicit.stat_1423639565",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Jewel",
-      "types": [
-        "jewel"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 1,
-          "ranges": [
-            [
-              5,
-              10
-            ]
-          ]
-        }
-      ]
-    },
     "minions_have_x_to_chaos_resistance": {
       "display": "Minions have #% to Chaos Resistance",
       "tradeStatId": "explicit.stat_3837707023",
@@ -7041,9 +7136,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -7141,9 +7235,8 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -7897,15 +7990,37 @@
         }
       ]
     },
-    "remnants_can_be_collected_from_x_further_away": {
+    "remnants_can_be_collected_from_x_further_away__1": {
       "display": "Remnants can be collected from #% further away",
       "tradeStatId": "explicit.stat_3482326075",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Amulet",
       "types": [
-        "amulet",
+        "amulet"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              20,
+              30
+            ]
+          ]
+        }
+      ]
+    },
+    "remnants_can_be_collected_from_x_further_away__2": {
+      "display": "Remnants can be collected from #% further away",
+      "tradeStatId": "explicit.stat_3482326075",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -8060,6 +8175,30 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "two-hand-mace",
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              25,
+              31
+            ]
+          ]
+        }
+      ]
+    },
+    "skills_which_create_fissures_have_a_x_chance_to_create_an_ad__2": {
+      "display": "Skills which create Fissures have a #% chance to create an additional Fissure",
+      "tradeStatId": "explicit.stat_2544540062",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "one-hand-mace"
@@ -8072,29 +8211,6 @@
             [
               15,
               25
-            ]
-          ]
-        }
-      ]
-    },
-    "skills_which_create_fissures_have_a_x_chance_to_create_an_ad__2": {
-      "display": "Skills which create Fissures have a #% chance to create an additional Fissure",
-      "tradeStatId": "explicit.stat_2544540062",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "2-handed",
-      "types": [
-        "two-hand-mace"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              25,
-              31
             ]
           ]
         }
@@ -8129,9 +8245,31 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "1-handed",
       "types": [
-        "amulet",
+        "wand"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              8,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "spell_skills_have_x_increased_area_of_effect__2": {
+      "display": "Spell Skills have #% increased Area of Effect",
+      "tradeStatId": "explicit.stat_1967040409",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -8162,29 +8300,6 @@
             [
               6,
               8
-            ]
-          ]
-        }
-      ]
-    },
-    "spell_skills_have_x_increased_area_of_effect__2": {
-      "display": "Spell Skills have #% increased Area of Effect",
-      "tradeStatId": "explicit.stat_1967040409",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "1-handed",
-      "types": [
-        "wand"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              8,
-              16
             ]
           ]
         }
@@ -8242,9 +8357,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -8345,6 +8459,30 @@
           ]
         }
       ]
+    },
+    "warcries_empower_x_additional_attacks": {
+      "display": "warcries empower # additional attacks",
+      "tradeStatId": null,
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ],
+      "_needsCanonicalText": true
     },
     "x_additional_physical_damage_reduction": {
       "display": "#% additional Physical Damage Reduction",
@@ -8555,9 +8693,8 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -10252,7 +10389,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +8",
+      "family": "Claw / Dagger / One Hand Sword +9",
       "types": [
         "claw",
         "dagger",
@@ -10264,7 +10401,8 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
-        "quarterstaff"
+        "quarterstaff",
+        "talisman"
       ],
       "tiers": [
         {
@@ -11144,9 +11282,8 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -12581,12 +12718,20 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -13063,6 +13208,29 @@
         }
       ]
     },
+    "x_increased_critical_hit_chance_against_marked_enemies": {
+      "display": "#% increased Critical Hit Chance against Marked Enemies",
+      "tradeStatId": "explicit.stat_1045789614",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              39,
+              51
+            ]
+          ]
+        }
+      ]
+    },
     "x_increased_critical_hit_chance_for_attacks__1": {
       "display": "#% increased Critical Hit Chance for Attacks",
       "tradeStatId": "explicit.stat_2194114101",
@@ -13165,80 +13333,6 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
-      "types": [
-        "amulet",
-        "ring"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 81,
-          "ranges": [
-            [
-              22,
-              25
-            ]
-          ]
-        },
-        {
-          "tier": 2,
-          "ilvl": 70,
-          "ranges": [
-            [
-              19,
-              21
-            ]
-          ]
-        },
-        {
-          "tier": 3,
-          "ilvl": 58,
-          "ranges": [
-            [
-              16,
-              18
-            ]
-          ]
-        },
-        {
-          "tier": 4,
-          "ilvl": 45,
-          "ranges": [
-            [
-              13,
-              15
-            ]
-          ]
-        },
-        {
-          "tier": 5,
-          "ilvl": 32,
-          "ranges": [
-            [
-              10,
-              12
-            ]
-          ]
-        },
-        {
-          "tier": 6,
-          "ilvl": 18,
-          "ranges": [
-            [
-              7,
-              9
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_critical_hit_chance_for_spells__2": {
-      "display": "#% increased Critical Hit Chance for Spells",
-      "tradeStatId": "explicit.stat_737908626",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "wand"
@@ -13306,7 +13400,7 @@
         }
       ]
     },
-    "x_increased_critical_hit_chance_for_spells__3": {
+    "x_increased_critical_hit_chance_for_spells__2": {
       "display": "#% increased Critical Hit Chance for Spells",
       "tradeStatId": "explicit.stat_737908626",
       "affix": "suffix",
@@ -13379,7 +13473,7 @@
         }
       ]
     },
-    "x_increased_critical_hit_chance_for_spells__4": {
+    "x_increased_critical_hit_chance_for_spells__3": {
       "display": "#% increased Critical Hit Chance for Spells",
       "tradeStatId": "explicit.stat_737908626",
       "affix": "suffix",
@@ -13442,7 +13536,7 @@
         }
       ]
     },
-    "x_increased_critical_hit_chance_for_spells__5": {
+    "x_increased_critical_hit_chance_for_spells__4": {
       "display": "#% increased Critical Hit Chance for Spells",
       "tradeStatId": "explicit.stat_737908626",
       "affix": "suffix",
@@ -13465,31 +13559,20 @@
         }
       ]
     },
-    "x_increased_critical_spell_damage_bonus__1": {
-      "display": "#% increased Critical Spell Damage Bonus",
-      "tradeStatId": "explicit.stat_274716455",
+    "x_increased_critical_hit_chance_for_spells__5": {
+      "display": "#% increased Critical Hit Chance for Spells",
+      "tradeStatId": "explicit.stat_737908626",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Ring",
       "types": [
-        "amulet",
         "ring"
       ],
       "tiers": [
         {
           "tier": 1,
-          "ilvl": 80,
-          "ranges": [
-            [
-              26,
-              29
-            ]
-          ]
-        },
-        {
-          "tier": 2,
-          "ilvl": 69,
+          "ilvl": 81,
           "ranges": [
             [
               22,
@@ -13498,48 +13581,58 @@
           ]
         },
         {
-          "tier": 3,
-          "ilvl": 57,
+          "tier": 2,
+          "ilvl": 70,
           "ranges": [
             [
-              18,
+              19,
               21
             ]
           ]
         },
         {
-          "tier": 4,
-          "ilvl": 44,
+          "tier": 3,
+          "ilvl": 58,
           "ranges": [
             [
-              14,
-              17
+              16,
+              18
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 45,
+          "ranges": [
+            [
+              13,
+              15
             ]
           ]
         },
         {
           "tier": 5,
-          "ilvl": 30,
+          "ilvl": 32,
           "ranges": [
             [
-              11,
-              13
+              10,
+              12
             ]
           ]
         },
         {
           "tier": 6,
-          "ilvl": 17,
+          "ilvl": 18,
           "ranges": [
             [
-              8,
-              10
+              7,
+              9
             ]
           ]
         }
       ]
     },
-    "x_increased_critical_spell_damage_bonus__2": {
+    "x_increased_critical_spell_damage_bonus__1": {
       "display": "#% increased Critical Spell Damage Bonus",
       "tradeStatId": "explicit.stat_274716455",
       "affix": "suffix",
@@ -13612,7 +13705,7 @@
         }
       ]
     },
-    "x_increased_critical_spell_damage_bonus__3": {
+    "x_increased_critical_spell_damage_bonus__2": {
       "display": "#% increased Critical Spell Damage Bonus",
       "tradeStatId": "explicit.stat_274716455",
       "affix": "suffix",
@@ -13685,7 +13778,7 @@
         }
       ]
     },
-    "x_increased_critical_spell_damage_bonus__4": {
+    "x_increased_critical_spell_damage_bonus__3": {
       "display": "#% increased Critical Spell Damage Bonus",
       "tradeStatId": "explicit.stat_274716455",
       "affix": "suffix",
@@ -13748,7 +13841,7 @@
         }
       ]
     },
-    "x_increased_critical_spell_damage_bonus__5": {
+    "x_increased_critical_spell_damage_bonus__4": {
       "display": "#% increased Critical Spell Damage Bonus",
       "tradeStatId": "explicit.stat_274716455",
       "affix": "suffix",
@@ -13766,6 +13859,79 @@
             [
               10,
               20
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_critical_spell_damage_bonus__5": {
+      "display": "#% increased Critical Spell Damage Bonus",
+      "tradeStatId": "explicit.stat_274716455",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
+        "ring"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 80,
+          "ranges": [
+            [
+              26,
+              29
+            ]
+          ]
+        },
+        {
+          "tier": 2,
+          "ilvl": 69,
+          "ranges": [
+            [
+              22,
+              25
+            ]
+          ]
+        },
+        {
+          "tier": 3,
+          "ilvl": 57,
+          "ranges": [
+            [
+              18,
+              21
+            ]
+          ]
+        },
+        {
+          "tier": 4,
+          "ilvl": 44,
+          "ranges": [
+            [
+              14,
+              17
+            ]
+          ]
+        },
+        {
+          "tier": 5,
+          "ilvl": 30,
+          "ranges": [
+            [
+              11,
+              13
+            ]
+          ]
+        },
+        {
+          "tier": 6,
+          "ilvl": 17,
+          "ranges": [
+            [
+              8,
+              10
             ]
           ]
         }
@@ -13823,9 +13989,54 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Focus",
       "types": [
-        "amulet",
+        "focus"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              8,
+              16
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_curse_magnitudes__2": {
+      "display": "#% increased Curse Magnitudes",
+      "tradeStatId": "explicit.stat_2353576063",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Jewel",
+      "types": [
+        "jewel"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 1,
+          "ranges": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_curse_magnitudes__3": {
+      "display": "#% increased Curse Magnitudes",
+      "tradeStatId": "explicit.stat_2353576063",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "Ring",
+      "types": [
         "ring"
       ],
       "tiers": [
@@ -13866,52 +14077,6 @@
             [
               2,
               3
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_curse_magnitudes__2": {
-      "display": "#% increased Curse Magnitudes",
-      "tradeStatId": "explicit.stat_2353576063",
-      "affix": "prefix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Focus",
-      "types": [
-        "focus"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              8,
-              16
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_curse_magnitudes__3": {
-      "display": "#% increased Curse Magnitudes",
-      "tradeStatId": "explicit.stat_2353576063",
-      "affix": "prefix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Jewel",
-      "types": [
-        "jewel"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 1,
-          "ranges": [
-            [
-              2,
-              4
             ]
           ]
         }
@@ -14038,6 +14203,30 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "two-hand-mace",
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              86,
+              99
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_damage_while_you_have_a_totem__2": {
+      "display": "#% increased Damage while you have a Totem",
+      "tradeStatId": "explicit.stat_2543331226",
+      "affix": "prefix",
+      "affixType": "explicit",
+      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "one-hand-mace"
@@ -14050,29 +14239,6 @@
             [
               41,
               59
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_damage_while_you_have_a_totem__2": {
-      "display": "#% increased Damage while you have a Totem",
-      "tradeStatId": "explicit.stat_2543331226",
-      "affix": "prefix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "2-handed",
-      "types": [
-        "two-hand-mace"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              86,
-              99
             ]
           ]
         }
@@ -14519,9 +14685,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Ring",
       "types": [
-        "amulet",
         "ring"
       ],
       "tiers": [
@@ -14797,6 +14962,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "crossbow"
       ],
       "tiers": [
@@ -17795,9 +17961,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Ring",
+      "family": "Ring",
       "types": [
-        "amulet",
         "ring"
       ],
       "tiers": [
@@ -18742,7 +18907,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -18755,6 +18920,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -19161,9 +19327,6 @@
             ]
           ]
         }
-      ],
-      "_tradeStatIdAlts": [
-        "explicit.stat_2306002879"
       ]
     },
     "x_increased_rarity_of_items_found_2": {
@@ -19211,9 +19374,6 @@
             ]
           ]
         }
-      ],
-      "_tradeStatIdAlts": [
-        "explicit.stat_2306002879"
       ]
     },
     "x_increased_recovery_rate": {
@@ -19721,16 +19881,6 @@
       "tiers": [
         {
           "tier": 1,
-          "ilvl": 82,
-          "ranges": [
-            [
-              35,
-              39
-            ]
-          ]
-        },
-        {
-          "tier": 2,
           "ilvl": 75,
           "ranges": [
             [
@@ -19740,27 +19890,7 @@
           ]
         },
         {
-          "tier": 3,
-          "ilvl": 71,
-          "ranges": [
-            [
-              30,
-              34
-            ]
-          ]
-        },
-        {
-          "tier": 4,
-          "ilvl": 63,
-          "ranges": [
-            [
-              26,
-              29
-            ]
-          ]
-        },
-        {
-          "tier": 5,
+          "tier": 2,
           "ilvl": 60,
           "ranges": [
             [
@@ -19770,27 +19900,17 @@
           ]
         },
         {
-          "tier": 6,
-          "ilvl": 55,
-          "ranges": [
-            [
-              22,
-              25
-            ]
-          ]
-        },
-        {
-          "tier": 7,
+          "tier": 3,
           "ilvl": 46,
           "ranges": [
             [
               18,
-              21
+              22
             ]
           ]
         },
         {
-          "tier": 8,
+          "tier": 4,
           "ilvl": 33,
           "ranges": [
             [
@@ -19800,27 +19920,7 @@
           ]
         },
         {
-          "tier": 9,
-          "ilvl": 31,
-          "ranges": [
-            [
-              14,
-              17
-            ]
-          ]
-        },
-        {
-          "tier": 10,
-          "ilvl": 20,
-          "ranges": [
-            [
-              10,
-              13
-            ]
-          ]
-        },
-        {
-          "tier": 11,
+          "tier": 5,
           "ilvl": 16,
           "ranges": [
             [
@@ -19830,17 +19930,7 @@
           ]
         },
         {
-          "tier": 12,
-          "ilvl": 9,
-          "ranges": [
-            [
-              6,
-              9
-            ]
-          ]
-        },
-        {
-          "tier": 13,
+          "tier": 6,
           "ilvl": 1,
           "ranges": [
             [
@@ -20046,9 +20136,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -20609,17 +20698,25 @@
       ]
     },
     "x_increased_spirit_reservation_efficiency_of_skills__1": {
-      "display": "#% increased spirit reservation efficiency of skills",
-      "tradeStatId": null,
+      "display": "#% increased Spirit Reservation Efficiency of Skills",
+      "tradeStatId": "explicit.stat_53386210",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -20634,12 +20731,11 @@
             ]
           ]
         }
-      ],
-      "_needsCanonicalText": true
+      ]
     },
     "x_increased_spirit_reservation_efficiency_of_skills__2": {
-      "display": "#% increased spirit reservation efficiency of skills",
-      "tradeStatId": null,
+      "display": "#% increased Spirit Reservation Efficiency of Skills",
+      "tradeStatId": "explicit.stat_53386210",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
@@ -20658,12 +20754,11 @@
             ]
           ]
         }
-      ],
-      "_needsCanonicalText": true
+      ]
     },
     "x_increased_spirit_reservation_efficiency_of_skills__3": {
-      "display": "#% increased spirit reservation efficiency of skills",
-      "tradeStatId": null,
+      "display": "#% increased Spirit Reservation Efficiency of Skills",
+      "tradeStatId": "explicit.stat_53386210",
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
@@ -20682,8 +20777,7 @@
             ]
           ]
         }
-      ],
-      "_needsCanonicalText": true
+      ]
     },
     "x_increased_strength": {
       "display": "#% increased Strength",
@@ -20760,7 +20854,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +8",
+      "family": "Claw / Dagger / One Hand Sword +9",
       "types": [
         "claw",
         "dagger",
@@ -20772,7 +20866,8 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
-        "quarterstaff"
+        "quarterstaff",
+        "talisman"
       ],
       "tiers": [
         {
@@ -20981,6 +21076,30 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "two-hand-mace",
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              25,
+              31
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_totem_placement_speed__2": {
+      "display": "#% increased Totem Placement speed",
+      "tradeStatId": "explicit.stat_3374165039",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "one-hand-mace"
@@ -20993,29 +21112,6 @@
             [
               17,
               25
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_totem_placement_speed__2": {
-      "display": "#% increased Totem Placement speed",
-      "tradeStatId": "explicit.stat_3374165039",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "2-handed",
-      "types": [
-        "two-hand-mace"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              25,
-              31
             ]
           ]
         }
@@ -21050,6 +21146,30 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "two-hand-mace",
+        "talisman"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              25,
+              31
+            ]
+          ]
+        }
+      ]
+    },
+    "x_increased_warcry_cooldown_recovery_rate__2": {
+      "display": "#% increased Warcry Cooldown Recovery Rate",
+      "tradeStatId": "explicit.stat_4159248054",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
       "family": "1-handed",
       "types": [
         "one-hand-mace"
@@ -21062,29 +21182,6 @@
             [
               17,
               25
-            ]
-          ]
-        }
-      ]
-    },
-    "x_increased_warcry_cooldown_recovery_rate__2": {
-      "display": "#% increased Warcry Cooldown Recovery Rate",
-      "tradeStatId": "explicit.stat_4159248054",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "2-handed",
-      "types": [
-        "two-hand-mace"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              25,
-              31
             ]
           ]
         }
@@ -21698,6 +21795,29 @@
         }
       ]
     },
+    "x_maximum_stacks_of_puppet_master": {
+      "display": "+# maximum stacks of Puppet Master",
+      "tradeStatId": "explicit.stat_1484026495",
+      "affix": "suffix",
+      "affixType": "explicit",
+      "isAveraged": false,
+      "family": "2-handed",
+      "types": [
+        "staff"
+      ],
+      "tiers": [
+        {
+          "tier": 1,
+          "ilvl": 65,
+          "ranges": [
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      ]
+    },
     "x_metres_to_dodge_roll_distance": {
       "display": "# metres to dodge roll distance",
       "tradeStatId": null,
@@ -22040,9 +22160,8 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Amulet / Belt",
+      "family": "Belt",
       "types": [
-        "amulet",
         "belt"
       ],
       "tiers": [
@@ -22383,8 +22502,9 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Helmet",
+      "family": "Shield / Helmet",
       "types": [
+        "shield",
         "helmet"
       ],
       "tiers": [
@@ -22395,29 +22515,6 @@
             [
               10,
               20
-            ]
-          ]
-        }
-      ]
-    },
-    "x_of_leech_is_instant": {
-      "display": "#% of Leech is Instant",
-      "tradeStatId": "explicit.stat_3561837752",
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Gloves",
-      "types": [
-        "gloves"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              8,
-              15
             ]
           ]
         }
@@ -22473,12 +22570,20 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Mace / Spear / Two Hand Mace +3",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
+        "claw",
+        "dagger",
+        "one-hand-sword",
+        "one-hand-axe",
         "one-hand-mace",
         "spear",
+        "flail",
+        "two-hand-sword",
+        "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -22618,7 +22723,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +19",
+      "family": "Claw / Dagger / One Hand Sword +20",
       "types": [
         "claw",
         "dagger",
@@ -22633,6 +22738,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "staff",
         "bow",
         "crossbow",
@@ -23245,30 +23351,6 @@
         }
       ]
     },
-    "x_reduced_movement_speed_penalty_from_using_skills_while_mov": {
-      "display": "#% reduced movement speed penalty from using skills while moving",
-      "tradeStatId": null,
-      "affix": "suffix",
-      "affixType": "explicit",
-      "isAveraged": false,
-      "family": "Boots",
-      "types": [
-        "boots"
-      ],
-      "tiers": [
-        {
-          "tier": 1,
-          "ilvl": 65,
-          "ranges": [
-            [
-              6,
-              10
-            ]
-          ]
-        }
-      ],
-      "_needsCanonicalText": true
-    },
     "x_reduced_poison_duration_on_you__1": {
       "display": "#% reduced poison duration on you",
       "tradeStatId": null,
@@ -23607,7 +23689,7 @@
       "affix": "prefix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +8",
+      "family": "Claw / Dagger / One Hand Sword +9",
       "types": [
         "claw",
         "dagger",
@@ -23619,7 +23701,8 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
-        "quarterstaff"
+        "quarterstaff",
+        "talisman"
       ],
       "tiers": [
         {
@@ -24924,8 +25007,8 @@
           "ilvl": 65,
           "ranges": [
             [
-              12,
-              16
+              20,
+              25
             ]
           ]
         }
@@ -25150,7 +25233,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -25163,6 +25246,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -25235,7 +25319,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Claw / Dagger / One Hand Sword +10",
+      "family": "Claw / Dagger / One Hand Sword +11",
       "types": [
         "claw",
         "dagger",
@@ -25248,6 +25332,7 @@
         "two-hand-axe",
         "two-hand-mace",
         "quarterstaff",
+        "talisman",
         "bow",
         "crossbow"
       ],
@@ -26255,13 +26340,14 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "Dagger / Flail / Sceptre +10",
+      "family": "Dagger / Flail / Sceptre +11",
       "types": [
         "dagger",
         "flail",
         "sceptre",
         "wand",
         "quarterstaff",
+        "talisman",
         "staff",
         "focus",
         "shield",
@@ -27031,7 +27117,8 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
-        "quarterstaff"
+        "quarterstaff",
+        "talisman"
       ],
       "tiers": [
         {
@@ -30416,7 +30503,7 @@
       "affix": "suffix",
       "affixType": "explicit",
       "isAveraged": false,
-      "family": "One Hand Sword / One Hand Axe / One Hand Mace +14",
+      "family": "One Hand Sword / One Hand Axe / One Hand Mace +15",
       "types": [
         "one-hand-sword",
         "one-hand-axe",
@@ -30427,6 +30514,7 @@
         "two-hand-sword",
         "two-hand-axe",
         "two-hand-mace",
+        "talisman",
         "crossbow",
         "shield",
         "gloves",
