@@ -132,6 +132,16 @@
       ]
     },
     {
+      "token": "talisman",
+      "category": "weapon.talisman",
+      "text": "Talisman",
+      "kind": "weapon",
+      "hand": "2h",
+      "pages": [
+        "Talismans"
+      ]
+    },
+    {
       "token": "staff",
       "category": "weapon.staff",
       "text": "Staff",

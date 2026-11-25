@@ -71,7 +71,7 @@ function mk(tag, className, text) {
 // read "Caster" rather than a hand-class.
 const CASTER_WEAPONS = new Set(['wand', 'sceptre', 'staff']);
 const MELEE_1H = new Set(['claw', 'dagger', 'one-hand-sword', 'one-hand-axe', 'one-hand-mace', 'spear', 'flail']);
-const WEAPON_2H = new Set(['two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'bow', 'crossbow']);
+const WEAPON_2H = new Set(['two-hand-sword', 'two-hand-axe', 'two-hand-mace', 'quarterstaff', 'talisman', 'bow', 'crossbow']);
 const OFFHAND = new Set(['quiver', 'shield', 'buckler', 'focus']);
 const ARMOUR = new Set(['gloves', 'boots', 'body-armour', 'helmet']);
 const JEWELLERY = new Set(['amulet', 'ring', 'belt']);

@@ -174,6 +174,5 @@ async function main() {
 
 main().catch((e) => {
   console.error('\n✖ refresh failed:', e.message);
-  console.error('  Nothing was changed if the failure was during download/validation.');
   process.exit(1);
 });
