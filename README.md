@@ -95,8 +95,9 @@ Thanks to those projects and maintainers.
 
 **Rebuilding the data.** The large build inputs are not committed. `node tools/refresh.mjs`
 re-scrapes PoE2DB and rebuilds `assets/data-snapshot.json`. It also needs
-`tools/data-sources/ggg-trade2-stats.json`, a manual browser capture of the trade site's
-`/api/trade2/data/stats` response; without it, mods have no display text or stat ids.
+`tools/data-sources/ggg-trade2-stats.json`, the trade site's `/api/trade2/data/stats` list;
+without it, mods have no display text or stat ids. `node tools/capture-ggg.mjs` prints a
+snippet that saves it (with the item and category lists) from a browser tab on the trade site.
 
 ## Disclaimer
 

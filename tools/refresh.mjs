@@ -4,7 +4,7 @@
  *   node tools/refresh.mjs            # re-scrape PoE2DB, rebuild snapshot, warn on new unjoined mods
  *   node tools/refresh.mjs --dry      # scrape report only — writes NOTHING, no rebuild
  *   node tools/refresh.mjs --allow-drop # pass through to the scraper (accept a pool that halved)
- *   node tools/refresh.mjs --no-fetch # skip the scrape, just rebuild + report (after a manual GGG re-capture)
+ *   node tools/refresh.mjs --no-fetch # skip the scrape, just rebuild + report (after a fresh GGG capture)
  *
  * What it does (and deliberately does NOT do):
  *   • Re-scrapes every PoE2DB item-class page (tools/scrape-poe2db.mjs) → poe2db-mods.json,
@@ -13,8 +13,8 @@
  *     assets/data-snapshot.json.
  *   • Reports which stat texts were added/removed this patch, and — the key signal —
  *     which NEWLY-ADDED mods did NOT join to a GGG stat id. Those are the ones that
- *     need a fresh GGG /api/trade2/data/stats capture (which can't be auto-downloaded:
- *     GGG is Cloudflare-blocked to server-side fetch; it's a manual browser capture).
+ *     need a fresh GGG capture (Cloudflare blocks server-side fetches, so it comes from a
+ *     browser tab: `node tools/capture-ggg.mjs` prints the snippet and the steps).
  *   • Does NOT touch the GGG capture or the manifest version — those stay manual on
  *     purpose (ids/text rarely change; version bump is your call).
  */
@@ -143,10 +143,9 @@ async function main() {
       console.log(`⚠ ${newlyUnmatched.length} NEWLY-ADDED mod(s) did not join to a GGG id:`);
       for (const k of newlyUnmatched.sort()) console.log(`      ${k}`);
       console.log(
-        '\n  These need a fresh GGG /api/trade2/data/stats capture to get a tier control.\n' +
-          '  Re-capture it in the browser (FINDINGS §11), drop it at\n' +
-          `      ${join(SRC, 'ggg-trade2-stats.json')}\n` +
-          '  then re-run:  node tools/refresh.mjs --no-fetch',
+        '\n  These need a fresh GGG capture to get a tier control. Run\n' +
+          '      node tools/capture-ggg.mjs\n' +
+          '  for the browser snippet, then re-run:  node tools/refresh.mjs --no-fetch',
       );
     } else {
       console.log(

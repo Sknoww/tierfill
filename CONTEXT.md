@@ -98,9 +98,11 @@ GGG /api/trade2/data/stats (browser fetch) -> data-sources/ggg-trade2-stats.json
   added mods that didn't join to a GGG id. `--dry` writes nothing; `--no-fetch` rebuilds
   after a fresh GGG fetch.
 - **GGG lists** (`/api/trade2/data/stats`, `/items`, `/filters`) are fetched from a
-  browser on the trade site, with no login; server-side fetches are Cloudflare-blocked
-  (steps in `FINDINGS §11`). `tools/data-sources/` is gitignored and not backed up, so
-  a fresh clone re-fetches and re-scrapes.
+  browser on the trade site, with no login; server-side fetches are Cloudflare-blocked.
+  `node tools/capture-ggg.mjs` prints a console snippet that downloads all three, then
+  splits that file into `tools/data-sources/`. The trade page's CSP blocks posting to a
+  local server, so the download step is needed. `tools/data-sources/` is gitignored and
+  not backed up, so a fresh clone re-fetches and re-scrapes.
 - **Item families:** one stat can have different ladders per item type. They're split by
   union-find on shared `types`, and a toggle appears when the item type is ambiguous.
 - **Snapshot entries** hold `tradeStatId`, `display`, `affix`, `isAveraged`, `family`,
