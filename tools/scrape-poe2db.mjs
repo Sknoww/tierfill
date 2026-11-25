@@ -4,6 +4,13 @@
  *   node tools/scrape-poe2db.mjs              # scrape ALL pages → tools/data-sources/poe2db-mods.json
  *   node tools/scrape-poe2db.mjs --dry        # scrape + print report, write nothing
  *   node tools/scrape-poe2db.mjs --page Bows  # scrape ONE page (debug); implies --dry
+ *   node tools/scrape-poe2db.mjs --allow-drop # accept pages whose row count fell by half
+ *
+ * FAIL-FAST: any page that errors, returns fewer than MIN_ROWS mod rows, or returns less
+ * than half the rows it had in the last good scrape stops the run with exit 1 and writes
+ * NOTHING. A renamed, 404'd or JS-gated PoE2DB page would otherwise silently drop that
+ * item class from the snapshot. --allow-drop downgrades only the "fell by half" check
+ * (for a patch that really trims a pool); HTTP errors and near-empty pages always fail.
  *
  * WHY this exists:
  *   The shipped pipeline's PRIMARY value source is a third party's PoE2DB-derived dump
@@ -24,7 +31,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = join(here, 'data-sources');
@@ -32,6 +39,11 @@ const OUT = join(SRC, 'poe2db-mods.json');
 const DRY = process.argv.includes('--dry');
 const PAGE_FLAG = process.argv.indexOf('--page');
 const ONLY_PAGE = PAGE_FLAG !== -1 ? process.argv[PAGE_FLAG + 1] : null;
+const ALLOW_DROP = process.argv.includes('--allow-drop');
+// A real class page carries 50+ explicit tier rows; anything under this is a broken page.
+export const MIN_ROWS = 20;
+// A page keeping less than this share of its last good row count is treated as broken.
+export const DROP_RATIO = 0.5;
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36';
@@ -228,6 +240,45 @@ function extractRows(html, report) {
   return rows;
 }
 
+// Row counts per slug from the last good scrape's `_pages` ("Slug→token (n)").
+export function previousRowCounts(prev) {
+  const counts = new Map();
+  for (const line of (prev && prev._pages) || []) {
+    const m = /^(.+?)→.*\((\d+)\)$/.exec(line);
+    if (m) counts.set(m[1], Number(m[2]));
+  }
+  return counts;
+}
+
+// Pure gate: returns { errors, warnings } for this run's page results.
+//   pages:    [{ slug, rows }] that fetched OK
+//   pageFail: ["slug: message"] that threw
+//   prev:     Map slug → row count from the last good scrape
+export function pageGate(pages, pageFail, prev, { allowDrop = false } = {}) {
+  const errors = pageFail.map((f) => `fetch failed — ${f}`);
+  const warnings = [];
+  for (const { slug, rows } of pages) {
+    if (rows < MIN_ROWS) {
+      errors.push(`${slug}: only ${rows} mod rows (minimum ${MIN_ROWS}) — page renamed, JS-gated or redesigned?`);
+      continue;
+    }
+    const before = prev.get(slug);
+    if (before && rows < before * DROP_RATIO) {
+      const msg = `${slug}: ${rows} mod rows, down from ${before} last scrape`;
+      (allowDrop ? warnings : errors).push(allowDrop ? `${msg} (accepted by --allow-drop)` : `${msg} — re-run with --allow-drop if the patch really cut this pool`);
+    }
+  }
+  return { errors, warnings };
+}
+
+async function readPrevious() {
+  try {
+    return JSON.parse(await readFile(OUT, 'utf8'));
+  } catch {
+    return null; // first run
+  }
+}
+
 // ── build ───────────────────────────────────────────────────────────────────────
 async function main() {
   const pages = ONLY_PAGE ? PAGES.filter(([slug]) => slug === ONLY_PAGE) : PAGES;
@@ -307,6 +358,18 @@ async function main() {
     }
   }
 
+  const gate = pageGate(report.pages, report.pageFail, previousRowCounts(await readPrevious()), {
+    allowDrop: ALLOW_DROP,
+  });
+  for (const w of gate.warnings) console.log(`  ⚠ ${w}`);
+  if (gate.errors.length) {
+    console.error(`\n✖ ${gate.errors.length} page(s) failed the scrape gate — nothing written:`);
+    for (const e of gate.errors) console.error(`  ✖ ${e}`);
+    // exitCode, not exit(): exiting with fetch sockets still open trips a libuv assert on Windows.
+    process.exitCode = 1;
+    return;
+  }
+
   if (DRY || ONLY_PAGE) {
     console.log('\n--dry: nothing written.');
     return;
@@ -327,7 +390,10 @@ async function main() {
   console.log(`\n✅ wrote ${OUT}  (${prefixKeys + suffixKeys} keys, ${totalEls} tier elements)`);
 }
 
-main().catch((e) => {
-  console.error('\n✖ scrape-poe2db failed:', e.message);
-  process.exit(1);
-});
+// Run only as a script, so the tests can import the gate without scraping.
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
+  main().catch((e) => {
+    console.error('\n✖ scrape-poe2db failed:', e.message);
+    process.exit(1);
+  });
+}

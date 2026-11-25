@@ -3,6 +3,7 @@
  *
  *   node tools/refresh.mjs            # re-scrape PoE2DB, rebuild snapshot, warn on new unjoined mods
  *   node tools/refresh.mjs --dry      # scrape report only — writes NOTHING, no rebuild
+ *   node tools/refresh.mjs --allow-drop # pass through to the scraper (accept a pool that halved)
  *   node tools/refresh.mjs --no-fetch # skip the scrape, just rebuild + report (after a manual GGG re-capture)
  *
  * What it does (and deliberately does NOT do):
@@ -30,6 +31,7 @@ const REPORT_TMP = join(SRC, '.refresh-report.tmp.json');
 
 const DRY = process.argv.includes('--dry');
 const NO_FETCH = process.argv.includes('--no-fetch');
+const SCRAPE_ARGS = process.argv.includes('--allow-drop') ? ['--allow-drop'] : [];
 
 // Spawn the PoE2DB scraper. With --dry it prints its report and writes nothing.
 function runScrape(args = []) {
@@ -71,7 +73,7 @@ async function main() {
   } else if (DRY) {
     // Honest dry-run of the fetch step: the scraper prints what it found and writes nothing.
     console.log('--dry: scraping PoE2DB (writes nothing, no rebuild)…\n');
-    await runScrape(['--dry']);
+    await runScrape(['--dry', ...SCRAPE_ARGS]);
     console.log('\n--dry: source file and snapshot are unchanged.');
     return;
   } else {
@@ -84,10 +86,11 @@ async function main() {
     }
     if (oldData) await copyFile(POE2DB, BACKUP);
 
-    // 2. re-scrape PoE2DB (writes poe2db-mods.json). The scraper validates per page and
-    //    throws on a hard failure, so a broken run surfaces here before the rebuild.
+    // 2. re-scrape PoE2DB (writes poe2db-mods.json). The scraper exits non-zero WITHOUT
+    //    writing if any page errors or comes back near-empty (see its FAIL-FAST note), so a
+    //    broken run stops here, before the rebuild, with the old scrape untouched.
     console.log('re-scraping PoE2DB…\n' + '─'.repeat(60));
-    await runScrape();
+    await runScrape(SCRAPE_ARGS);
     console.log('─'.repeat(60));
 
     const newData = JSON.parse(await readFile(POE2DB, 'utf8'));
